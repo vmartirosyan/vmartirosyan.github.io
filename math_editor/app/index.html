@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Expression Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1 data-i18n="appTitle">Math Expression Editor</h1>
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="en">🇺🇸 English</option>
+                        <option value="hy">🇦🇲 Հայերեն</option>
+                    </select>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <div class="tab-navigation">
+                    <button class="tab-btn active" data-tab="editor" data-i18n="tabEditor">Expression Editor</button>
+                    <button class="tab-btn" data-tab="trainer" data-i18n="tabTrainer">Math Trainer</button>
+                    <button class="tab-btn" data-tab="graphing" data-i18n="tabGraphing">Graphing & 3D Shapes</button>
+                    <button class="tab-btn" data-tab="transformations" data-i18n="tabTransformations">2D Transformations</button>
+                    <button class="tab-btn" data-tab="drawing" data-i18n="tabDrawing">Freeform Drawing</button>
+                </div>
+                <div class="controls">
+                    <button id="clearBtn" class="control-btn" data-i18n="clear">Clear</button>
+                    <button id="undoBtn" class="control-btn" data-i18n="undo">Undo</button>
+                    <button id="exportBtn" class="control-btn" data-i18n="exportLatex">Export LaTeX</button>
+                    <button id="exportJpegBtn" class="control-btn" data-i18n="exportJpeg">Export JPEG</button>
+                    <button id="importJpegBtn" class="control-btn" data-i18n="importJpeg">Import from JPEG</button>
+                    <button id="evaluateBtn" class="control-btn" data-i18n="evaluate">Evaluate</button>
+                    <input type="file" id="jpegFileInput" accept="image/jpeg" style="display: none;">
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Expression Editor Tab -->
+            <div id="editorTab" class="tab-content active">
+            <div class="whiteboard-container">
+                <div id="expressionDisplay" class="expression-display">
+                    <span class="cursor active" data-position="0"></span>
+                </div>
+                <div id="evaluationResult" class="evaluation-result" style="display: none;">
+                    <span data-i18n="result">Result: </span><span id="resultValue"></span>
+                </div>
+            </div>
+
+            <div class="keyboard-container">
+                <div class="keyboard-section">
+                    <h3 data-i18n="secNumbers">Numbers</h3>
+                    <div class="keyboard-row">
+                        <button class="key-btn number" data-value="7">7</button>
+                        <button class="key-btn number" data-value="8">8</button>
+                        <button class="key-btn number" data-value="9">9</button>
+                        <button class="key-btn operator" data-value="/">÷</button>
+                        <button class="key-btn function" data-value="sqrt">√</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn number" data-value="4">4</button>
+                        <button class="key-btn number" data-value="5">5</button>
+                        <button class="key-btn number" data-value="6">6</button>
+                        <button class="key-btn operator" data-value="*">×</button>
+                        <button class="key-btn function" data-value="power">x^y</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn number" data-value="1">1</button>
+                        <button class="key-btn number" data-value="2">2</button>
+                        <button class="key-btn number" data-value="3">3</button>
+                        <button class="key-btn operator" data-value="-">−</button>
+                        <button class="key-btn function" data-value="log">log</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn number" data-value="0">0</button>
+                        <button class="key-btn number" data-value=".">.</button>
+                        <button class="key-btn symbol" data-value="±">±</button>
+                        <button class="key-btn operator" data-value="=">=</button>
+                        <button class="key-btn operator" data-value="+">+</button>
+                        <button class="key-btn function" data-value="ln">ln</button>
+                    </div>
+                </div>
+
+                <div class="keyboard-section">
+                    <h3 data-i18n="secSpecialFunctions">Special Functions</h3>
+                    <div class="keyboard-row">
+                        <button class="key-btn function" data-value="fraction">a/b</button>
+                        <button class="key-btn function" data-value="subscript">x_i</button>
+                        <button class="key-btn function" data-value="superscript">x^i</button>
+                        <button class="key-btn function" data-value="integral">∫</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn function" data-value="sum">Σ</button>
+                        <button class="key-btn function" data-value="product">Π</button>
+                        <button class="key-btn function" data-value="limit">lim</button>
+                        <button class="key-btn function" data-value="derivative">d/dx</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn trig" data-value="sin">sin</button>
+                        <button class="key-btn trig" data-value="cos">cos</button>
+                        <button class="key-btn trig" data-value="tan">tan</button>
+                        <button class="key-btn function" data-value="abs">|x|</button>
+                    </div>
+                </div>
+
+                <div class="keyboard-section">
+                    <h3 data-i18n="secLatinLetters">Latin Letters</h3>
+                    <div class="keyboard-row" id="latinLettersRow">
+                        <button class="key-btn symbol" data-value="a">a</button>
+                        <button class="key-btn symbol" data-value="b">b</button>
+                        <button class="key-btn symbol" data-value="c">c</button>
+                        <button class="key-btn symbol" data-value="x">x</button>
+                        <button class="key-btn symbol" data-value="y">y</button>
+                        <button class="key-btn symbol" data-value="z">z</button>
+                        <button class="key-btn control-btn" id="expandLatinBtn" style="font-size: 14px;" data-i18n="btnShowAll">Show All</button>
+                    </div>
+                    <div id="allLatinLetters" style="display: none;">
+                        <div class="keyboard-row">
+                            <button class="key-btn symbol" data-value="d">d</button>
+                            <button class="key-btn symbol" data-value="e">e</button>
+                            <button class="key-btn symbol" data-value="f">f</button>
+                            <button class="key-btn symbol" data-value="g">g</button>
+                            <button class="key-btn symbol" data-value="h">h</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button class="key-btn symbol" data-value="i">i</button>
+                            <button class="key-btn symbol" data-value="j">j</button>
+                            <button class="key-btn symbol" data-value="k">k</button>
+                            <button class="key-btn symbol" data-value="l">l</button>
+                            <button class="key-btn symbol" data-value="m">m</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button class="key-btn symbol" data-value="n">n</button>
+                            <button class="key-btn symbol" data-value="o">o</button>
+                            <button class="key-btn symbol" data-value="p">p</button>
+                            <button class="key-btn symbol" data-value="q">q</button>
+                            <button class="key-btn symbol" data-value="r">r</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button class="key-btn symbol" data-value="s">s</button>
+                            <button class="key-btn symbol" data-value="t">t</button>
+                            <button class="key-btn symbol" data-value="u">u</button>
+                            <button class="key-btn symbol" data-value="v">v</button>
+                            <button class="key-btn symbol" data-value="w">w</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="keyboard-section">
+                    <h3 data-i18n="secGreekSymbols">Greek & Symbols</h3>
+                    <div class="keyboard-row">
+                        <button class="key-btn symbol" data-value="pi">π</button>
+                        <button class="key-btn symbol" data-value="theta">θ</button>
+                        <button class="key-btn symbol" data-value="alpha">α</button>
+                        <button class="key-btn symbol" data-value="beta">β</button>
+                        <button class="key-btn symbol" data-value="gamma">γ</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn symbol" data-value="delta">δ</button>
+                        <button class="key-btn symbol" data-value="epsilon">ε</button>
+                        <button class="key-btn symbol" data-value="lambda">λ</button>
+                        <button class="key-btn symbol" data-value="mu">μ</button>
+                        <button class="key-btn symbol" data-value="sigma">σ</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key-btn symbol" data-value="(">(</button>
+                        <button class="key-btn symbol" data-value=")">)</button>
+                        <button class="key-btn symbol" data-value="[">[</button>
+                        <button class="key-btn symbol" data-value="]">]</button>
+                        <button class="key-btn symbol" data-value=",">,</button>
+                    </div>
+                </div>
+
+                <div class="keyboard-section navigation-help">
+                    <h3 data-i18n="secNavigation">Navigation</h3>
+                    <p><kbd>Arrow Keys</kbd> <span data-i18n="navHelp1">to navigate between expression elements</span></p>
+                    <p><kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> <span data-i18n="navHelp2">to move between sub-elements</span></p>
+                    <p><kbd>Backspace</kbd> <span data-i18n="navHelp3">to delete • Esc to exit sub-element</span></p>
+                    <p><kbd>Enter</kbd> <span data-i18n="navHelp4">to insert line break for multiline expressions</span></p>
+                </div>
+            </div>
+            </div>
+            <!-- End Expression Editor Tab -->
+
+            <!-- Math Trainer Tab -->
+            <div id="trainerTab" class="tab-content">
+                <div class="trainer-container">
+                    <!-- Sub-section selector -->
+                    <div class="trainer-subsection-selector">
+                        <button class="subsection-btn active" data-subsection="arithmetic" data-i18n="trainerArithmetic">🧮 Arithmetic</button>
+                        <button class="subsection-btn" data-subsection="algebra" data-i18n="trainerAlgebra">📐 Algebra</button>
+                    </div>
+
+                    <!-- Arithmetic Section -->
+                    <div id="arithmeticSection" class="trainer-subsection active">
+                        <div class="trainer-header">
+                            <div class="trainer-controls">
+                                <div class="control-group">
+                                    <label data-i18n="secDifficulty">Difficulty:</label>
+                                    <div class="difficulty-buttons">
+                                        <button class="difficulty-btn active" data-difficulty="easy" data-i18n="btnEasy">Easy</button>
+                                        <button class="difficulty-btn" data-difficulty="medium" data-i18n="btnMedium">Medium</button>
+                                        <button class="difficulty-btn" data-difficulty="hard" data-i18n="btnHard">Hard</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <div id="trainerScore" class="score-display">
+                                        <span class="score-correct" data-i18n="trainerCorrect">Correct: 0</span>
+                                        <span class="score-total" data-i18n="trainerTotal">Total: 0</span>
+                                    </div>
+                                    <button class="control-btn small-btn" id="resetScoreBtn" data-i18n="btnResetScore">Reset</button>
+                                </div>
+                                
+                                <button class="control-btn primary-btn" id="newProblemBtn" data-i18n="btnNewProblem">🎲 New Problem</button>
+                            </div>
+                        </div>
+
+                        <div class="trainer-main">
+                            <div id="trainerProblemDisplay" class="problem-display">
+                                <div class="problem-placeholder">
+                                    <span class="placeholder-icon">🧮</span>
+                                    <span class="placeholder-text" data-i18n="trainerClickNew">Click "New Problem" to start practicing!</span>
+                                </div>
+                            </div>
+
+                            <div id="trainerWorkspace" class="trainer-workspace" style="display: none;">
+                                <div id="trainerStepsContainer" class="steps-container">
+                                    <!-- Step input rows will be generated here -->
+                                </div>
+
+                                <div class="check-section">
+                                    <button class="control-btn primary-btn large-btn" id="checkAnswerBtn" data-i18n="btnCheckAnswer">Check Answer</button>
+                                </div>
+
+                                <div id="trainerFeedback" class="trainer-feedback" style="display: none;">
+                                    <!-- Feedback will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Algebra Section -->
+                    <div id="algebraSection" class="trainer-subsection">
+                        <div class="trainer-header">
+                            <div class="trainer-controls">
+                                <div class="control-group">
+                                    <label data-i18n="secDifficulty">Difficulty:</label>
+                                    <div class="difficulty-buttons algebra-difficulty-buttons">
+                                        <button class="difficulty-btn active" data-difficulty="easy" data-i18n="btnEasy">Easy</button>
+                                        <button class="difficulty-btn" data-difficulty="medium" data-i18n="btnMedium">Medium</button>
+                                        <button class="difficulty-btn" data-difficulty="hard" data-i18n="btnHard">Hard</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label data-i18n="algebraProblemType">Problem Type:</label>
+                                    <div class="problem-type-buttons">
+                                        <button class="algebra-type-btn active" data-type="simplify" data-i18n="algebraSimplify">Simplify</button>
+                                        <button class="algebra-type-btn" data-type="expand" data-i18n="algebraExpand">Expand</button>
+                                        <button class="algebra-type-btn" data-type="factor" data-i18n="algebraFactor">Factor</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <div id="algebraScore" class="score-display">
+                                        <span class="score-correct" data-i18n="trainerCorrect">Correct: 0</span>
+                                        <span class="score-total" data-i18n="trainerTotal">Total: 0</span>
+                                    </div>
+                                    <button class="control-btn small-btn" id="algebraResetScoreBtn" data-i18n="btnResetScore">Reset</button>
+                                </div>
+                                
+                                <button class="control-btn primary-btn" id="newAlgebraProblemBtn" data-i18n="btnNewProblem">🎲 New Problem</button>
+                            </div>
+                        </div>
+
+                        <div class="trainer-main">
+                            <div id="algebraProblemDisplay" class="problem-display">
+                                <div class="problem-placeholder">
+                                    <span class="placeholder-icon">📐</span>
+                                    <span class="placeholder-text" data-i18n="algebraClickNew">Click "New Problem" to start practicing algebra!</span>
+                                </div>
+                            </div>
+
+                            <div id="algebraWorkspace" class="trainer-workspace" style="display: none;">
+                                <div class="algebra-instruction" data-i18n="algebraInstruction">
+                                    Simplify the expression step by step. Add each step to show your work:
+                                </div>
+                                
+                                <div id="algebraStepsContainer" class="steps-container">
+                                    <!-- Step input rows will be generated here -->
+                                </div>
+
+                                <div id="algebraFeedback" class="trainer-feedback" style="display: none;">
+                                    <!-- Feedback will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="algebra-reference">
+                            <h4 data-i18n="algebraReference">Reference</h4>
+                            <div class="reference-content">
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="algebraPowerNotation">Powers:</span>
+                                    <span class="reference-example">x² or x^2, x³ or x^3</span>
+                                </div>
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="algebraMultiplication">Multiplication:</span>
+                                    <span class="reference-example">2x, 3xy, 2*x</span>
+                                </div>
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="algebraPowerRules">Power rules:</span>
+                                    <span class="reference-example">x^a * x^b = x^(a+b)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Math Trainer Tab -->
+
+            <!-- Graphing Tab -->
+            <div id="graphingTab" class="tab-content">
+                <div class="graphing-container">
+                    <div class="graphing-sidebar">
+                        <div class="graphing-section">
+                            <h3 data-i18n="secChartType">Chart Type</h3>
+                            <div class="chart-type-grid">
+                                <button class="chart-btn active" data-chart="function" data-i18n="btnFunctionGraph">Function Graph</button>
+                                <button class="chart-btn" data-chart="bar" data-i18n="btnBarChart">Bar Chart</button>
+                                <button class="chart-btn" data-chart="line" data-i18n="btnLineChart">Line Chart</button>
+                                <button class="chart-btn" data-chart="pie" data-i18n="btnPieChart">Pie Chart</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section">
+                            <h3 data-i18n="sec3DShapes">3D Shapes</h3>
+                            <div class="shape-grid">
+                                <button class="shape-btn" data-shape="pyramid" data-i18n="btnPyramid">Pyramid</button>
+                                <button class="shape-btn" data-shape="cube" data-i18n="btnCube">Cube</button>
+                                <button class="shape-btn" data-shape="cylinder" data-i18n="btnCylinder">Cylinder</button>
+                                <button class="shape-btn" data-shape="cuboid" data-i18n="btnCuboid">Cuboid</button>
+                                <button class="shape-btn" data-shape="sphere" data-i18n="btnSphere">Sphere</button>
+                                <button class="shape-btn" data-shape="cone" data-i18n="btnCone">Cone</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section" id="functionInputSection">
+                            <h3 data-i18n="secFunctionInput">Function Input</h3>
+                            <div class="input-group">
+                                <label for="functionInput">f(x) =</label>
+                                <input type="text" id="functionInput" placeholder="e.g., x^2, sin(x), x^3 - 2*x">
+                            </div>
+                            <div class="input-row">
+                                <div class="input-group">
+                                    <label for="xMin" data-i18n="lblXMin">X Min:</label>
+                                    <input type="number" id="xMin" value="-10" step="0.5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="xMax" data-i18n="lblXMax">X Max:</label>
+                                    <input type="number" id="xMax" value="10" step="0.5">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="input-group">
+                                    <label for="yMin" data-i18n="lblYMin">Y Min:</label>
+                                    <input type="number" id="yMin" value="-10" step="0.5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="yMax" data-i18n="lblYMax">Y Max:</label>
+                                    <input type="number" id="yMax" value="10" step="0.5">
+                                </div>
+                            </div>
+                            <button id="plotBtn" class="control-btn" data-i18n="btnPlotGraph">Plot Graph</button>
+                        </div>
+
+                        <div class="graphing-section" id="chartDataSection" style="display: none;">
+                            <h3 data-i18n="secChartData">Chart Data</h3>
+                            <div class="input-group">
+                                <label data-i18n="lblLabels">Labels (comma-separated):</label>
+                                <input type="text" id="chartLabels" placeholder="A, B, C, D">
+                            </div>
+                            <div class="input-group">
+                                <label data-i18n="lblValues">Values (comma-separated):</label>
+                                <input type="text" id="chartValues" placeholder="10, 20, 15, 25">
+                            </div>
+                            <button id="plotChartBtn" class="control-btn" data-i18n="btnPlotChart">Plot Chart</button>
+                        </div>
+
+                        <div class="graphing-section" id="shapeParamsSection" style="display: none;">
+                            <h3 data-i18n="secShapeParams">Shape Parameters</h3>
+                            <div id="shapeInputs"></div>
+                            <button id="renderShapeBtn" class="control-btn" data-i18n="btnRenderShape">Render Shape</button>
+                        </div>
+                    </div>
+
+                    <div class="graphing-canvas-area">
+                        <canvas id="graphCanvas"></canvas>
+                        <div id="shape3DControls" class="shape-controls-overlay" style="display: none;">
+                            <div class="controls-panel">
+                                <h4 data-i18n="sec3DControls">3D Controls</h4>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblRotationX">Rotation X:</span> <span id="rotationXValue">30°</span></label>
+                                    <input type="range" id="rotationX" min="0" max="360" value="30" step="5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblRotationY">Rotation Y:</span> <span id="rotationYValue">45°</span></label>
+                                    <input type="range" id="rotationY" min="0" max="360" value="45" step="5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblRotationZ">Rotation Z:</span> <span id="rotationZValue">0°</span></label>
+                                    <input type="range" id="rotationZ" min="0" max="360" value="0" step="5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblZoom">Zoom:</span> <span id="zoomValue">100%</span></label>
+                                    <input type="range" id="zoomLevel" min="50" max="200" value="100" step="5">
+                                </div>
+                                <button id="reset3DBtn" class="control-btn small-btn" data-i18n="btnResetView">Reset View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Graphing Tab -->
+            
+            <!-- 2D Transformations Tab -->
+            <div id="transformationsTab" class="tab-content">
+                <div class="graphing-container">
+                    <div class="graphing-sidebar">
+                        <div class="graphing-section">
+                            <h3 data-i18n="sec2DShape">2D Shape</h3>
+                            <div class="shape-grid">
+                                <button class="shape-2d-btn active" data-shape="triangle" data-i18n="btnTriangle">Triangle</button>
+                                <button class="shape-2d-btn" data-shape="square" data-i18n="btnSquare">Square</button>
+                                <button class="shape-2d-btn" data-shape="rectangle" data-i18n="btnRectangle">Rectangle</button>
+                                <button class="shape-2d-btn" data-shape="circle" data-i18n="btnCircle">Circle</button>
+                                <button class="shape-2d-btn" data-shape="polygon" data-i18n="btnPolygon">Polygon</button>
+                                <button class="shape-2d-btn" data-shape="custom" data-i18n="btnCustomPoints">Custom Points</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section">
+                            <h3 data-i18n="secTransformations">Transformations</h3>
+                            <div class="transformation-controls">
+                                <div class="control-item">
+                                    <label><span data-i18n="lblTransX">Translation X:</span> <span id="transXValue">0</span></label>
+                                    <input type="range" id="translationX" min="-10" max="10" value="0" step="0.5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblTransY">Translation Y:</span> <span id="transYValue">0</span></label>
+                                    <input type="range" id="translationY" min="-10" max="10" value="0" step="0.5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblRotation">Rotation:</span> <span id="rotation2DValue">0°</span></label>
+                                    <input type="range" id="rotation2D" min="0" max="360" value="0" step="5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblScale">Scale:</span> <span id="scaleValue">1</span></label>
+                                    <input type="range" id="scale2D" min="0.5" max="3" value="1" step="0.1">
+                                </div>
+                            </div>
+                            
+                            <h4 style="margin-top: 15px; font-size: 13px;" data-i18n="lblRotCenter">Rotation Center</h4>
+                            <div class="transformation-controls">
+                                <div class="control-item">
+                                    <label><span data-i18n="lblCenterX">Center X:</span> <span id="rotCenterXValue">0</span></label>
+                                    <input type="range" id="rotationCenterX" min="-10" max="10" value="0" step="0.5">
+                                </div>
+                                <div class="control-item">
+                                    <label><span data-i18n="lblCenterY">Center Y:</span> <span id="rotCenterYValue">0</span></label>
+                                    <input type="range" id="rotationCenterY" min="-10" max="10" value="0" step="0.5">
+                                </div>
+                                <button class="transform-btn" id="setCenterToShape" data-i18n="btnCenterAtShape">Center at Shape</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section">
+                            <h3 data-i18n="secReflections">Reflections</h3>
+                            <div class="reflection-controls">
+                                <button class="transform-btn" id="reflectX" data-i18n="btnReflectX">Reflect in X-axis</button>
+                                <button class="transform-btn" id="reflectY" data-i18n="btnReflectY">Reflect in Y-axis</button>
+                                <button class="transform-btn" id="reflectOrigin" data-i18n="btnReflectOrigin">Reflect in Origin</button>
+                                <button class="transform-btn" id="reflectYeqX" data-i18n="btnReflectYeqX">Reflect in y=x</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section">
+                            <h3 data-i18n="secSpecialTrans">Special Transformations</h3>
+                            <div class="reflection-controls">
+                                <button class="transform-btn" id="shearX" data-i18n="btnShearX">Shear X</button>
+                                <button class="transform-btn" id="shearY" data-i18n="btnShearY">Shear Y</button>
+                                <button class="transform-btn" id="rotate90" data-i18n="btnRotate90">Rotate 90°</button>
+                                <button class="transform-btn" id="rotate180" data-i18n="btnRotate180">Rotate 180°</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section">
+                            <h3 data-i18n="secActions">Actions</h3>
+                            <div class="reflection-controls">
+                                <button class="control-btn" id="showOriginal" data-i18n="btnToggleOriginal">Toggle Original</button>
+                                <button class="control-btn" id="showGrid" data-i18n="btnToggleGrid">Toggle Grid</button>
+                                <button class="control-btn" id="resetTransform" data-i18n="btnResetAll">Reset All</button>
+                            </div>
+                        </div>
+
+                        <div class="graphing-section" id="customPointsSection" style="display: none;">
+                            <h3 data-i18n="secCustomPoints">Custom Points</h3>
+                            <div class="input-group">
+                                <label data-i18n="lblPoints">Points (x,y pairs):</label>
+                                <textarea id="customPoints" rows="4" placeholder="0,0&#10;2,0&#10;2,2&#10;0,2"></textarea>
+                            </div>
+                            <button class="control-btn" id="applyPoints" data-i18n="btnApplyPoints">Apply Points</button>
+                        </div>
+                    </div>
+
+                    <div class="graphing-canvas-area">
+                        <canvas id="transformCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- End 2D Transformations Tab -->
+
+            <!-- Freeform Drawing Tab -->
+            <div id="drawingTab" class="tab-content">
+                <div class="drawing-container">
+                    <div class="drawing-sidebar">
+                        <h3 data-i18n="secDrawingTools">Drawing Tools</h3>
+                        
+                        <div class="tool-section">
+                            <h4 data-i18n="secTool">Tool</h4>
+                            <button class="tool-btn active" data-tool="pen" data-i18n="btnPen">✏️ Pen</button>
+                            <button class="tool-btn" data-tool="eraser" data-i18n="btnEraser">🧹 Eraser</button>
+                            <button class="tool-btn" data-tool="line" data-i18n="btnLine">📏 Line</button>
+                            <button class="tool-btn" data-tool="rectangle" data-i18n="btnRect">▭ Rectangle</button>
+                            <button class="tool-btn" data-tool="circle" data-i18n="btnCircleTool">⭕ Circle</button>
+                            <button class="tool-btn" data-tool="text" data-i18n="btnText">📝 Text</button>
+                        </div>
+
+                        <div class="tool-section">
+                            <h4 data-i18n="secColor">Color</h4>
+                            <input type="color" id="drawingColor" value="#000000">
+                        </div>
+
+                        <div class="tool-section">
+                            <h4><span data-i18n="secBrushSize">Brush Size:</span> <span id="brushSizeValue">3</span>px</h4>
+                            <input type="range" id="brushSize" min="1" max="20" value="3" step="1">
+                        </div>
+
+                        <div class="tool-section">
+                            <h4 data-i18n="secBackground">Background</h4>
+                            <button class="action-btn" id="setBgWhite" data-i18n="btnWhite">⬜ White</button>
+                            <button class="action-btn" id="setBgBlack" data-i18n="btnBlack">⬛ Black</button>
+                            <button class="action-btn" id="setBgTransparent" data-i18n="btnTransparent">🔲 Transparent</button>
+                        </div>
+
+                        <div class="tool-section">
+                            <h4 data-i18n="secGrid">Grid</h4>
+                            <button class="action-btn" id="toggleGrid" data-i18n="btnToggleGridDraw">📐 Toggle Grid</button>
+                            <label style="font-size: 12px; color: #666; margin-top: 8px; display: block;">
+                                <span data-i18n="lblGridSize">Grid Size:</span> <span id="gridSizeValue">20</span>px
+                            </label>
+                            <input type="range" id="gridSize" min="10" max="50" value="20" step="5">
+                        </div>
+
+                        <div class="tool-section">
+                            <h4 data-i18n="secActions">Actions</h4>
+                            <button class="action-btn" id="clearDrawing" data-i18n="btnClearCanvas">🗑️ Clear Canvas</button>
+                            <button class="action-btn" id="undoDrawing" data-i18n="btnUndoDraw">↩️ Undo</button>
+                            <button class="action-btn" id="saveDrawing" data-i18n="btnSavePng">💾 Save PNG</button>
+                        </div>
+                    </div>
+                    
+                    <div class="drawing-canvas-wrapper">
+                        <canvas id="drawingCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- End Freeform Drawing Tab -->
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="translations.js"></script>
+    <script src="mathExpression.js"></script>
+    <script src="navigation.js"></script>
+    <script src="keyboard.js"></script>
+    <script src="graphing.js"></script>
+    <script src="transformations.js"></script>
+    <script src="drawing.js"></script>
+    <script src="trainer.js"></script>
+    <script src="algebra.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
