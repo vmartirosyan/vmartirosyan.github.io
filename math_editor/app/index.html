@@ -192,6 +192,7 @@
                     <div class="trainer-subsection-selector">
                         <button class="subsection-btn active" data-subsection="arithmetic" data-i18n="trainerArithmetic">🧮 Arithmetic</button>
                         <button class="subsection-btn" data-subsection="algebra" data-i18n="trainerAlgebra">📐 Algebra</button>
+                        <button class="subsection-btn" data-subsection="equations" data-i18n="trainerEquations">⚖️ Equations</button>
                     </div>
 
                     <!-- Arithmetic Section -->
@@ -314,6 +315,73 @@
                                 <div class="reference-item">
                                     <span class="reference-label" data-i18n="algebraPowerRules">Power rules:</span>
                                     <span class="reference-example">x^a * x^b = x^(a+b)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Equations Section -->
+                    <div id="equationsSection" class="trainer-subsection">
+                        <div class="trainer-header">
+                            <div class="trainer-controls">
+                                <div class="control-group">
+                                    <label data-i18n="secDifficulty">Difficulty:</label>
+                                    <div class="difficulty-buttons equations-difficulty-buttons">
+                                        <button class="difficulty-btn active" data-difficulty="easy" data-i18n="btnEasy">Easy</button>
+                                        <button class="difficulty-btn" data-difficulty="medium" data-i18n="btnMedium">Medium</button>
+                                        <button class="difficulty-btn" data-difficulty="hard" data-i18n="btnHard">Hard</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <div id="equationsScore" class="score-display">
+                                        <span class="score-correct" data-i18n="trainerCorrect">Correct: 0</span>
+                                        <span class="score-total" data-i18n="trainerTotal">Total: 0</span>
+                                    </div>
+                                    <button class="control-btn small-btn" id="equationsResetScoreBtn" data-i18n="btnResetScore">Reset</button>
+                                </div>
+                                
+                                <button class="control-btn primary-btn" id="newEquationProblemBtn" data-i18n="btnNewProblem">🎲 New Problem</button>
+                            </div>
+                        </div>
+
+                        <div class="trainer-main">
+                            <div id="equationsProblemDisplay" class="problem-display">
+                                <div class="problem-placeholder">
+                                    <span class="placeholder-icon">⚖️</span>
+                                    <span class="placeholder-text" data-i18n="equationsClickNew">Click "New Problem" to start solving equations!</span>
+                                </div>
+                            </div>
+
+                            <div id="equationsWorkspace" class="trainer-workspace" style="display: none;">
+                                <div class="equations-instruction" data-i18n="equationsInstruction">
+                                    Solve the equation step by step. Show your work:
+                                </div>
+                                
+                                <div id="equationsStepsContainer" class="steps-container">
+                                    <!-- Step input rows will be generated here -->
+                                </div>
+
+                                <div id="equationsFeedback" class="trainer-feedback" style="display: none;">
+                                    <!-- Feedback will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="equations-reference">
+                            <h4 data-i18n="equationsReference">Reference</h4>
+                            <div class="reference-content">
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="equationsSqrt">Square root:</span>
+                                    <span class="reference-example">√x or sqrt(x)</span>
+                                </div>
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="equationsLog">Logarithm:</span>
+                                    <span class="reference-example">log(x), ln(x)</span>
+                                </div>
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="equationsFraction">Fractions:</span>
+                                    <span class="reference-example">a/b, (x+1)/(x-1)</span>
                                 </div>
                             </div>
                         </div>
@@ -594,6 +662,7 @@
     <script src="drawing.js"></script>
     <script src="trainer.js"></script>
     <script src="algebra.js"></script>
+    <script src="equations.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

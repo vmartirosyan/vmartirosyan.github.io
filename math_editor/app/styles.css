@@ -2006,7 +2006,8 @@ main {
         flex-wrap: wrap;
     }
     
-    .step-input-row .algebra-step-input {
+    .step-input-row .algebra-step-input,
+    .step-input-row .equations-step-input {
         order: 1;
         width: 100%;
         flex: none;
@@ -2016,6 +2017,227 @@ main {
     .step-input-row .add-step-btn {
         order: 2;
         margin-top: 8px;
+    }
+}
+
+/* ====== EQUATIONS TRAINER STYLES ====== */
+
+.equations-step-input {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 20px;
+    font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.equations-step-input:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.equations-step-input.input-error {
+    border-color: #f44336;
+    background: #fff5f5;
+}
+
+.equations-step-input:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.equations-steps-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.equations-instruction {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.equations-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.equations-actions .secondary-btn {
+    background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+    color: white;
+    border: none;
+}
+
+.equations-actions .secondary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+/* Equations Solutions Section */
+.equations-solutions-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-radius: 12px;
+    border: 2px dashed #ff9800;
+}
+
+.solutions-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.solutions-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: #e65100;
+}
+
+.solutions-hint {
+    font-size: 13px;
+    color: #f57c00;
+    font-style: italic;
+}
+
+.solutions-inputs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.solution-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.solution-label {
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    font-family: 'Times New Roman', serif;
+}
+
+.equations-solution-input {
+    width: 100px;
+    padding: 8px 12px;
+    font-size: 18px;
+    font-family: 'Times New Roman', serif;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.equations-solution-input:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 8px rgba(255, 152, 0, 0.3);
+}
+
+.equations-solution-input.input-error {
+    border-color: #f44336;
+    background-color: #ffebee;
+}
+
+.equations-solution-input.input-correct {
+    border-color: #4caf50;
+    background-color: #e8f5e9;
+}
+
+.equations-solution-input:disabled {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    cursor: not-allowed;
+}
+
+.solutions-status {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.solutions-status.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.solutions-status.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.solutions-status.warning {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.solutions-status .success-text {
+    color: #2e7d32;
+}
+
+.solutions-status .error-text {
+    color: #c62828;
+}
+
+.solutions-status .warning-text {
+    color: #e65100;
+}
+
+.equations-reference {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 12px;
+    border: 1px solid #90caf9;
+}
+
+.equations-reference h4 {
+    margin: 0 0 15px 0;
+    color: #1565c0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Mobile responsive for equations */
+@media (max-width: 768px) {
+    .equations-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .equations-step-input {
+        font-size: 18px;
+    }
+    
+    .solutions-inputs-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .solution-input-row {
+        justify-content: center;
+    }
+    
+    .equations-solution-input {
+        flex: 1;
+        max-width: 150px;
     }
 }
 
