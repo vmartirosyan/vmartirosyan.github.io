@@ -206,9 +206,7 @@ class EquationsTrainer {
     generateAdvancedEquation() {
         const templates = [
             () => this.fractionalEquation(),
-            () => this.sqrtEquation(),
-            () => this.exponentialEquation(),
-            () => this.logarithmicEquation()
+            () => this.sqrtEquation()
         ];
         return this.randomChoice(templates)();
     }
@@ -365,9 +363,18 @@ class EquationsTrainer {
             };
         }
 
+        // Check for incomplete expressions (trailing operators)
+        const normalized = this.normalizeExpression(userStep);
+        if (/[+\-*/=]$/.test(normalized.trim())) {
+            return {
+                valid: false,
+                message: 'Expression is incomplete (ends with an operator)'
+            };
+        }
+
         // Normalize both steps
         const normPrev = this.normalizeExpression(previousStep);
-        const normUser = this.normalizeExpression(userStep);
+        const normUser = normalized;
 
         // Check if it's the same (just reformatted)
         if (normPrev === normUser) {
@@ -608,6 +615,20 @@ class EquationsTrainer {
     randomChoice(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
     }
+
+    // Validate equation input: allow numbers, variable x, operators, parentheses, sqrt, log, ln
+    validateEquationInput(input) {
+        // Allow: x, digits, +, -, *, /, ^, =, parentheses, sqrt, log, ln, spaces
+        const validPattern = /^[x0-9+\-*/^=()×÷√\/\s]*(sqrt|log|ln)?[x0-9+\-*/^=()×÷√\/\s]*$/;
+        return validPattern.test(input);
+    }
+
+    // Check if input uses only variable x (no y, z, a, b, etc.)
+    validateEquationVariable(input) {
+        // Only 'x' is allowed as a variable in equations
+        const variablePattern = /[a-wyz]/gi; // Any letter except 'x'
+        return !variablePattern.test(input);
+    }
 }
 
 
@@ -678,9 +699,14 @@ class EquationsController {
         
         const typeLabel = typeLabels[problem.type] || problem.type;
         
+        // Render equation with fractions if it contains them
+        const displayEq = window.FractionRenderer 
+            ? window.FractionRenderer.renderExpression(problem.equation)
+            : problem.equation;
+        
         this.problemDisplay.innerHTML = `
             <div class="problem-type-label">${typeLabel}</div>
-            <div class="problem-expression-large">${problem.equation}</div>
+            <div class="problem-expression-large">${displayEq}</div>
         `;
         
         if (this.workspaceArea) {
@@ -753,6 +779,8 @@ class EquationsController {
         
         this.setupStepInputListeners();
         
+        // Solution input validation disabled - all characters allowed
+        
         setTimeout(() => {
             document.getElementById('equationsCurrentStepInput')?.focus();
         }, 100);
@@ -771,6 +799,8 @@ class EquationsController {
         const hintBtn = document.getElementById('equationsShowHintBtn');
         
         if (input) {
+            // Input validation disabled - all characters allowed
+            
             input.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();

@@ -705,8 +705,8 @@ class MathExpressionApp {
     
     // Initialize drawing controls
     initDrawingControls() {
-        // Tool buttons
-        const toolBtns = document.querySelectorAll('.tool-btn');
+        // Tool buttons (support both old .tool-btn and new .toolbar-btn)
+        const toolBtns = document.querySelectorAll('.tool-btn[data-tool], .toolbar-btn[data-tool]');
         toolBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 toolBtns.forEach(b => b.classList.remove('active'));
@@ -725,13 +725,25 @@ class MathExpressionApp {
             });
         }
         
+        // Color presets
+        const colorPresets = document.querySelectorAll('.color-preset');
+        colorPresets.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const color = btn.dataset.color;
+                this.drawingController.setColor(color);
+                if (drawingColor) {
+                    drawingColor.value = color;
+                }
+            });
+        });
+        
         // Brush size
         const brushSize = document.getElementById('brushSize');
         const brushSizeValue = document.getElementById('brushSizeValue');
         if (brushSize) {
             brushSize.addEventListener('input', (e) => {
                 const value = parseInt(e.target.value);
-                brushSizeValue.textContent = value;
+                if (brushSizeValue) brushSizeValue.textContent = value;
                 this.drawingController.setBrushSize(value);
             });
         }
@@ -795,10 +807,62 @@ class MathExpressionApp {
         if (gridSize) {
             gridSize.addEventListener('input', (e) => {
                 const value = parseInt(e.target.value);
-                gridSizeValue.textContent = value;
+                if (gridSizeValue) gridSizeValue.textContent = value;
                 this.drawingController.setGridSize(value);
             });
         }
+        
+        // Axis toggle
+        const toggleAxis = document.getElementById('toggleAxis');
+        if (toggleAxis) {
+            toggleAxis.addEventListener('click', () => {
+                this.drawingController.toggleAxis();
+            });
+        }
+        
+        // Unit circle toggle
+        const toggleUnitCircle = document.getElementById('toggleUnitCircle');
+        if (toggleUnitCircle) {
+            toggleUnitCircle.addEventListener('click', () => {
+                this.drawingController.toggleUnitCircle();
+            });
+        }
+        
+        // Fullscreen toggle
+        const toggleFullscreen = document.getElementById('toggleFullscreen');
+        if (toggleFullscreen) {
+            toggleFullscreen.addEventListener('click', () => {
+                this.toggleDrawingFullscreen();
+            });
+        }
+        
+        // Keyboard shortcut for fullscreen
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11' && document.getElementById('drawingTab').classList.contains('active')) {
+                e.preventDefault();
+                this.toggleDrawingFullscreen();
+            } else if (e.key === 'Escape' && document.body.classList.contains('drawing-fullscreen')) {
+                this.toggleDrawingFullscreen(false);
+            }
+        });
+    }
+    
+    toggleDrawingFullscreen(forceState = null) {
+        const isFullscreen = document.body.classList.contains('drawing-fullscreen');
+        const newState = forceState !== null ? forceState : !isFullscreen;
+        
+        if (newState) {
+            document.body.classList.add('drawing-fullscreen');
+        } else {
+            document.body.classList.remove('drawing-fullscreen');
+        }
+        
+        // Resize canvas after transition
+        setTimeout(() => {
+            if (this.drawingController) {
+                this.drawingController.resizeCanvas();
+            }
+        }, 100);
     }
 
     // Initialize evaluation

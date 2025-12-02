@@ -41,6 +41,7 @@ class AlgebraTrainer {
             () => this.combineSimpleLikeTerms(),
             () => this.combineCoefficients(),
             () => this.simplePowerAddition(),
+            () => this.simplifyAlgebraicFraction(),
         ];
         return this.randomChoice(templates)();
     }
@@ -51,6 +52,7 @@ class AlgebraTrainer {
             () => this.multiplyPowers(),
             () => this.combineWithSubtraction(),
             () => this.simplifyWithCoefficients(),
+            () => this.algebraicFractionAddition(),
         ];
         return this.randomChoice(templates)();
     }
@@ -61,6 +63,7 @@ class AlgebraTrainer {
             () => this.multiplyPolynomialTerms(),
             () => this.divideWithPowers(),
             () => this.complexCombination(),
+            () => this.complexAlgebraicFraction(),
         ];
         return this.randomChoice(templates)();
     }
@@ -280,22 +283,33 @@ class AlgebraTrainer {
         const templates = [
             () => this.simpleDistribution(),
             () => this.distributionWithConstant(),
-        ];
-        return this.randomChoice(templates)();
-    }
-
-    createMediumExpand() {
-        const templates = [
             () => this.distributionTwoTerms(),
             () => this.binomialSquareSimple(),
         ];
         return this.randomChoice(templates)();
     }
 
-    createHardExpand() {
+    createMediumExpand() {
         const templates = [
             () => this.binomialProduct(),
             () => this.trinomialDistribution(),
+            () => this.binomialWithNegative(),
+        ];
+        return this.randomChoice(templates)();
+    }
+
+    createHardExpand() {
+        const templates = [
+            () => this.cubicBinomial(),
+            () => this.fourthOrderBinomial(),
+            () => this.binomialSquareWithCoefficient(),
+            () => this.binomialSquareWithFraction(),
+            () => this.binomialSquareWithNegative(),
+            () => this.trinomialProduct(),
+            () => this.binomialTrinomialProduct(),
+            () => this.cubicBinomialWithCoefficient(),
+            () => this.multiTermDistribution(),
+            () => this.complexBinomialProduct(),
         ];
         return this.randomChoice(templates)();
     }
@@ -402,6 +416,211 @@ class AlgebraTrainer {
         };
     }
 
+    // Medium: (x - 2)(x + 3) = x² + x - 6
+    binomialWithNegative() {
+        const a = this.randomInt(2, 5);
+        const b = this.randomInt(2, 5);
+        const variable = 'x';
+        
+        return {
+            expression: `(${variable} - ${a})(${variable} + ${b})`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${variable}² + ${b - a}${variable} - ${a * b}` }
+            ],
+            finalAnswer: `${variable}² + ${b - a}${variable} - ${a * b}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (x + 2)³ = x³ + 6x² + 12x + 8
+    cubicBinomial() {
+        const a = this.randomInt(2, 3);
+        const variable = 'x';
+        // (x + a)³ = x³ + 3ax² + 3a²x + a³
+        
+        return {
+            expression: `(${variable} + ${a})³`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${variable}³ + ${3 * a}${variable}² + ${3 * a * a}${variable} + ${a * a * a}` }
+            ],
+            finalAnswer: `${variable}³ + ${3 * a}${variable}² + ${3 * a * a}${variable} + ${a * a * a}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (x + 1)⁴ = x⁴ + 4x³ + 6x² + 4x + 1
+    fourthOrderBinomial() {
+        const a = this.randomInt(1, 2);
+        const variable = 'x';
+        // (x + a)⁴ = x⁴ + 4ax³ + 6a²x² + 4a³x + a⁴
+        
+        return {
+            expression: `(${variable} + ${a})⁴`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${variable}⁴ + ${4 * a}${variable}³ + ${6 * a * a}${variable}² + ${4 * a * a * a}${variable} + ${a * a * a * a}` }
+            ],
+            finalAnswer: `${variable}⁴ + ${4 * a}${variable}³ + ${6 * a * a}${variable}² + ${4 * a * a * a}${variable} + ${a * a * a * a}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (2x + 3)² = 4x² + 12x + 9
+    binomialSquareWithCoefficient() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(2, 4);
+        const variable = 'x';
+        // (ax + b)² = a²x² + 2abx + b²
+        
+        return {
+            expression: `(${a}${variable} + ${b})²`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${a * a}${variable}² + ${2 * a * b}${variable} + ${b * b}` }
+            ],
+            finalAnswer: `${a * a}${variable}² + ${2 * a * b}${variable} + ${b * b}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (x/2 + 1)² = (x²/4) + x + 1
+    binomialSquareWithFraction() {
+        const den = this.randomChoice([2, 3]);
+        const b = this.randomInt(1, 2);
+        const variable = 'x';
+        
+        return {
+            expression: `(${variable}/${den} + ${b})²`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `(${variable}²/${den * den}) + (${2 * b}${variable})/${den} + ${b * b}` }
+            ],
+            finalAnswer: `(${variable}²/${den * den}) + (${2 * b}${variable})/${den} + ${b * b}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (-x + 2)² = x² - 4x + 4
+    binomialSquareWithNegative() {
+        const a = this.randomInt(2, 4);
+        const variable = 'x';
+        // (-x + a)² = x² - 2ax + a²
+        
+        return {
+            expression: `(-${variable} + ${a})²`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${variable}² - ${2 * a}${variable} + ${a * a}` }
+            ],
+            finalAnswer: `${variable}² - ${2 * a}${variable} + ${a * a}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (x + 1)(x + 2)(x + 3) = x³ + 6x² + 11x + 6
+    trinomialProduct() {
+        const a = this.randomInt(1, 2);
+        const b = this.randomInt(2, 3);
+        const c = this.randomInt(3, 4);
+        const variable = 'x';
+        // (x+a)(x+b)(x+c) = x³ + (a+b+c)x² + (ab+ac+bc)x + abc
+        const coeff2 = a + b + c;
+        const coeff1 = a*b + a*c + b*c;
+        const coeff0 = a * b * c;
+        
+        return {
+            expression: `(${variable} + ${a})(${variable} + ${b})(${variable} + ${c})`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${variable}³ + ${coeff2}${variable}² + ${coeff1}${variable} + ${coeff0}` }
+            ],
+            finalAnswer: `${variable}³ + ${coeff2}${variable}² + ${coeff1}${variable} + ${coeff0}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (x + 2)(x² + 3x + 1) = x³ + 5x² + 7x + 2
+    binomialTrinomialProduct() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(2, 4);
+        const c = this.randomInt(1, 2);
+        const variable = 'x';
+        // (x+a)(x²+bx+c) = x³ + (a+b)x² + (ab+c)x + ac
+        
+        return {
+            expression: `(${variable} + ${a})(${variable}² + ${b}${variable} + ${c})`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${variable}³ + ${a + b}${variable}² + ${a * b + c}${variable} + ${a * c}` }
+            ],
+            finalAnswer: `${variable}³ + ${a + b}${variable}² + ${a * b + c}${variable} + ${a * c}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (2x - 1)³ = 8x³ - 12x² + 6x - 1
+    cubicBinomialWithCoefficient() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(1, 2);
+        const variable = 'x';
+        // (ax - b)³ = a³x³ - 3a²bx² + 3ab²x - b³
+        const coeff3 = a * a * a;
+        const coeff2 = -3 * a * a * b;
+        const coeff1 = 3 * a * b * b;
+        const coeff0 = -b * b * b;
+        
+        return {
+            expression: `(${a}${variable} - ${b})³`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${coeff3}${variable}³ ${coeff2}${variable}² + ${coeff1}${variable} ${coeff0}` }
+            ],
+            finalAnswer: `${coeff3}${variable}³ ${coeff2}${variable}² + ${coeff1}${variable} ${coeff0}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: 3x(2x² - x + 4) = 6x³ - 3x² + 12x
+    multiTermDistribution() {
+        const a = this.randomInt(2, 4);
+        const b = this.randomInt(2, 3);
+        const c = this.randomInt(1, 2);
+        const d = this.randomInt(3, 5);
+        const variable = 'x';
+        
+        return {
+            expression: `${a}${variable}(${b}${variable}² - ${c}${variable} + ${d})`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${a * b}${variable}³ - ${a * c}${variable}² + ${a * d}${variable}` }
+            ],
+            finalAnswer: `${a * b}${variable}³ - ${a * c}${variable}² + ${a * d}${variable}`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: (2x + 3)(3x - 2) = 6x² + 5x - 6
+    complexBinomialProduct() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(2, 4);
+        const c = this.randomInt(2, 4);
+        const d = this.randomInt(1, 3);
+        const variable = 'x';
+        // (ax + b)(cx - d) = acx² + (bc - ad)x - bd
+        
+        return {
+            expression: `(${a}${variable} + ${b})(${c}${variable} - ${d})`,
+            type: 'expand',
+            expectedSteps: [
+                { expression: `${a * c}${variable}² + ${b * c - a * d}${variable} - ${b * d}` }
+            ],
+            finalAnswer: `${a * c}${variable}² + ${b * c - a * d}${variable} - ${b * d}`,
+            numSteps: 1
+        };
+    }
+
     // === FACTORING PROBLEMS ===
     createFactorProblem() {
         switch (this.difficulty) {
@@ -416,22 +635,29 @@ class AlgebraTrainer {
         const templates = [
             () => this.factorCommonFactor(),
             () => this.factorSimpleGCF(),
-        ];
-        return this.randomChoice(templates)();
-    }
-
-    createMediumFactor() {
-        const templates = [
             () => this.factorWithVariable(),
             () => this.factorTwoTermsGCF(),
         ];
         return this.randomChoice(templates)();
     }
 
-    createHardFactor() {
+    createMediumFactor() {
         const templates = [
             () => this.factorTrinomial(),
             () => this.factorDifferenceOfSquares(),
+        ];
+        return this.randomChoice(templates)();
+    }
+
+    createHardFactor() {
+        const templates = [
+            () => this.factorTrinomialWithCoefficient(),
+            () => this.factorCubicDifference(),
+            () => this.factorByGrouping(),
+            () => this.factorPerfectCubeSum(),
+            () => this.factorNegativeLeadingCoeff(),
+            () => this.factorNegativeTrinomial(),
+            () => this.factorNegativeCubic(),
         ];
         return this.randomChoice(templates)();
     }
@@ -539,6 +765,222 @@ class AlgebraTrainer {
             alternateAnswers: [`(${variable} - ${a})(${variable} + ${a})`],
             numSteps: 1
         };
+    }
+
+    // Hard: Factor trinomial with leading coefficient - e.g., 2x² + 7x + 3 = (2x + 1)(x + 3)
+    factorTrinomialWithCoefficient() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(1, 3);
+        const c = this.randomInt(1, 3);
+        const variable = 'x';
+        // (ax + b)(x + c) = ax² + (ac + b)x + bc
+        const leadCoeff = a;
+        const midCoeff = a * c + b;
+        const constTerm = b * c;
+        
+        return {
+            expression: `${leadCoeff}${variable}² + ${midCoeff}${variable} + ${constTerm}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `(${a}${variable} + ${b})(${variable} + ${c})` }
+            ],
+            finalAnswer: `(${a}${variable} + ${b})(${variable} + ${c})`,
+            alternateAnswers: [`(${variable} + ${c})(${a}${variable} + ${b})`],
+            numSteps: 1
+        };
+    }
+
+    // Hard: Factor cubic difference - e.g., x³ - 8 = (x - 2)(x² + 2x + 4)
+    factorCubicDifference() {
+        const a = this.randomInt(2, 3);
+        const variable = 'x';
+        // x³ - a³ = (x - a)(x² + ax + a²)
+        
+        return {
+            expression: `${variable}³ - ${a * a * a}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `(${variable} - ${a})(${variable}² + ${a}${variable} + ${a * a})` }
+            ],
+            finalAnswer: `(${variable} - ${a})(${variable}² + ${a}${variable} + ${a * a})`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: Factor by grouping - e.g., x³ + 2x² + 3x + 6 = (x² + 3)(x + 2)
+    factorByGrouping() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(2, 4);
+        const variable = 'x';
+        // (x² + b)(x + a) = x³ + ax² + bx + ab
+        
+        return {
+            expression: `${variable}³ + ${a}${variable}² + ${b}${variable} + ${a * b}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `(${variable}² + ${b})(${variable} + ${a})` }
+            ],
+            finalAnswer: `(${variable}² + ${b})(${variable} + ${a})`,
+            alternateAnswers: [`(${variable} + ${a})(${variable}² + ${b})`],
+            numSteps: 1
+        };
+    }
+
+    // Hard: Factor perfect cube sum - e.g., x³ + 27 = (x + 3)(x² - 3x + 9)
+    factorPerfectCubeSum() {
+        const a = this.randomInt(2, 3);
+        const variable = 'x';
+        // x³ + a³ = (x + a)(x² - ax + a²)
+        
+        return {
+            expression: `${variable}³ + ${a * a * a}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `(${variable} + ${a})(${variable}² - ${a}${variable} + ${a * a})` }
+            ],
+            finalAnswer: `(${variable} + ${a})(${variable}² - ${a}${variable} + ${a * a})`,
+            numSteps: 1
+        };
+    }
+
+    // Hard: -2x² + 8 = -2(x² - 4) = -2(x + 2)(x - 2)
+    factorNegativeLeadingCoeff() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(2, 3);
+        const variable = 'x';
+        // -a(x² - b²) = -a(x + b)(x - b)
+        
+        return {
+            expression: `-${a}${variable}² + ${a * b * b}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `-${a}(${variable} + ${b})(${variable} - ${b})` }
+            ],
+            finalAnswer: `-${a}(${variable} + ${b})(${variable} - ${b})`,
+            alternateAnswers: [
+                `-${a}(${variable}² - ${b * b})`,
+                `-${a}(${variable} - ${b})(${variable} + ${b})`
+            ],
+            numSteps: 1
+        };
+    }
+
+    // Hard: -x² - 5x - 6 = -(x² + 5x + 6) = -(x + 2)(x + 3)
+    factorNegativeTrinomial() {
+        const a = this.randomInt(2, 3);
+        const b = this.randomInt(2, 4);
+        const variable = 'x';
+        // -(x² + (a+b)x + ab) = -(x + a)(x + b)
+        
+        return {
+            expression: `-${variable}² - ${a + b}${variable} - ${a * b}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `-(${variable} + ${a})(${variable} + ${b})` }
+            ],
+            finalAnswer: `-(${variable} + ${a})(${variable} + ${b})`,
+            alternateAnswers: [
+                `-(${variable}² + ${a + b}${variable} + ${a * b})`,
+                `-(${variable} + ${b})(${variable} + ${a})`
+            ],
+            numSteps: 1
+        };
+    }
+
+    // Hard: -x³ + 8 = -(x³ - 8) = -(x - 2)(x² + 2x + 4)
+    factorNegativeCubic() {
+        const a = this.randomInt(2, 3);
+        const variable = 'x';
+        // -(x³ - a³) = -(x - a)(x² + ax + a²)
+        
+        return {
+            expression: `-${variable}³ + ${a * a * a}`,
+            type: 'factor',
+            expectedSteps: [
+                { expression: `-(${variable} - ${a})(${variable}² + ${a}${variable} + ${a * a})` }
+            ],
+            finalAnswer: `-(${variable} - ${a})(${variable}² + ${a}${variable} + ${a * a})`,
+            alternateAnswers: [`-(${variable}³ - ${a * a * a})`],
+            numSteps: 1
+        };
+    }
+
+    // === ALGEBRAIC FRACTION PROBLEMS ===
+    
+    // Easy: Simplify fraction with variable - e.g., 2x/4 = x/2
+    simplifyAlgebraicFraction() {
+        const numeratorCoeff = this.randomInt(2, 6) * 2;
+        const denominator = this.randomInt(2, 4) * 2;
+        const gcd = this.gcd(numeratorCoeff, denominator);
+        const simplifiedNum = numeratorCoeff / gcd;
+        const simplifiedDen = denominator / gcd;
+        const variable = this.randomChoice(['x', 'y', 'a']);
+        
+        return {
+            expression: `(${numeratorCoeff}${variable})/${denominator}`,
+            type: 'simplify',
+            expectedSteps: [
+                { expression: simplifiedDen === 1 ? `${simplifiedNum}${variable}` : `(${simplifiedNum}${variable})/${simplifiedDen}` }
+            ],
+            finalAnswer: simplifiedDen === 1 ? `${simplifiedNum}${variable}` : `(${simplifiedNum}${variable})/${simplifiedDen}`,
+            numSteps: 1
+        };
+    }
+    
+    // Medium: Add algebraic fractions with same denominator - e.g., x/3 + 2x/3 = 3x/3 = x
+    algebraicFractionAddition() {
+        const coeff1 = this.randomInt(1, 4);
+        const coeff2 = this.randomInt(1, 4);
+        const denominator = this.randomInt(2, 5);
+        const variable = this.randomChoice(['x', 'y', 'n']);
+        const totalCoeff = coeff1 + coeff2;
+        const gcd = this.gcd(totalCoeff, denominator);
+        const simplifiedNum = totalCoeff / gcd;
+        const simplifiedDen = denominator / gcd;
+        
+        return {
+            expression: `(${coeff1}${variable})/${denominator} + (${coeff2}${variable})/${denominator}`,
+            type: 'simplify',
+            expectedSteps: [
+                { expression: `(${totalCoeff}${variable})/${denominator}` },
+                simplifiedNum !== totalCoeff || simplifiedDen !== denominator
+                    ? { expression: simplifiedDen === 1 ? `${simplifiedNum}${variable}` : `(${simplifiedNum}${variable})/${simplifiedDen}` }
+                    : null
+            ].filter(s => s !== null),
+            finalAnswer: simplifiedDen === 1 ? `${simplifiedNum}${variable}` : `(${simplifiedNum}${variable})/${simplifiedDen}`,
+            numSteps: simplifiedNum !== totalCoeff || simplifiedDen !== denominator ? 2 : 1
+        };
+    }
+    
+    // Hard: Complex algebraic fraction - e.g., (x+1)/(x+2) + 1/(x+2) = (x+2)/(x+2) = 1
+    complexAlgebraicFraction() {
+        const a = this.randomInt(1, 4);
+        const denominator = this.randomInt(2, 5);
+        const variable = this.randomChoice(['x', 'y']);
+        
+        return {
+            expression: `(${variable}+${a})/(${variable}+${denominator}) + ${denominator-a}/(${variable}+${denominator})`,
+            type: 'simplify',
+            expectedSteps: [
+                { expression: `(${variable}+${a}+${denominator-a})/(${variable}+${denominator})` },
+                { expression: `(${variable}+${denominator})/(${variable}+${denominator})` },
+                { expression: `1` }
+            ],
+            finalAnswer: `1`,
+            numSteps: 3
+        };
+    }
+    
+    // GCD helper for fractions
+    gcd(a, b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b !== 0) {
+            const temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 
     // === UTILITIES ===
@@ -757,6 +1199,15 @@ class AlgebraTrainer {
             };
         }
         
+        // Check for incomplete expressions (trailing operators)
+        const normalized = this.normalizeExpression(userExpr);
+        if (/[+\-*/]$/.test(normalized.trim())) {
+            return {
+                valid: false,
+                message: 'Expression is incomplete (ends with an operator)'
+            };
+        }
+        
         const validation = this.validateTransformation(previousExpr, userExpr);
         
         if (!validation.valid) {
@@ -817,6 +1268,29 @@ class AlgebraTrainer {
 
     randomChoice(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Validate algebraic input: allow numbers, letters, operators, parentheses, powers
+    validateAlgebraInput(input) {
+        // Allow: letters (a-z, A-Z), digits, +, -, *, /, ^, superscripts, parentheses, spaces
+        const validPattern = /^[a-zA-Z0-9+\-*/^×÷()\/⁰¹²³⁴⁵⁶⁷⁸⁹\s]*$/;
+        return validPattern.test(input);
+    }
+
+    // Get all variables used in the current problem
+    getRelevantVariables() {
+        if (!this.currentProblem || !this.currentProblem.expression) {
+            return ['x', 'y', 'z', 'a', 'b', 'c']; // Default allowed variables
+        }
+        const vars = this.getVariables(this.currentProblem.expression);
+        return vars.length > 0 ? vars : ['x', 'y', 'z', 'a', 'b', 'c'];
+    }
+
+    // Validate that user only uses relevant variables
+    validateRelevantVariables(input) {
+        const usedVars = this.getVariables(input);
+        const allowedVars = this.getRelevantVariables();
+        return usedVars.every(v => allowedVars.includes(v));
     }
 }
 
@@ -892,9 +1366,14 @@ class AlgebraController {
         
         const typeLabel = this.getTypeLabel(problem.type);
         
+        // Render expression with fractions if it contains them
+        const displayExpr = window.FractionRenderer 
+            ? window.FractionRenderer.renderExpression(problem.expression)
+            : problem.expression;
+        
         this.problemDisplay.innerHTML = `
             <div class="problem-type-label">${typeLabel}</div>
-            <div class="problem-expression-large">${problem.expression}</div>
+            <div class="problem-expression-large">${displayExpr}</div>
         `;
         
         if (this.workspaceArea) {
@@ -958,6 +1437,8 @@ class AlgebraController {
         console.log('Setting up listeners. checkBtn:', checkBtn);
         
         if (input) {
+            // Input validation disabled - all characters allowed
+            
             input.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();

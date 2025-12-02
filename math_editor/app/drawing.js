@@ -9,6 +9,8 @@ class DrawingController {
         this.brushSize = 3;
         this.backgroundColor = '#ffffff';
         this.showGrid = false;
+        this.showAxis = false;
+        this.showUnitCircle = false;
         this.gridSize = 20;
         
         // For shapes
@@ -24,6 +26,16 @@ class DrawingController {
         // History for undo
         this.history = [];
         this.maxHistory = 20;
+        
+        // Geometry objects (points, segments, vectors)
+        this.points = [];
+        this.segments = [];
+        this.vectors = [];
+        this.selectedPoint = null;
+        this.draggedPoint = null;
+        this.segmentStartPoint = null;
+        this.pointRadius = 6;
+        this.nextPointId = 1;
     }
 
     init(canvasId) {
@@ -57,19 +69,36 @@ class DrawingController {
         this.canvas.addEventListener('touchmove', this.handleTouchMove.bind(this));
         this.canvas.addEventListener('touchend', this.handleMouseUp.bind(this));
         
+        // Set initial cursor
+        this.updateCursor();
+        
         console.log('Drawing controller initialized');
     }
 
     resizeCanvas() {
         const container = this.canvas.parentElement;
-        this.canvas.width = container.clientWidth;
-        this.canvas.height = container.clientHeight;
+        const newWidth = container.clientWidth;
+        const newHeight = container.clientHeight;
         
-        this.tempCanvas.width = this.canvas.width;
-        this.tempCanvas.height = this.canvas.height;
+        // Save current drawing content before resizing
+        let savedDrawing = null;
+        if (this.drawingCanvas.width > 0 && this.drawingCanvas.height > 0) {
+            savedDrawing = this.drawingCtx.getImageData(0, 0, this.drawingCanvas.width, this.drawingCanvas.height);
+        }
         
-        this.drawingCanvas.width = this.canvas.width;
-        this.drawingCanvas.height = this.canvas.height;
+        this.canvas.width = newWidth;
+        this.canvas.height = newHeight;
+        
+        this.tempCanvas.width = newWidth;
+        this.tempCanvas.height = newHeight;
+        
+        this.drawingCanvas.width = newWidth;
+        this.drawingCanvas.height = newHeight;
+        
+        // Restore drawing content after resizing
+        if (savedDrawing) {
+            this.drawingCtx.putImageData(savedDrawing, 0, 0);
+        }
         
         // Initialize drawing layer - NO BACKGROUND, keep it transparent
         if (this.canvas.width > 0 && this.canvas.height > 0) {
@@ -102,8 +131,102 @@ class DrawingController {
             this.drawGrid();
         }
         
+        // Draw axis if enabled
+        if (this.showAxis) {
+            this.drawAxis();
+        }
+        
+        // Draw unit circle if enabled
+        if (this.showUnitCircle) {
+            this.drawUnitCircle();
+        }
+        
         // Draw the drawing layer on top
         this.ctx.drawImage(this.drawingCanvas, 0, 0);
+        
+        // Draw geometry objects (segments, vectors, points)
+        this.drawGeometry();
+    }
+    
+    drawGeometry() {
+        // Draw segments first (below points)
+        this.segments.forEach(seg => {
+            const p1 = this.points.find(p => p.id === seg.startId);
+            const p2 = this.points.find(p => p.id === seg.endId);
+            if (p1 && p2) {
+                this.ctx.strokeStyle = seg.color;
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([]);
+                this.ctx.beginPath();
+                this.ctx.moveTo(p1.x, p1.y);
+                this.ctx.lineTo(p2.x, p2.y);
+                this.ctx.stroke();
+            }
+        });
+        
+        // Draw vectors (with arrowheads)
+        this.vectors.forEach(vec => {
+            const p1 = this.points.find(p => p.id === vec.startId);
+            const p2 = this.points.find(p => p.id === vec.endId);
+            if (p1 && p2) {
+                this.ctx.strokeStyle = vec.color;
+                this.ctx.fillStyle = vec.color;
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([]);
+                
+                // Draw line
+                this.ctx.beginPath();
+                this.ctx.moveTo(p1.x, p1.y);
+                this.ctx.lineTo(p2.x, p2.y);
+                this.ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+                const arrowLength = 12;
+                const arrowAngle = Math.PI / 6;
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(p2.x, p2.y);
+                this.ctx.lineTo(
+                    p2.x - arrowLength * Math.cos(angle - arrowAngle),
+                    p2.y - arrowLength * Math.sin(angle - arrowAngle)
+                );
+                this.ctx.lineTo(
+                    p2.x - arrowLength * Math.cos(angle + arrowAngle),
+                    p2.y - arrowLength * Math.sin(angle + arrowAngle)
+                );
+                this.ctx.closePath();
+                this.ctx.fill();
+            }
+        });
+        
+        // Draw points on top
+        this.points.forEach(point => {
+            // Outer circle
+            this.ctx.fillStyle = point.color;
+            this.ctx.strokeStyle = this.backgroundColor === '#000000' ? '#ffffff' : '#000000';
+            this.ctx.lineWidth = 1;
+            this.ctx.beginPath();
+            this.ctx.arc(point.x, point.y, this.pointRadius, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.stroke();
+            
+            // Highlight selected/hovered point
+            if (point === this.selectedPoint || point === this.draggedPoint) {
+                this.ctx.strokeStyle = '#ff6600';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.arc(point.x, point.y, this.pointRadius + 3, 0, Math.PI * 2);
+                this.ctx.stroke();
+            }
+            
+            // Label
+            if (point.label) {
+                this.ctx.font = '12px Arial';
+                this.ctx.fillStyle = this.backgroundColor === '#000000' ? '#ffffff' : '#000000';
+                this.ctx.fillText(point.label, point.x + this.pointRadius + 4, point.y - 4);
+            }
+        });
     }
     
     redrawBackground() {
@@ -115,40 +238,247 @@ class DrawingController {
     drawGrid() {
         // Make grid more visible with darker color
         if (this.backgroundColor === '#000000') {
-            this.ctx.strokeStyle = '#666666';
+            this.ctx.strokeStyle = '#444444';
         } else if (this.backgroundColor === 'transparent') {
-            this.ctx.strokeStyle = '#cccccc';
+            this.ctx.strokeStyle = '#dddddd';
         } else {
-            // White background - use a much darker gray
-            this.ctx.strokeStyle = '#cccccc';
+            // White background - use a light gray
+            this.ctx.strokeStyle = '#e0e0e0';
         }
         
         this.ctx.lineWidth = 1;
         this.ctx.setLineDash([]);
         
-        //console.log('Drawing grid with color:', this.ctx.strokeStyle, 'size:', this.gridSize);
+        const centerX = Math.floor(this.canvas.width / 2);
+        const centerY = Math.floor(this.canvas.height / 2);
         
-        // Vertical lines
-        for (let x = 0; x <= this.canvas.width; x += this.gridSize) {
+        // Vertical lines - aligned to center
+        for (let x = centerX % this.gridSize; x <= this.canvas.width; x += this.gridSize) {
             this.ctx.beginPath();
             this.ctx.moveTo(x, 0);
             this.ctx.lineTo(x, this.canvas.height);
             this.ctx.stroke();
         }
         
-        // Horizontal lines
-        for (let y = 0; y <= this.canvas.height; y += this.gridSize) {
+        // Horizontal lines - aligned to center
+        for (let y = centerY % this.gridSize; y <= this.canvas.height; y += this.gridSize) {
             this.ctx.beginPath();
             this.ctx.moveTo(0, y);
             this.ctx.lineTo(this.canvas.width, y);
             this.ctx.stroke();
         }
     }
+    
+    drawAxis() {
+        const centerX = Math.floor(this.canvas.width / 2);
+        const centerY = Math.floor(this.canvas.height / 2);
+        
+        // Axis color
+        if (this.backgroundColor === '#000000') {
+            this.ctx.strokeStyle = '#ffffff';
+            this.ctx.fillStyle = '#ffffff';
+        } else {
+            this.ctx.strokeStyle = '#333333';
+            this.ctx.fillStyle = '#333333';
+        }
+        
+        this.ctx.lineWidth = 2;
+        this.ctx.setLineDash([]);
+        
+        // X axis
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, centerY);
+        this.ctx.lineTo(this.canvas.width, centerY);
+        this.ctx.stroke();
+        
+        // Y axis
+        this.ctx.beginPath();
+        this.ctx.moveTo(centerX, 0);
+        this.ctx.lineTo(centerX, this.canvas.height);
+        this.ctx.stroke();
+        
+        // Arrowheads
+        const arrowSize = 10;
+        
+        // X axis arrow (right)
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.canvas.width - arrowSize, centerY - arrowSize/2);
+        this.ctx.lineTo(this.canvas.width, centerY);
+        this.ctx.lineTo(this.canvas.width - arrowSize, centerY + arrowSize/2);
+        this.ctx.stroke();
+        
+        // Y axis arrow (up)
+        this.ctx.beginPath();
+        this.ctx.moveTo(centerX - arrowSize/2, arrowSize);
+        this.ctx.lineTo(centerX, 0);
+        this.ctx.lineTo(centerX + arrowSize/2, arrowSize);
+        this.ctx.stroke();
+        
+        // Labels
+        this.ctx.font = '14px Arial';
+        this.ctx.fillText('x', this.canvas.width - 20, centerY - 10);
+        this.ctx.fillText('y', centerX + 10, 20);
+        this.ctx.fillText('0', centerX + 5, centerY + 15);
+        
+        // Tick marks (aligned with grid) - 1 unit = 4 grid steps
+        if (this.showGrid) {
+            this.ctx.lineWidth = 1;
+            const tickSize = 5;
+            const unitSize = this.gridSize * 4; // 1 unit = 4 grid squares
+            this.ctx.font = '11px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'top';
+            
+            // X axis ticks and numbers
+            let num = 0;
+            for (let x = centerX; x <= this.canvas.width; x += unitSize) {
+                if (num !== 0) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, centerY - tickSize);
+                    this.ctx.lineTo(x, centerY + tickSize);
+                    this.ctx.stroke();
+                    this.ctx.fillText(num.toString(), x, centerY + tickSize + 2);
+                }
+                num++;
+            }
+            num = 0;
+            for (let x = centerX; x >= 0; x -= unitSize) {
+                if (num !== 0) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, centerY - tickSize);
+                    this.ctx.lineTo(x, centerY + tickSize);
+                    this.ctx.stroke();
+                    this.ctx.fillText((-num).toString(), x, centerY + tickSize + 2);
+                }
+                num++;
+            }
+            
+            // Y axis ticks and numbers
+            this.ctx.textAlign = 'right';
+            this.ctx.textBaseline = 'middle';
+            num = 0;
+            for (let y = centerY; y >= 0; y -= unitSize) {
+                if (num !== 0) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(centerX - tickSize, y);
+                    this.ctx.lineTo(centerX + tickSize, y);
+                    this.ctx.stroke();
+                    this.ctx.fillText(num.toString(), centerX - tickSize - 3, y);
+                }
+                num++;
+            }
+            num = 0;
+            for (let y = centerY; y <= this.canvas.height; y += unitSize) {
+                if (num !== 0) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(centerX - tickSize, y);
+                    this.ctx.lineTo(centerX + tickSize, y);
+                    this.ctx.stroke();
+                    this.ctx.fillText((-num).toString(), centerX - tickSize - 3, y);
+                }
+                num++;
+            }
+        }
+    }
+    
+    drawUnitCircle() {
+        const centerX = Math.floor(this.canvas.width / 2);
+        const centerY = Math.floor(this.canvas.height / 2);
+        
+        // Use gridSize as the unit (radius = gridSize * some multiplier for visibility)
+        const radius = this.gridSize * 4; // 4 grid units = 1 unit on circle
+        
+        // Circle color
+        if (this.backgroundColor === '#000000') {
+            this.ctx.strokeStyle = '#00aaff';
+        } else {
+            this.ctx.strokeStyle = '#0066cc';
+        }
+        
+        this.ctx.lineWidth = 2;
+        this.ctx.setLineDash([]);
+        
+        // Draw the unit circle
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        
+        // Draw key angle lines (dashed)
+        this.ctx.setLineDash([5, 5]);
+        this.ctx.lineWidth = 1;
+        
+        if (this.backgroundColor === '#000000') {
+            this.ctx.strokeStyle = '#888888';
+        } else {
+            this.ctx.strokeStyle = '#999999';
+        }
+        
+        // 30, 45, 60 degree lines in all quadrants
+        const angles = [30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330];
+        angles.forEach(deg => {
+            const rad = deg * Math.PI / 180;
+            const x = centerX + radius * Math.cos(rad);
+            const y = centerY - radius * Math.sin(rad); // Flip Y for screen coords
+            
+            this.ctx.beginPath();
+            this.ctx.moveTo(centerX, centerY);
+            this.ctx.lineTo(x, y);
+            this.ctx.stroke();
+        });
+        
+        // Draw key points on circle
+        this.ctx.setLineDash([]);
+        const keyAngles = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330];
+        
+        if (this.backgroundColor === '#000000') {
+            this.ctx.fillStyle = '#ff6600';
+        } else {
+            this.ctx.fillStyle = '#cc3300';
+        }
+        
+        keyAngles.forEach(deg => {
+            const rad = deg * Math.PI / 180;
+            const x = centerX + radius * Math.cos(rad);
+            const y = centerY - radius * Math.sin(rad);
+            
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            this.ctx.fill();
+        });
+        
+        // Label some key angles
+        this.ctx.font = '11px Arial';
+        if (this.backgroundColor === '#000000') {
+            this.ctx.fillStyle = '#ffffff';
+        } else {
+            this.ctx.fillStyle = '#333333';
+        }
+        
+        // 0°, 90°, 180°, 270° labels
+        this.ctx.fillText('0°', centerX + radius + 8, centerY + 4);
+        this.ctx.fillText('90°', centerX - 12, centerY - radius - 8);
+        this.ctx.fillText('180°', centerX - radius - 30, centerY + 4);
+        this.ctx.fillText('270°', centerX - 15, centerY + radius + 15);
+    }
+    
+    toggleAxis() {
+        this.showAxis = !this.showAxis;
+        this.render();
+        return this.showAxis;
+    }
+    
+    toggleUnitCircle() {
+        this.showUnitCircle = !this.showUnitCircle;
+        this.render();
+        return this.showUnitCircle;
+    }
 
     handleMouseDown(e) {
         const rect = this.canvas.getBoundingClientRect();
-        this.startX = e.clientX - rect.left;
-        this.startY = e.clientY - rect.top;
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        this.startX = (e.clientX - rect.left) * scaleX;
+        this.startY = (e.clientY - rect.top) * scaleY;
         this.isDrawing = true;
         
         if (this.currentTool === 'pen' || this.currentTool === 'eraser') {
@@ -156,6 +486,61 @@ class DrawingController {
             this.drawingCtx.moveTo(this.startX, this.startY);
         } else if (this.currentTool === 'text') {
             this.addText(this.startX, this.startY);
+        } else if (this.currentTool === 'fill') {
+            this.floodFill(Math.floor(this.startX), Math.floor(this.startY));
+            this.isDrawing = false;
+        } else if (this.currentTool === 'point') {
+            this.addPoint(this.startX, this.startY);
+            this.isDrawing = false;
+        } else if (this.currentTool === 'segment' || this.currentTool === 'vector') {
+            // Check if clicking on existing point
+            const clickedPoint = this.findPointAt(this.startX, this.startY);
+            if (clickedPoint) {
+                if (!this.segmentStartPoint) {
+                    // First point selected
+                    this.segmentStartPoint = clickedPoint;
+                    this.selectedPoint = clickedPoint;
+                    this.render();
+                } else {
+                    // Second point - create segment/vector
+                    if (clickedPoint !== this.segmentStartPoint) {
+                        if (this.currentTool === 'segment') {
+                            this.addSegment(this.segmentStartPoint.id, clickedPoint.id);
+                        } else {
+                            this.addVector(this.segmentStartPoint.id, clickedPoint.id);
+                        }
+                    }
+                    this.segmentStartPoint = null;
+                    this.selectedPoint = null;
+                    this.render();
+                }
+            } else {
+                // Create new point
+                const newPoint = this.addPoint(this.startX, this.startY);
+                if (!this.segmentStartPoint) {
+                    this.segmentStartPoint = newPoint;
+                    this.selectedPoint = newPoint;
+                    this.render();
+                } else {
+                    if (this.currentTool === 'segment') {
+                        this.addSegment(this.segmentStartPoint.id, newPoint.id);
+                    } else {
+                        this.addVector(this.segmentStartPoint.id, newPoint.id);
+                    }
+                    this.segmentStartPoint = null;
+                    this.selectedPoint = null;
+                    this.render();
+                }
+            }
+            this.isDrawing = false;
+        } else if (this.currentTool === 'move') {
+            const clickedPoint = this.findPointAt(this.startX, this.startY);
+            if (clickedPoint) {
+                this.draggedPoint = clickedPoint;
+                this.render();
+            } else {
+                this.isDrawing = false;
+            }
         } else {
             // For shapes, save current state
             this.saveTemp();
@@ -163,11 +548,19 @@ class DrawingController {
     }
 
     handleMouseMove(e) {
-        if (!this.isDrawing) return;
-        
         const rect = this.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
+        
+        // Update cursor for move tool
+        if (this.currentTool === 'move') {
+            const hoverPoint = this.findPointAt(x, y);
+            this.canvas.style.cursor = hoverPoint ? 'grab' : 'default';
+        }
+        
+        if (!this.isDrawing) return;
         
         if (this.currentTool === 'pen') {
             this.drawLine(this.startX, this.startY, x, y);
@@ -184,16 +577,27 @@ class DrawingController {
         } else if (this.currentTool === 'circle') {
             this.restoreTemp();
             this.drawCirclePreview(this.startX, this.startY, x, y);
+        } else if (this.currentTool === 'move' && this.draggedPoint) {
+            this.draggedPoint.x = x;
+            this.draggedPoint.y = y;
+            this.render();
         }
     }
 
     handleMouseUp(e) {
+        if (this.currentTool === 'move' && this.draggedPoint) {
+            this.draggedPoint = null;
+            this.render();
+        }
+        
         if (this.isDrawing && this.currentTool !== 'text') {
             // For shapes, finalize the drawing
             if (this.currentTool === 'line' || this.currentTool === 'rectangle' || this.currentTool === 'circle') {
                 const rect = this.canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const scaleX = this.canvas.width / rect.width;
+                const scaleY = this.canvas.height / rect.height;
+                const x = (e.clientX - rect.left) * scaleX;
+                const y = (e.clientY - rect.top) * scaleY;
                 
                 // Draw final shape on drawing layer
                 if (this.currentTool === 'line') {
@@ -321,6 +725,174 @@ class DrawingController {
         );
         this.render();
     }
+    
+    floodFill(startX, startY) {
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+        
+        if (startX < 0 || startX >= width || startY < 0 || startY >= height) return;
+        
+        // Render everything first to get composite image
+        this.render();
+        
+        // Get image data from the DISPLAY canvas (includes geometry)
+        const sourceData = this.ctx.getImageData(0, 0, width, height);
+        const srcPixels = sourceData.data;
+        
+        // Get the target color at start position
+        const startPos = (startY * width + startX) * 4;
+        const targetR = srcPixels[startPos];
+        const targetG = srcPixels[startPos + 1];
+        const targetB = srcPixels[startPos + 2];
+        const targetA = srcPixels[startPos + 3];
+        
+        // Parse fill color
+        const fillColor = this.hexToRgb(this.currentColor);
+        
+        // Don't fill if clicking on the same color
+        if (targetR === fillColor.r && targetG === fillColor.g && 
+            targetB === fillColor.b && targetA === 255) {
+            return;
+        }
+        
+        // Tolerance for color matching
+        const tolerance = 32;
+        
+        const matchesTarget = (pos) => {
+            return Math.abs(srcPixels[pos] - targetR) <= tolerance &&
+                   Math.abs(srcPixels[pos + 1] - targetG) <= tolerance &&
+                   Math.abs(srcPixels[pos + 2] - targetB) <= tolerance &&
+                   Math.abs(srcPixels[pos + 3] - targetA) <= tolerance;
+        };
+        
+        // Get drawing layer data to modify
+        const drawingData = this.drawingCtx.getImageData(0, 0, width, height);
+        const drawPixels = drawingData.data;
+        
+        const setPixel = (pos) => {
+            drawPixels[pos] = fillColor.r;
+            drawPixels[pos + 1] = fillColor.g;
+            drawPixels[pos + 2] = fillColor.b;
+            drawPixels[pos + 3] = 255;
+        };
+        
+        // Use a queue-based flood fill (scanline algorithm for efficiency)
+        const stack = [[startX, startY]];
+        const visited = new Set();
+        
+        while (stack.length > 0) {
+            const [x, y] = stack.pop();
+            const key = `${x},${y}`;
+            
+            if (visited.has(key)) continue;
+            if (x < 0 || x >= width || y < 0 || y >= height) continue;
+            
+            const pos = (y * width + x) * 4;
+            if (!matchesTarget(pos)) continue;
+            
+            visited.add(key);
+            setPixel(pos);
+            
+            // Add neighbors
+            stack.push([x + 1, y]);
+            stack.push([x - 1, y]);
+            stack.push([x, y + 1]);
+            stack.push([x, y - 1]);
+        }
+        
+        // Put the modified image data back to drawing layer
+        this.drawingCtx.putImageData(drawingData, 0, 0);
+        this.saveToHistory();
+        this.render();
+    }
+    
+    hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : { r: 0, g: 0, b: 0 };
+    }
+    
+    // Geometry methods
+    addPoint(x, y, label = null) {
+        const point = {
+            id: this.nextPointId++,
+            x: x,
+            y: y,
+            color: this.currentColor,
+            label: label || String.fromCharCode(64 + this.points.length + 1) // A, B, C...
+        };
+        this.points.push(point);
+        this.render();
+        return point;
+    }
+    
+    findPointAt(x, y) {
+        const hitRadius = this.pointRadius + 5;
+        return this.points.find(p => {
+            const dx = p.x - x;
+            const dy = p.y - y;
+            return Math.sqrt(dx * dx + dy * dy) <= hitRadius;
+        });
+    }
+    
+    addSegment(startId, endId) {
+        // Check if segment already exists
+        const exists = this.segments.some(s => 
+            (s.startId === startId && s.endId === endId) ||
+            (s.startId === endId && s.endId === startId)
+        );
+        if (!exists) {
+            this.segments.push({
+                startId: startId,
+                endId: endId,
+                color: this.currentColor
+            });
+            this.render();
+        }
+    }
+    
+    addVector(startId, endId) {
+        // Check if vector already exists
+        const exists = this.vectors.some(v => 
+            v.startId === startId && v.endId === endId
+        );
+        if (!exists) {
+            this.vectors.push({
+                startId: startId,
+                endId: endId,
+                color: this.currentColor
+            });
+            this.render();
+        }
+    }
+    
+    deletePoint(pointId) {
+        // Remove point
+        this.points = this.points.filter(p => p.id !== pointId);
+        // Remove segments connected to this point
+        this.segments = this.segments.filter(s => 
+            s.startId !== pointId && s.endId !== pointId
+        );
+        // Remove vectors connected to this point
+        this.vectors = this.vectors.filter(v => 
+            v.startId !== pointId && v.endId !== pointId
+        );
+        this.render();
+    }
+    
+    clearGeometry() {
+        this.points = [];
+        this.segments = [];
+        this.vectors = [];
+        this.nextPointId = 1;
+        this.segmentStartPoint = null;
+        this.selectedPoint = null;
+        this.draggedPoint = null;
+        this.render();
+    }
 
     addText(x, y) {
         const text = prompt(window.t('msgEnterText'));
@@ -373,6 +945,7 @@ class DrawingController {
 
     setTool(tool) {
         this.currentTool = tool;
+        this.updateCursor();
     }
 
     setColor(color) {
@@ -381,6 +954,39 @@ class DrawingController {
 
     setBrushSize(size) {
         this.brushSize = size;
+        this.updateCursor();
+    }
+    
+    updateCursor() {
+        if (!this.canvas) return;
+        
+        if (this.currentTool === 'eraser') {
+            // Create a square cursor the size of the eraser
+            const size = this.brushSize * 2;
+            const cursorCanvas = document.createElement('canvas');
+            cursorCanvas.width = size + 2;
+            cursorCanvas.height = size + 2;
+            const ctx = cursorCanvas.getContext('2d');
+            
+            // Draw square outline
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(1, 1, size, size);
+            
+            // Inner white outline for visibility on dark backgrounds
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(2, 2, size - 2, size - 2);
+            
+            const center = Math.floor((size + 2) / 2);
+            this.canvas.style.cursor = `url(${cursorCanvas.toDataURL()}) ${center} ${center}, crosshair`;
+        } else if (this.currentTool === 'move') {
+            this.canvas.style.cursor = 'grab';
+        } else if (this.currentTool === 'point' || this.currentTool === 'segment' || this.currentTool === 'vector') {
+            this.canvas.style.cursor = 'cell';
+        } else {
+            this.canvas.style.cursor = 'crosshair';
+        }
     }
 
     setBackgroundColor(color) {
@@ -394,6 +1000,7 @@ class DrawingController {
         }
         
         this.redrawBackground();
+        this.clearGeometry();
         this.history = [];
         this.saveToHistory();
     }

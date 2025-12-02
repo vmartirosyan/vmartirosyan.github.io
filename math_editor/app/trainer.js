@@ -27,6 +27,7 @@ class MathTrainer {
             () => this.buildSimpleExpression(2, { min: 2, max: 10 }, ['+', '*']),
             () => this.buildSimpleExpression(2, { min: 2, max: 8 }, ['*', '+']),
             () => this.buildSubtractionExpression({ min: 5, max: 20 }, 'easy'),
+            () => this.buildSimpleFraction({ min: 2, max: 6 }),
         ];
         return this.randomChoice(templates)();
     }
@@ -39,6 +40,8 @@ class MathTrainer {
             () => this.buildDivisionExpression({ min: 2, max: 10 }),
             () => this.buildSubtractionExpression({ min: 10, max: 30 }, 'medium'),
             () => this.buildMixedExpression({ min: 5, max: 20 }, 'medium'),
+            () => this.buildFractionAddition({ min: 2, max: 8 }),
+            () => this.buildFractionMultiplication({ min: 2, max: 6 }),
         ];
         return this.randomChoice(templates)();
     }
@@ -52,6 +55,8 @@ class MathTrainer {
             () => this.buildSubtractionExpression({ min: 15, max: 50 }, 'hard'),
             () => this.buildMixedExpression({ min: 10, max: 30 }, 'hard'),
             () => this.buildNegativeNumberExpression({ min: 5, max: 20 }),
+            () => this.buildFractionDivision({ min: 2, max: 8 }),
+            () => this.buildMixedFractionExpression({ min: 2, max: 10 }),
         ];
         return this.randomChoice(templates)();
     }
@@ -322,6 +327,170 @@ class MathTrainer {
         return this.randomChoice(templates)();
     }
 
+    // === FRACTION PROBLEMS ===
+    
+    // Easy: Simple fraction simplification or evaluation
+    buildSimpleFraction(range) {
+        const numerator = this.randomInt(range.min, range.max);
+        const denominator = this.randomInt(range.min, range.max);
+        const gcd = this.gcd(numerator, denominator);
+        const simplified = {
+            num: numerator / gcd,
+            den: denominator / gcd
+        };
+        
+        const result = simplified.den === 1 ? simplified.num : numerator / denominator;
+        
+        // For fractions that simplify to whole numbers, just use one step
+        return {
+            expression: `${numerator}/${denominator}`,
+            displayExpression: `${numerator}/${denominator}`,
+            result: result,
+            expectedSteps: [{ expression: `${numerator}/${denominator}`, result: result }],
+            numSteps: 1
+        };
+    }
+    
+    // Medium: Fraction addition with common denominators
+    buildFractionAddition(range) {
+        const denominator = this.randomInt(range.min, range.max);
+        const num1 = this.randomInt(1, denominator - 1);
+        const num2 = this.randomInt(1, denominator - 1);
+        const resultNum = num1 + num2;
+        const gcd = this.gcd(resultNum, denominator);
+        const simplifiedNum = resultNum / gcd;
+        const simplifiedDen = denominator / gcd;
+        
+        const finalResult = simplifiedDen === 1 ? simplifiedNum : resultNum / denominator;
+        
+        return {
+            expression: `${num1}/${denominator} + ${num2}/${denominator}`,
+            displayExpression: `${num1}/${denominator} + ${num2}/${denominator}`,
+            result: finalResult,
+            expectedSteps: [
+                { expression: `(${num1} + ${num2})/${denominator}`, result: resultNum / denominator },
+                simplifiedDen !== denominator 
+                    ? { expression: `${simplifiedNum}/${simplifiedDen}`, result: finalResult }
+                    : null
+            ].filter(s => s !== null),
+            numSteps: simplifiedDen !== denominator ? 2 : 1
+        };
+    }
+    
+    // Medium: Fraction multiplication
+    buildFractionMultiplication(range) {
+        const num1 = this.randomInt(range.min, range.max);
+        const den1 = this.randomInt(range.min, range.max);
+        const num2 = this.randomInt(range.min, range.max);
+        const den2 = this.randomInt(range.min, range.max);
+        
+        const resultNum = num1 * num2;
+        const resultDen = den1 * den2;
+        const gcd = this.gcd(resultNum, resultDen);
+        const simplifiedNum = resultNum / gcd;
+        const simplifiedDen = resultDen / gcd;
+        
+        const finalResult = simplifiedDen === 1 ? simplifiedNum : resultNum / resultDen;
+        
+        return {
+            expression: `(${num1}/${den1}) * (${num2}/${den2})`,
+            displayExpression: `(${num1}/${den1}) * (${num2}/${den2})`,
+            result: finalResult,
+            expectedSteps: [
+                { expression: `(${num1} * ${num2})/(${den1} * ${den2})`, result: resultNum / resultDen },
+                { expression: `${resultNum}/${resultDen}`, result: resultNum / resultDen },
+                simplifiedNum !== resultNum || simplifiedDen !== resultDen
+                    ? { expression: `${simplifiedNum}/${simplifiedDen}`, result: finalResult }
+                    : null
+            ].filter(s => s !== null),
+            numSteps: simplifiedNum !== resultNum || simplifiedDen !== resultDen ? 3 : 2
+        };
+    }
+    
+    // Hard: Fraction division
+    buildFractionDivision(range) {
+        const num1 = this.randomInt(range.min, range.max);
+        const den1 = this.randomInt(range.min, range.max);
+        const num2 = this.randomInt(range.min, range.max);
+        const den2 = this.randomInt(range.min, range.max);
+        
+        const resultNum = num1 * den2;
+        const resultDen = den1 * num2;
+        const gcd = this.gcd(resultNum, resultDen);
+        const simplifiedNum = resultNum / gcd;
+        const simplifiedDen = resultDen / gcd;
+        
+        const finalResult = simplifiedDen === 1 ? simplifiedNum : resultNum / resultDen;
+        
+        return {
+            expression: `(${num1}/${den1}) / (${num2}/${den2})`,
+            displayExpression: `(${num1}/${den1}) / (${num2}/${den2})`,
+            result: finalResult,
+            expectedSteps: [
+                { expression: `(${num1}/${den1}) * (${den2}/${num2})`, result: resultNum / resultDen },
+                { expression: `(${num1} * ${den2})/(${den1} * ${num2})`, result: resultNum / resultDen },
+                { expression: `${resultNum}/${resultDen}`, result: resultNum / resultDen },
+                simplifiedNum !== resultNum || simplifiedDen !== resultDen
+                    ? { expression: `${simplifiedNum}/${simplifiedDen}`, result: finalResult }
+                    : null
+            ].filter(s => s !== null),
+            numSteps: simplifiedNum !== resultNum || simplifiedDen !== resultDen ? 4 : 3
+        };
+    }
+    
+    // Hard: Mixed expression with fractions
+    buildMixedFractionExpression(range) {
+        const whole = this.randomInt(range.min, range.max);
+        const num = this.randomInt(1, 5);
+        const den = this.randomInt(2, 6);
+        
+        const fractionValue = num / den;
+        const result = whole + fractionValue;
+        
+        // Check if fraction simplifies
+        const gcd = this.gcd(num, den);
+        const simplifiedNum = num / gcd;
+        const simplifiedDen = den / gcd;
+        
+        const steps = [];
+        
+        // Step 1: Simplify the fraction
+        if (simplifiedDen === 1) {
+            // Fraction simplifies to a whole number
+            steps.push({ expression: `${num}/${den}`, result: simplifiedNum });
+            steps.push({ expression: `${whole} + ${simplifiedNum}`, result: result });
+        } else if (simplifiedNum !== num || simplifiedDen !== den) {
+            // Fraction can be simplified but not to a whole number
+            steps.push({ expression: `${num}/${den}`, result: fractionValue });
+            steps.push({ expression: `${simplifiedNum}/${simplifiedDen}`, result: fractionValue });
+            steps.push({ expression: `${whole} + ${simplifiedNum}/${simplifiedDen}`, result: result });
+        } else {
+            // Fraction is already in simplest form, just add
+            steps.push({ expression: `${num}/${den}`, result: fractionValue });
+            steps.push({ expression: `${whole} + ${num}/${den}`, result: result });
+        }
+        
+        return {
+            expression: `${whole} + ${num}/${den}`,
+            displayExpression: `${whole} + ${num}/${den}`,
+            result: result,
+            expectedSteps: steps,
+            numSteps: steps.length
+        };
+    }
+    
+    // GCD helper
+    gcd(a, b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b !== 0) {
+            const temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
     generateExpectedSteps(numbers, operators) {
         const steps = [];
         let values = [...numbers];
@@ -386,6 +555,13 @@ class MathTrainer {
             return true;
         }
         
+        // Check if both evaluate to the same value (for fractions and decimals)
+        const userValue = this.evaluateExpression(userExpr);
+        const expectedValue = this.evaluateExpression(expectedExpr);
+        if (userValue !== null && expectedValue !== null && Math.abs(userValue - expectedValue) < 0.0001) {
+            return true;
+        }
+        
         // Check commutative equivalence for + and *
         // Parse simple binary expressions like "a+b" or "a*b" (including negative numbers)
         const operatorMatch = normalizedExpected.match(/^(\(?-?\d+\)?)([\+\*])(\(?-?\d+\)?)$/);
@@ -406,6 +582,18 @@ class MathTrainer {
         }
         
         return false;
+    }
+    
+    // Evaluate a simple arithmetic expression
+    evaluateExpression(expr) {
+        try {
+            const normalized = this.normalizeExpression(expr);
+            // Use eval for simple arithmetic (safe in this context as input is validated)
+            const result = eval(normalized);
+            return isNaN(result) || !isFinite(result) ? null : result;
+        } catch (e) {
+            return null;
+        }
     }
 
     // Validate a single step (both expression and result)
@@ -429,9 +617,24 @@ class MathTrainer {
         // Check if expressions are equivalent (including commutative property)
         const expressionCorrect = this.expressionsAreEquivalent(userExpression, expected.expression);
         
-        // Compare results
-        const userValue = parseFloat(userResult.trim());
-        const resultCorrect = !isNaN(userValue) && Math.abs(userValue - expected.result) < 0.0001;
+        // Compare results - handle both decimal and fraction format
+        const userValue = this.parseNumericValue(userResult.trim());
+        const expectedValue = expected.result;
+        const resultCorrect = userValue !== null && Math.abs(userValue - expectedValue) < 0.0001;
+        
+        // Debug logging for fractions
+        if (!expressionCorrect || !resultCorrect) {
+            console.log('Validation details:', {
+                userExpr: userExpression,
+                expectedExpr: expected.expression,
+                expressionCorrect,
+                userResult: userResult,
+                userValue,
+                expectedValue,
+                resultCorrect,
+                diff: userValue !== null ? Math.abs(userValue - expectedValue) : 'null'
+            });
+        }
         
         if (expressionCorrect && resultCorrect) {
             return { valid: true };
@@ -442,6 +645,37 @@ class MathTrainer {
         } else {
             return { valid: false, error: 'result-wrong' };
         }
+    }
+
+    // Parse numeric value from string (handles decimals and fractions)
+    parseNumericValue(str) {
+        if (!str) return null;
+        
+        // Try parsing as decimal first
+        const decimal = parseFloat(str);
+        if (!isNaN(decimal)) return decimal;
+        
+        // Try parsing as fraction (e.g., "2/3")
+        const fractionMatch = str.match(/^\s*(-?\d+)\s*\/\s*(\d+)\s*$/);
+        if (fractionMatch) {
+            const numerator = parseInt(fractionMatch[1]);
+            const denominator = parseInt(fractionMatch[2]);
+            if (denominator !== 0) {
+                return numerator / denominator;
+            }
+        }
+        
+        // Try parsing fraction in parentheses (e.g., "(2/3)")
+        const parenFractionMatch = str.match(/^\s*\(?\s*(-?\d+)\s*\/\s*(\d+)\s*\)?\s*$/);
+        if (parenFractionMatch) {
+            const numerator = parseInt(parenFractionMatch[1]);
+            const denominator = parseInt(parenFractionMatch[2]);
+            if (denominator !== 0) {
+                return numerator / denominator;
+            }
+        }
+        
+        return null;
     }
 
     // Validate all steps
@@ -509,6 +743,13 @@ class MathTrainer {
 
     randomChoice(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Validate input: only allow numbers, basic operators, spaces, parentheses
+    validateArithmeticInput(input) {
+        // Allow: digits, +, -, *, ×, /, ÷, spaces, parentheses
+        const validPattern = /^[0-9+\-*/×÷()\/\s]*$/;
+        return validPattern.test(input);
     }
 }
 
@@ -578,8 +819,13 @@ class TrainerController {
     displayProblem(problem) {
         if (!this.problemDisplay) return;
         
+        // Render expression with fractions if it contains them
+        const displayExpr = window.FractionRenderer 
+            ? window.FractionRenderer.renderExpression(problem.displayExpression)
+            : problem.displayExpression;
+        
         this.problemDisplay.innerHTML = `
-            <div class="problem-expression-large">${problem.displayExpression} = ?</div>
+            <div class="problem-expression-large">${displayExpr} = ?</div>
         `;
         
         if (this.workspaceArea) {
@@ -635,6 +881,8 @@ class TrainerController {
                 resultInput: resultInput,
                 validated: false
             });
+            
+            // Input validation disabled - all characters allowed
             
             // Tab from expression to result
             exprInput.addEventListener('keypress', (e) => {
