@@ -1235,13 +1235,14 @@ main {
     cursor: crosshair;
 }
 
-/* New Drawing Layout - Horizontal Toolbar */
+/* New Drawing Layout - Vertical Left Toolbar */
 .drawing-container-new {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: calc(100vh - 120px);
     padding: 10px;
     flex: 1;
+    gap: 10px;
 }
 
 .drawing-toolbar {
@@ -1256,10 +1257,30 @@ main {
     flex-shrink: 0;
 }
 
+.drawing-toolbar.vertical {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 0;
+    padding: 8px;
+    width: auto;
+    overflow-y: auto;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .toolbar-group {
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.toolbar-group.vertical {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: #f0f0f0;
+    border-radius: 6px;
 }
 
 .toolbar-label {
@@ -1269,6 +1290,13 @@ main {
     margin-right: 4px;
 }
 
+.toolbar-group.vertical .toolbar-label {
+    margin-right: 0;
+    margin-bottom: 4px;
+    text-align: center;
+    font-size: 10px;
+}
+
 .toolbar-separator {
     width: 1px;
     height: 28px;
@@ -1276,14 +1304,34 @@ main {
     margin: 0 4px;
 }
 
+.toolbar-separator.horizontal {
+    width: 1px;
+    height: auto;
+    align-self: stretch;
+    margin: 0 2px;
+}
+
+.color-presets-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+}
+
+.toolbar-slider.vertical {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    width: 24px;
+    height: 60px;
+}
+
 .toolbar-btn {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border: 2px solid #ddd;
     background: white;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1301,9 +1349,9 @@ main {
 }
 
 .toolbar-btn.small {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
 }
 
 .toolbar-btn.action {
@@ -1315,8 +1363,8 @@ main {
 }
 
 .toolbar-color {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border: 2px solid #ddd;
     border-radius: 6px;
     cursor: pointer;
@@ -1324,10 +1372,10 @@ main {
 }
 
 .color-preset {
-    width: 24px;
-    height: 24px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -1338,8 +1386,13 @@ main {
 }
 
 .toolbar-slider {
-    width: 80px;
+    width: 24px;
+    height: 60px;
     cursor: pointer;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
 }
 
 .toolbar-value {
@@ -1396,7 +1449,8 @@ body.drawing-fullscreen .drawing-toolbar {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    bottom: 0;
+    width: 70px;
     z-index: 1000;
     border-radius: 0;
     opacity: 0.15;
@@ -1405,6 +1459,10 @@ body.drawing-fullscreen .drawing-toolbar {
 
 body.drawing-fullscreen .drawing-toolbar:hover {
     opacity: 1;
+}
+
+body.drawing-fullscreen .drawing-canvas-area {
+    margin-left: 70px;
 }
 
 body.drawing-fullscreen .drawing-canvas-area {

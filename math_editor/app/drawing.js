@@ -9,6 +9,7 @@ class DrawingController {
         this.brushSize = 3;
         this.backgroundColor = '#ffffff';
         this.showGrid = false;
+        this.showFineGrid = false;
         this.showAxis = false;
         this.showUnitCircle = false;
         this.gridSize = 20;
@@ -34,8 +35,12 @@ class DrawingController {
         this.selectedPoint = null;
         this.draggedPoint = null;
         this.segmentStartPoint = null;
-        this.pointRadius = 6;
         this.nextPointId = 1;
+    }
+    
+    // Point radius scales with grid size
+    get pointRadius() {
+        return Math.max(3, this.gridSize / 6);
     }
 
     init(canvasId) {
@@ -126,6 +131,11 @@ class DrawingController {
         
         //console.log('Rendering, showGrid:', this.showGrid);
         
+        // Draw fine grid first (below main grid)
+        if (this.showGrid && this.showFineGrid) {
+            this.drawFineGrid();
+        }
+        
         // Draw grid if enabled
         if (this.showGrid) {
             this.drawGrid();
@@ -146,6 +156,71 @@ class DrawingController {
         
         // Draw geometry objects (segments, vectors, points)
         this.drawGeometry();
+    }
+    
+    // Draw geometry to a specific context (used for fill boundary detection)
+    drawGeometryTo(ctx) {
+        // Draw segments first (below points)
+        this.segments.forEach(seg => {
+            const p1 = this.points.find(p => p.id === seg.startId);
+            const p2 = this.points.find(p => p.id === seg.endId);
+            if (p1 && p2) {
+                ctx.strokeStyle = seg.color;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+        });
+        
+        // Draw vectors (with arrowheads)
+        this.vectors.forEach(vec => {
+            const p1 = this.points.find(p => p.id === vec.startId);
+            const p2 = this.points.find(p => p.id === vec.endId);
+            if (p1 && p2) {
+                ctx.strokeStyle = vec.color;
+                ctx.fillStyle = vec.color;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([]);
+                
+                // Draw line
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+                const arrowLength = 12;
+                const arrowAngle = Math.PI / 6;
+                
+                ctx.beginPath();
+                ctx.moveTo(p2.x, p2.y);
+                ctx.lineTo(
+                    p2.x - arrowLength * Math.cos(angle - arrowAngle),
+                    p2.y - arrowLength * Math.sin(angle - arrowAngle)
+                );
+                ctx.lineTo(
+                    p2.x - arrowLength * Math.cos(angle + arrowAngle),
+                    p2.y - arrowLength * Math.sin(angle + arrowAngle)
+                );
+                ctx.closePath();
+                ctx.fill();
+            }
+        });
+        
+        // Draw points on top
+        this.points.forEach(point => {
+            ctx.fillStyle = point.color;
+            ctx.strokeStyle = this.backgroundColor === '#000000' ? '#ffffff' : '#000000';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, this.pointRadius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+        });
     }
     
     drawGeometry() {
@@ -224,7 +299,8 @@ class DrawingController {
             if (point.label) {
                 this.ctx.font = '12px Arial';
                 this.ctx.fillStyle = this.backgroundColor === '#000000' ? '#ffffff' : '#000000';
-                this.ctx.fillText(point.label, point.x + this.pointRadius + 4, point.y - 4);
+                const labelOffset = this.pointRadius + 10; // Fixed offset from point edge
+                this.ctx.fillText(point.label, point.x + labelOffset, point.y - 4);
             }
         });
     }
@@ -238,12 +314,12 @@ class DrawingController {
     drawGrid() {
         // Make grid more visible with darker color
         if (this.backgroundColor === '#000000') {
-            this.ctx.strokeStyle = '#444444';
+            this.ctx.strokeStyle = '#666666';
         } else if (this.backgroundColor === 'transparent') {
-            this.ctx.strokeStyle = '#dddddd';
+            this.ctx.strokeStyle = '#aaaaaa';
         } else {
-            // White background - use a light gray
-            this.ctx.strokeStyle = '#e0e0e0';
+            // White background - use a medium gray
+            this.ctx.strokeStyle = '#b0b0b0';
         }
         
         this.ctx.lineWidth = 1;
@@ -262,6 +338,51 @@ class DrawingController {
         
         // Horizontal lines - aligned to center
         for (let y = centerY % this.gridSize; y <= this.canvas.height; y += this.gridSize) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.canvas.width, y);
+            this.ctx.stroke();
+        }
+    }
+    
+    drawFineGrid() {
+        // Fine grid: 5 lines per grid unit (creating subdivisions)
+        const fineGridSize = this.gridSize / 5;
+        
+        // Make fine grid subtle but visible
+        if (this.backgroundColor === '#000000') {
+            this.ctx.strokeStyle = '#3a3a3a';
+        } else if (this.backgroundColor === 'transparent') {
+            this.ctx.strokeStyle = '#d0d0d0';
+        } else {
+            // White background - use light gray
+            this.ctx.strokeStyle = '#d8d8d8';
+        }
+        
+        this.ctx.lineWidth = 0.5;
+        this.ctx.setLineDash([]);
+        
+        const centerX = Math.floor(this.canvas.width / 2);
+        const centerY = Math.floor(this.canvas.height / 2);
+        
+        // Vertical fine lines - aligned to center
+        for (let x = centerX % fineGridSize; x <= this.canvas.width; x += fineGridSize) {
+            // Skip lines that coincide with main grid
+            const distFromCenter = Math.abs(x - centerX);
+            if (Math.abs(distFromCenter % this.gridSize) < 0.5) continue;
+            
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.canvas.height);
+            this.ctx.stroke();
+        }
+        
+        // Horizontal fine lines - aligned to center
+        for (let y = centerY % fineGridSize; y <= this.canvas.height; y += fineGridSize) {
+            // Skip lines that coincide with main grid
+            const distFromCenter = Math.abs(y - centerY);
+            if (Math.abs(distFromCenter % this.gridSize) < 0.5) continue;
+            
             this.ctx.beginPath();
             this.ctx.moveTo(0, y);
             this.ctx.lineTo(this.canvas.width, y);
@@ -320,11 +441,11 @@ class DrawingController {
         this.ctx.fillText('y', centerX + 10, 20);
         this.ctx.fillText('0', centerX + 5, centerY + 15);
         
-        // Tick marks (aligned with grid) - 1 unit = 4 grid steps
+        // Tick marks (aligned with grid) - 1 unit = 2 grid steps
         if (this.showGrid) {
             this.ctx.lineWidth = 1;
             const tickSize = 5;
-            const unitSize = this.gridSize * 4; // 1 unit = 4 grid squares
+            const unitSize = this.gridSize * 2; // 1 unit = 2 grid squares
             this.ctx.font = '11px Arial';
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'top';
@@ -386,7 +507,7 @@ class DrawingController {
         const centerY = Math.floor(this.canvas.height / 2);
         
         // Use gridSize as the unit (radius = gridSize * some multiplier for visibility)
-        const radius = this.gridSize * 4; // 4 grid units = 1 unit on circle
+        const radius = this.gridSize * 2; // 2 grid units = 1 unit on circle
         
         // Circle color
         if (this.backgroundColor === '#000000') {
@@ -481,7 +602,33 @@ class DrawingController {
         this.startY = (e.clientY - rect.top) * scaleY;
         this.isDrawing = true;
         
-        if (this.currentTool === 'pen' || this.currentTool === 'eraser') {
+        if (this.currentTool === 'pen') {
+            this.drawingCtx.beginPath();
+            this.drawingCtx.moveTo(this.startX, this.startY);
+        } else if (this.currentTool === 'eraser') {
+            // Check if clicking on a point - delete it and connected segments/vectors
+            const clickedPoint = this.findPointAt(this.startX, this.startY);
+            if (clickedPoint) {
+                this.deletePoint(clickedPoint.id);
+                this.isDrawing = false;
+                return;
+            }
+            // Check if clicking on a segment or vector
+            const clickedSegment = this.findSegmentAt(this.startX, this.startY);
+            if (clickedSegment) {
+                this.segments = this.segments.filter(s => s !== clickedSegment);
+                this.render();
+                this.isDrawing = false;
+                return;
+            }
+            const clickedVector = this.findVectorAt(this.startX, this.startY);
+            if (clickedVector) {
+                this.vectors = this.vectors.filter(v => v !== clickedVector);
+                this.render();
+                this.isDrawing = false;
+                return;
+            }
+            // Regular eraser for drawing layer
             this.drawingCtx.beginPath();
             this.drawingCtx.moveTo(this.startX, this.startY);
         } else if (this.currentTool === 'text') {
@@ -647,17 +794,77 @@ class DrawingController {
     }
 
     drawStraightLine(x1, y1, x2, y2) {
+        // Extend line to canvas boundaries
+        const extended = this.extendLineToCanvasBounds(x1, y1, x2, y2);
+        
         this.drawingCtx.strokeStyle = this.currentColor;
         this.drawingCtx.lineWidth = this.brushSize;
         this.drawingCtx.lineCap = 'round';
         
         this.drawingCtx.beginPath();
-        this.drawingCtx.moveTo(x1, y1);
-        this.drawingCtx.lineTo(x2, y2);
+        this.drawingCtx.moveTo(extended.x1, extended.y1);
+        this.drawingCtx.lineTo(extended.x2, extended.y2);
         this.drawingCtx.stroke();
     }
     
+    extendLineToCanvasBounds(x1, y1, x2, y2) {
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+        
+        // Handle vertical line
+        if (Math.abs(x2 - x1) < 0.001) {
+            return { x1: x1, y1: 0, x2: x2, y2: height };
+        }
+        
+        // Handle horizontal line
+        if (Math.abs(y2 - y1) < 0.001) {
+            return { x1: 0, y1: y1, x2: width, y2: y2 };
+        }
+        
+        // Calculate slope and intercept
+        const slope = (y2 - y1) / (x2 - x1);
+        const intercept = y1 - slope * x1;
+        
+        // Find intersections with all four edges
+        const points = [];
+        
+        // Left edge (x = 0)
+        const yAtLeft = intercept;
+        if (yAtLeft >= 0 && yAtLeft <= height) {
+            points.push({ x: 0, y: yAtLeft });
+        }
+        
+        // Right edge (x = width)
+        const yAtRight = slope * width + intercept;
+        if (yAtRight >= 0 && yAtRight <= height) {
+            points.push({ x: width, y: yAtRight });
+        }
+        
+        // Top edge (y = 0)
+        const xAtTop = -intercept / slope;
+        if (xAtTop >= 0 && xAtTop <= width) {
+            points.push({ x: xAtTop, y: 0 });
+        }
+        
+        // Bottom edge (y = height)
+        const xAtBottom = (height - intercept) / slope;
+        if (xAtBottom >= 0 && xAtBottom <= width) {
+            points.push({ x: xAtBottom, y: height });
+        }
+        
+        // Should have exactly 2 intersection points
+        if (points.length >= 2) {
+            return { x1: points[0].x, y1: points[0].y, x2: points[1].x, y2: points[1].y };
+        }
+        
+        // Fallback to original points
+        return { x1, y1, x2, y2 };
+    }
+    
     drawStraightLinePreview(x1, y1, x2, y2) {
+        // Extend line to canvas boundaries for preview
+        const extended = this.extendLineToCanvasBounds(x1, y1, x2, y2);
+        
         // Draw preview on display canvas, then render to show it
         this.render();
         
@@ -666,8 +873,8 @@ class DrawingController {
         this.ctx.lineCap = 'round';
         
         this.ctx.beginPath();
-        this.ctx.moveTo(x1, y1);
-        this.ctx.lineTo(x2, y2);
+        this.ctx.moveTo(extended.x1, extended.y1);
+        this.ctx.lineTo(extended.x2, extended.y2);
         this.ctx.stroke();
     }
 
@@ -732,11 +939,26 @@ class DrawingController {
         
         if (startX < 0 || startX >= width || startY < 0 || startY >= height) return;
         
-        // Render everything first to get composite image
-        this.render();
+        // Create a temporary canvas for boundary detection (without grid)
+        const boundaryCanvas = document.createElement('canvas');
+        boundaryCanvas.width = width;
+        boundaryCanvas.height = height;
+        const boundaryCtx = boundaryCanvas.getContext('2d');
         
-        // Get image data from the DISPLAY canvas (includes geometry)
-        const sourceData = this.ctx.getImageData(0, 0, width, height);
+        // Draw background
+        if (this.backgroundColor !== 'transparent') {
+            boundaryCtx.fillStyle = this.backgroundColor;
+            boundaryCtx.fillRect(0, 0, width, height);
+        }
+        
+        // Draw the drawing layer (user's drawings)
+        boundaryCtx.drawImage(this.drawingCanvas, 0, 0);
+        
+        // Draw geometry objects (segments, vectors, points) - these should be boundaries
+        this.drawGeometryTo(boundaryCtx);
+        
+        // Get image data from boundary canvas (excludes grid)
+        const sourceData = boundaryCtx.getImageData(0, 0, width, height);
         const srcPixels = sourceData.data;
         
         // Get the target color at start position
@@ -836,6 +1058,53 @@ class DrawingController {
             const dy = p.y - y;
             return Math.sqrt(dx * dx + dy * dy) <= hitRadius;
         });
+    }
+    
+    findSegmentAt(x, y) {
+        const threshold = 8;
+        return this.segments.find(seg => {
+            const p1 = this.points.find(p => p.id === seg.startId);
+            const p2 = this.points.find(p => p.id === seg.endId);
+            if (!p1 || !p2) return false;
+            return this.pointToLineDistance(x, y, p1.x, p1.y, p2.x, p2.y) < threshold;
+        });
+    }
+    
+    findVectorAt(x, y) {
+        const threshold = 8;
+        return this.vectors.find(vec => {
+            const p1 = this.points.find(p => p.id === vec.startId);
+            const p2 = this.points.find(p => p.id === vec.endId);
+            if (!p1 || !p2) return false;
+            return this.pointToLineDistance(x, y, p1.x, p1.y, p2.x, p2.y) < threshold;
+        });
+    }
+    
+    pointToLineDistance(px, py, x1, y1, x2, y2) {
+        const A = px - x1;
+        const B = py - y1;
+        const C = x2 - x1;
+        const D = y2 - y1;
+        
+        const dot = A * C + B * D;
+        const lenSq = C * C + D * D;
+        let param = lenSq !== 0 ? dot / lenSq : -1;
+        
+        let xx, yy;
+        if (param < 0) {
+            xx = x1;
+            yy = y1;
+        } else if (param > 1) {
+            xx = x2;
+            yy = y2;
+        } else {
+            xx = x1 + param * C;
+            yy = y1 + param * D;
+        }
+        
+        const dx = px - xx;
+        const dy = py - yy;
+        return Math.sqrt(dx * dx + dy * dy);
     }
     
     addSegment(startId, endId) {
@@ -1007,7 +1276,22 @@ class DrawingController {
     
     toggleGrid() {
         this.showGrid = !this.showGrid;
+        // Disable fine grid if main grid is off
+        if (!this.showGrid) {
+            this.showFineGrid = false;
+        }
         console.log('Grid toggled, showGrid:', this.showGrid);
+        this.render();
+    }
+    
+    toggleFineGrid() {
+        // Can only enable fine grid if main grid is on
+        if (!this.showGrid) {
+            console.log('Cannot enable fine grid without main grid');
+            return;
+        }
+        this.showFineGrid = !this.showFineGrid;
+        console.log('Fine grid toggled, showFineGrid:', this.showFineGrid);
         this.render();
     }
     

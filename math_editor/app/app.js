@@ -802,6 +802,14 @@ class MathExpressionApp {
             });
         }
         
+        // Fine grid toggle
+        const toggleFineGrid = document.getElementById('toggleFineGrid');
+        if (toggleFineGrid) {
+            toggleFineGrid.addEventListener('click', () => {
+                this.drawingController.toggleFineGrid();
+            });
+        }
+        
         const gridSize = document.getElementById('gridSize');
         const gridSizeValue = document.getElementById('gridSizeValue');
         if (gridSize) {

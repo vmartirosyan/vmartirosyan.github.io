@@ -594,70 +594,70 @@
             <!-- Freeform Drawing Tab -->
             <div id="drawingTab" class="tab-content">
                 <div class="drawing-container-new">
-                    <!-- Top Toolbar -->
-                    <div class="drawing-toolbar">
-                        <div class="toolbar-group">
-                            <span class="toolbar-label" data-i18n="secTool">Tool</span>
+                    <!-- Left Toolbar -->
+                    <div class="drawing-toolbar vertical">
+                        <!-- Tools Group: Drawing + Geometry -->
+                        <div class="toolbar-group vertical">
+                            <span class="toolbar-label" data-i18n="secTool">Tools</span>
                             <button class="toolbar-btn active" data-tool="pen" title="Pen">✏️</button>
                             <button class="toolbar-btn" data-tool="eraser" title="Eraser">🧹</button>
-                            <button class="toolbar-btn" data-tool="line" title="Line">📏</button>
+                            <button class="toolbar-btn" data-tool="line" title="Line">⟋</button>
                             <button class="toolbar-btn" data-tool="rectangle" title="Rectangle">▭</button>
                             <button class="toolbar-btn" data-tool="circle" title="Circle">⭕</button>
                             <button class="toolbar-btn" data-tool="fill" title="Fill">🪣</button>
                             <button class="toolbar-btn" data-tool="text" title="Text">📝</button>
-                            <button class="toolbar-btn" data-tool="point" title="Point">•</button>
-                            <button class="toolbar-btn" data-tool="segment" title="Segment">―</button>
-                            <button class="toolbar-btn" data-tool="vector" title="Vector">→</button>
+                            <button class="toolbar-btn" data-tool="point" title="Point">⬤</button>
+                            <button class="toolbar-btn" data-tool="segment" title="Segment">●―●</button>
+                            <button class="toolbar-btn" data-tool="vector" title="Vector">●→</button>
                             <button class="toolbar-btn" data-tool="move" title="Move Point">✋</button>
                         </div>
                         
-                        <div class="toolbar-separator"></div>
+                        <div class="toolbar-separator horizontal"></div>
                         
-                        <div class="toolbar-group">
-                            <span class="toolbar-label" data-i18n="secColor">Color</span>
+                        <!-- Style Group: Color + Size + Background -->
+                        <div class="toolbar-group vertical">
+                            <span class="toolbar-label">Style</span>
                             <input type="color" id="drawingColor" value="#000000" class="toolbar-color">
-                            <button class="color-preset" data-color="#000000" style="background:#000000" title="Black"></button>
-                            <button class="color-preset" data-color="#ff0000" style="background:#ff0000" title="Red"></button>
-                            <button class="color-preset" data-color="#0000ff" style="background:#0000ff" title="Blue"></button>
-                            <button class="color-preset" data-color="#00aa00" style="background:#00aa00" title="Green"></button>
-                            <button class="color-preset" data-color="#ff6600" style="background:#ff6600" title="Orange"></button>
-                            <button class="color-preset" data-color="#9900ff" style="background:#9900ff" title="Purple"></button>
-                        </div>
-                        
-                        <div class="toolbar-separator"></div>
-                        
-                        <div class="toolbar-group">
-                            <span class="toolbar-label" data-i18n="secBrushSize">Size:</span>
+                            <div class="color-presets-grid">
+                                <button class="color-preset" data-color="#000000" style="background:#000000" title="Black"></button>
+                                <button class="color-preset" data-color="#ff0000" style="background:#ff0000" title="Red"></button>
+                                <button class="color-preset" data-color="#0000ff" style="background:#0000ff" title="Blue"></button>
+                                <button class="color-preset" data-color="#00aa00" style="background:#00aa00" title="Green"></button>
+                                <button class="color-preset" data-color="#ff6600" style="background:#ff6600" title="Orange"></button>
+                                <button class="color-preset" data-color="#9900ff" style="background:#9900ff" title="Purple"></button>
+                            </div>
+                            <span class="toolbar-sublabel">Size</span>
                             <input type="range" id="brushSize" min="1" max="20" value="3" step="1" class="toolbar-slider">
                             <span id="brushSizeValue" class="toolbar-value">3</span>
+                            <span class="toolbar-sublabel">Bg</span>
+                            <div class="toolbar-row">
+                                <button class="toolbar-btn small" id="setBgWhite" title="White Background">⬜</button>
+                                <button class="toolbar-btn small" id="setBgBlack" title="Black Background">⬛</button>
+                            </div>
                         </div>
                         
-                        <div class="toolbar-separator"></div>
+                        <div class="toolbar-separator horizontal"></div>
                         
-                        <div class="toolbar-group">
-                            <span class="toolbar-label" data-i18n="secBackground">Bg</span>
-                            <button class="toolbar-btn small" id="setBgWhite" title="White Background">⬜</button>
-                            <button class="toolbar-btn small" id="setBgBlack" title="Black Background">⬛</button>
-                        </div>
-                        
-                        <div class="toolbar-separator"></div>
-                        
-                        <div class="toolbar-group">
-                            <span class="toolbar-label">Grid</span>
-                            <button class="toolbar-btn toggle-btn small" id="toggleGrid" title="Toggle Grid">▦</button>
-                            <button class="toolbar-btn toggle-btn small" id="toggleAxis" title="Toggle Axis">✛</button>
-                            <button class="toolbar-btn toggle-btn small" id="toggleUnitCircle" title="Unit Circle">◎</button>
+                        <!-- View & Actions Group -->
+                        <div class="toolbar-group vertical">
+                            <span class="toolbar-label">View</span>
+                            <div class="toolbar-row">
+                                <button class="toolbar-btn toggle-btn small" id="toggleGrid" title="Toggle Grid">▦</button>
+                                <button class="toolbar-btn toggle-btn small" id="toggleFineGrid" title="Fine Grid">▤</button>
+                                <button class="toolbar-btn toggle-btn small" id="toggleAxis" title="Toggle Axis">✛</button>
+                                <button class="toolbar-btn toggle-btn small" id="toggleUnitCircle" title="Unit Circle">◎</button>
+                            </div>
                             <input type="range" id="gridSize" min="10" max="50" value="20" step="5" class="toolbar-slider" title="Grid Size">
                             <span id="gridSizeValue" class="toolbar-value">20</span>
-                        </div>
-                        
-                        <div class="toolbar-separator"></div>
-                        
-                        <div class="toolbar-group">
-                            <button class="toolbar-btn action" id="undoDrawing" title="Undo">↩️</button>
-                            <button class="toolbar-btn action" id="clearDrawing" title="Clear">🗑️</button>
-                            <button class="toolbar-btn action" id="saveDrawing" title="Save">💾</button>
-                            <button class="toolbar-btn action" id="toggleFullscreen" title="Fullscreen (F11)">⛶</button>
+                            <span class="toolbar-sublabel">Actions</span>
+                            <div class="toolbar-row">
+                                <button class="toolbar-btn action" id="undoDrawing" title="Undo">↩️</button>
+                                <button class="toolbar-btn action" id="clearDrawing" title="Clear">🗑️</button>
+                            </div>
+                            <div class="toolbar-row">
+                                <button class="toolbar-btn action" id="saveDrawing" title="Save">💾</button>
+                                <button class="toolbar-btn action" id="toggleFullscreen" title="Fullscreen (F11)">⛶</button>
+                            </div>
                         </div>
                     </div>
                     
