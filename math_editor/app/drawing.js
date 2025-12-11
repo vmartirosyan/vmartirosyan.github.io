@@ -28,14 +28,26 @@ class DrawingController {
         this.history = [];
         this.maxHistory = 20;
         
-        // Geometry objects (points, segments, vectors)
+        // Geometry objects (points, segments, vectors, lines, texts)
         this.points = [];
         this.segments = [];
         this.vectors = [];
+        this.lines = []; // Lines extend to canvas boundaries
+        this.texts = []; // Text objects
         this.selectedPoint = null;
         this.draggedPoint = null;
+        this.draggedText = null;
+        this.hoveredText = null;
         this.segmentStartPoint = null;
+        this.lineStartPoint = null; // For line tool (two-click mode)
         this.nextPointId = 1;
+        this.nextTextId = 1;
+        
+        // Axis origin (default to center, set on first render)
+        this.axisOriginX = null;
+        this.axisOriginY = null;
+        this.hoveredAxis = null; // 'x' or 'y'
+        this.draggedAxis = null; // 'x' or 'y'
     }
     
     // Point radius scales with grid size
@@ -73,6 +85,9 @@ class DrawingController {
         this.canvas.addEventListener('touchstart', this.handleTouchStart.bind(this));
         this.canvas.addEventListener('touchmove', this.handleTouchMove.bind(this));
         this.canvas.addEventListener('touchend', this.handleMouseUp.bind(this));
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', this.handleKeyDown.bind(this));
         
         // Set initial cursor
         this.updateCursor();
@@ -175,6 +190,22 @@ class DrawingController {
             }
         });
         
+        // Draw lines (extended to canvas boundaries)
+        this.lines.forEach(line => {
+            const p1 = this.points.find(p => p.id === line.startId);
+            const p2 = this.points.find(p => p.id === line.endId);
+            if (p1 && p2) {
+                const extended = this.extendLineToCanvasBounds(p1.x, p1.y, p2.x, p2.y);
+                ctx.strokeStyle = line.color;
+                ctx.lineWidth = line.lineWidth || 2;
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.moveTo(extended.x1, extended.y1);
+                ctx.lineTo(extended.x2, extended.y2);
+                ctx.stroke();
+            }
+        });
+        
         // Draw vectors (with arrowheads)
         this.vectors.forEach(vec => {
             const p1 = this.points.find(p => p.id === vec.startId);
@@ -235,6 +266,22 @@ class DrawingController {
                 this.ctx.beginPath();
                 this.ctx.moveTo(p1.x, p1.y);
                 this.ctx.lineTo(p2.x, p2.y);
+                this.ctx.stroke();
+            }
+        });
+        
+        // Draw lines (extended to canvas boundaries)
+        this.lines.forEach(line => {
+            const p1 = this.points.find(p => p.id === line.startId);
+            const p2 = this.points.find(p => p.id === line.endId);
+            if (p1 && p2) {
+                const extended = this.extendLineToCanvasBounds(p1.x, p1.y, p2.x, p2.y);
+                this.ctx.strokeStyle = line.color;
+                this.ctx.lineWidth = line.lineWidth || 2;
+                this.ctx.setLineDash([]);
+                this.ctx.beginPath();
+                this.ctx.moveTo(extended.x1, extended.y1);
+                this.ctx.lineTo(extended.x2, extended.y2);
                 this.ctx.stroke();
             }
         });
@@ -302,6 +349,34 @@ class DrawingController {
                 const labelOffset = this.pointRadius + 10; // Fixed offset from point edge
                 this.ctx.fillText(point.label, point.x + labelOffset, point.y - 4);
             }
+        });
+        
+        // Draw text objects
+        this.texts.forEach(textObj => {
+            // Measure text for bounding box
+            this.ctx.font = `${textObj.fontSize}px Arial`;
+            const metrics = this.ctx.measureText(textObj.text);
+            const textWidth = metrics.width;
+            const textHeight = textObj.fontSize;
+            
+            // Draw bounding box if hovered
+            if (textObj === this.hoveredText || textObj === this.draggedText) {
+                const padding = 5;
+                this.ctx.strokeStyle = '#ff6600';
+                this.ctx.lineWidth = 1;
+                this.ctx.setLineDash([3, 3]);
+                this.ctx.strokeRect(
+                    textObj.x - padding,
+                    textObj.y - textHeight - padding,
+                    textWidth + padding * 2,
+                    textHeight + padding * 2
+                );
+                this.ctx.setLineDash([]);
+            }
+            
+            // Draw the text
+            this.ctx.fillStyle = textObj.color;
+            this.ctx.fillText(textObj.text, textObj.x, textObj.y);
         });
     }
     
@@ -391,8 +466,13 @@ class DrawingController {
     }
     
     drawAxis() {
-        const centerX = Math.floor(this.canvas.width / 2);
-        const centerY = Math.floor(this.canvas.height / 2);
+        // Use custom origin if set, otherwise center
+        const centerX = this.axisOriginX !== null ? this.axisOriginX : Math.floor(this.canvas.width / 2);
+        const centerY = this.axisOriginY !== null ? this.axisOriginY : Math.floor(this.canvas.height / 2);
+        
+        // Initialize axis origin if not set
+        if (this.axisOriginX === null) this.axisOriginX = centerX;
+        if (this.axisOriginY === null) this.axisOriginY = centerY;
         
         // Axis color
         if (this.backgroundColor === '#000000') {
@@ -406,17 +486,45 @@ class DrawingController {
         this.ctx.lineWidth = 2;
         this.ctx.setLineDash([]);
         
-        // X axis
+        // X axis (highlight if hovered or dragged)
+        if (this.hoveredAxis === 'x' || this.draggedAxis === 'x') {
+            this.ctx.strokeStyle = '#ff6600';
+            this.ctx.lineWidth = 3;
+        }
         this.ctx.beginPath();
         this.ctx.moveTo(0, centerY);
         this.ctx.lineTo(this.canvas.width, centerY);
         this.ctx.stroke();
         
-        // Y axis
+        // Reset style after X axis
+        if (this.hoveredAxis === 'x' || this.draggedAxis === 'x') {
+            if (this.backgroundColor === '#000000') {
+                this.ctx.strokeStyle = '#ffffff';
+            } else {
+                this.ctx.strokeStyle = '#333333';
+            }
+            this.ctx.lineWidth = 2;
+        }
+        
+        // Y axis (highlight if hovered or dragged)
+        if (this.hoveredAxis === 'y' || this.draggedAxis === 'y') {
+            this.ctx.strokeStyle = '#ff6600';
+            this.ctx.lineWidth = 3;
+        }
         this.ctx.beginPath();
         this.ctx.moveTo(centerX, 0);
         this.ctx.lineTo(centerX, this.canvas.height);
         this.ctx.stroke();
+        
+        // Reset style after Y axis
+        if (this.hoveredAxis === 'y' || this.draggedAxis === 'y') {
+            if (this.backgroundColor === '#000000') {
+                this.ctx.strokeStyle = '#ffffff';
+            } else {
+                this.ctx.strokeStyle = '#333333';
+            }
+            this.ctx.lineWidth = 2;
+        }
         
         // Arrowheads
         const arrowSize = 10;
@@ -503,8 +611,9 @@ class DrawingController {
     }
     
     drawUnitCircle() {
-        const centerX = Math.floor(this.canvas.width / 2);
-        const centerY = Math.floor(this.canvas.height / 2);
+        // Use custom origin if set, otherwise center
+        const centerX = this.axisOriginX !== null ? this.axisOriginX : Math.floor(this.canvas.width / 2);
+        const centerY = this.axisOriginY !== null ? this.axisOriginY : Math.floor(this.canvas.height / 2);
         
         // Use gridSize as the unit (radius = gridSize * some multiplier for visibility)
         const radius = this.gridSize * 2; // 2 grid units = 1 unit on circle
@@ -610,6 +719,7 @@ class DrawingController {
             const clickedPoint = this.findPointAt(this.startX, this.startY);
             if (clickedPoint) {
                 this.deletePoint(clickedPoint.id);
+                this.saveToHistory();
                 this.isDrawing = false;
                 return;
             }
@@ -617,6 +727,7 @@ class DrawingController {
             const clickedSegment = this.findSegmentAt(this.startX, this.startY);
             if (clickedSegment) {
                 this.segments = this.segments.filter(s => s !== clickedSegment);
+                this.saveToHistory();
                 this.render();
                 this.isDrawing = false;
                 return;
@@ -624,6 +735,25 @@ class DrawingController {
             const clickedVector = this.findVectorAt(this.startX, this.startY);
             if (clickedVector) {
                 this.vectors = this.vectors.filter(v => v !== clickedVector);
+                this.saveToHistory();
+                this.render();
+                this.isDrawing = false;
+                return;
+            }
+            // Check if clicking on a line
+            const clickedLine = this.findLineAt(this.startX, this.startY);
+            if (clickedLine) {
+                this.lines = this.lines.filter(l => l !== clickedLine);
+                this.saveToHistory();
+                this.render();
+                this.isDrawing = false;
+                return;
+            }
+            // Check if clicking on a text
+            const clickedText = this.findTextAt(this.startX, this.startY);
+            if (clickedText) {
+                this.texts = this.texts.filter(t => t !== clickedText);
+                this.saveToHistory();
                 this.render();
                 this.isDrawing = false;
                 return;
@@ -656,9 +786,10 @@ class DrawingController {
                         } else {
                             this.addVector(this.segmentStartPoint.id, clickedPoint.id);
                         }
+                        // Keep the clicked point as the new start for continuous drawing
+                        this.segmentStartPoint = clickedPoint;
+                        this.selectedPoint = clickedPoint;
                     }
-                    this.segmentStartPoint = null;
-                    this.selectedPoint = null;
                     this.render();
                 }
             } else {
@@ -674,7 +805,41 @@ class DrawingController {
                     } else {
                         this.addVector(this.segmentStartPoint.id, newPoint.id);
                     }
-                    this.segmentStartPoint = null;
+                    // Keep the new point as the start for continuous drawing
+                    this.segmentStartPoint = newPoint;
+                    this.selectedPoint = newPoint;
+                    this.render();
+                }
+            }
+            this.isDrawing = false;
+        } else if (this.currentTool === 'line') {
+            // Line tool - two clicks to create a line through two points
+            const clickedPoint = this.findPointAt(this.startX, this.startY);
+            if (clickedPoint) {
+                if (!this.lineStartPoint) {
+                    // First point selected
+                    this.lineStartPoint = clickedPoint;
+                    this.selectedPoint = clickedPoint;
+                    this.render();
+                } else {
+                    // Second point - create line
+                    if (clickedPoint !== this.lineStartPoint) {
+                        this.addLine(this.lineStartPoint.id, clickedPoint.id);
+                    }
+                    this.lineStartPoint = null;
+                    this.selectedPoint = null;
+                    this.render();
+                }
+            } else {
+                // Create new point
+                const newPoint = this.addPoint(this.startX, this.startY);
+                if (!this.lineStartPoint) {
+                    this.lineStartPoint = newPoint;
+                    this.selectedPoint = newPoint;
+                    this.render();
+                } else {
+                    this.addLine(this.lineStartPoint.id, newPoint.id);
+                    this.lineStartPoint = null;
                     this.selectedPoint = null;
                     this.render();
                 }
@@ -686,7 +851,24 @@ class DrawingController {
                 this.draggedPoint = clickedPoint;
                 this.render();
             } else {
-                this.isDrawing = false;
+                // Check for text
+                const clickedText = this.findTextAt(this.startX, this.startY);
+                if (clickedText) {
+                    this.draggedText = clickedText;
+                    this.canvas.style.cursor = 'grabbing';
+                    this.render();
+                    // isDrawing stays true for dragging
+                } else {
+                    // Check for axis
+                    const clickedAxis = this.findAxisAt(this.startX, this.startY);
+                    if (clickedAxis) {
+                        this.draggedAxis = clickedAxis;
+                        this.render();
+                        // isDrawing stays true for dragging
+                    } else {
+                        this.isDrawing = false;
+                    }
+                }
             }
         } else {
             // For shapes, save current state
@@ -701,10 +883,61 @@ class DrawingController {
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
         
-        // Update cursor for move tool
+        // Handle dragging objects (points, text, axes) - must check before isDrawing check
+        if (this.currentTool === 'move') {
+            if (this.draggedPoint) {
+                this.draggedPoint.x = x;
+                this.draggedPoint.y = y;
+                this.render();
+                return;
+            }
+            if (this.draggedText) {
+                this.draggedText.x = x;
+                this.draggedText.y = y;
+                this.render();
+                return;
+            }
+            if (this.draggedAxis) {
+                // Move axis: X axis moves vertically, Y axis moves horizontally
+                if (this.draggedAxis === 'x') {
+                    this.axisOriginY = y;
+                } else if (this.draggedAxis === 'y') {
+                    this.axisOriginX = x;
+                }
+                this.render();
+                return;
+            }
+        }
+        
+        // Update cursor for move tool (hover detection)
         if (this.currentTool === 'move') {
             const hoverPoint = this.findPointAt(x, y);
-            this.canvas.style.cursor = hoverPoint ? 'grab' : 'default';
+            const hoverText = this.findTextAt(x, y);
+            const hoverAxis = this.findAxisAt(x, y);
+            
+            if (hoverPoint || hoverText) {
+                this.canvas.style.cursor = 'grab';
+            } else if (hoverAxis === 'x') {
+                this.canvas.style.cursor = 'ns-resize'; // X axis moves vertically
+            } else if (hoverAxis === 'y') {
+                this.canvas.style.cursor = 'ew-resize'; // Y axis moves horizontally
+            } else {
+                this.canvas.style.cursor = 'default';
+            }
+            
+            // Update hovered text for visual feedback
+            const newHoveredText = hoverText;
+            if (newHoveredText !== this.hoveredText) {
+                this.hoveredText = newHoveredText;
+                this.render();
+            }
+            
+            // Update hovered axis for visual feedback
+            const newHoveredAxis = (!hoverPoint && !hoverText) ? hoverAxis : null;
+            if (newHoveredAxis !== this.hoveredAxis) {
+                this.hoveredAxis = newHoveredAxis;
+                this.render();
+            }
         }
         
         if (!this.isDrawing) return;
@@ -715,31 +948,37 @@ class DrawingController {
             this.startY = y;
         } else if (this.currentTool === 'eraser') {
             this.erase(x, y);
-        } else if (this.currentTool === 'line') {
-            this.restoreTemp();
-            this.drawStraightLinePreview(this.startX, this.startY, x, y);
         } else if (this.currentTool === 'rectangle') {
             this.restoreTemp();
             this.drawRectanglePreview(this.startX, this.startY, x, y);
         } else if (this.currentTool === 'circle') {
             this.restoreTemp();
             this.drawCirclePreview(this.startX, this.startY, x, y);
-        } else if (this.currentTool === 'move' && this.draggedPoint) {
-            this.draggedPoint.x = x;
-            this.draggedPoint.y = y;
-            this.render();
         }
     }
 
     handleMouseUp(e) {
         if (this.currentTool === 'move' && this.draggedPoint) {
             this.draggedPoint = null;
+            this.saveToHistory();
+            this.render();
+        }
+        
+        if (this.currentTool === 'move' && this.draggedText) {
+            this.draggedText = null;
+            this.saveToHistory();
+            this.render();
+        }
+        
+        if (this.currentTool === 'move' && this.draggedAxis) {
+            this.draggedAxis = null;
+            this.saveToHistory();
             this.render();
         }
         
         if (this.isDrawing && this.currentTool !== 'text') {
             // For shapes, finalize the drawing
-            if (this.currentTool === 'line' || this.currentTool === 'rectangle' || this.currentTool === 'circle') {
+            if (this.currentTool === 'rectangle' || this.currentTool === 'circle') {
                 const rect = this.canvas.getBoundingClientRect();
                 const scaleX = this.canvas.width / rect.width;
                 const scaleY = this.canvas.height / rect.height;
@@ -747,9 +986,7 @@ class DrawingController {
                 const y = (e.clientY - rect.top) * scaleY;
                 
                 // Draw final shape on drawing layer
-                if (this.currentTool === 'line') {
-                    this.drawStraightLine(this.startX, this.startY, x, y);
-                } else if (this.currentTool === 'rectangle') {
+                if (this.currentTool === 'rectangle') {
                     this.drawRectangle(this.startX, this.startY, x, y);
                 } else if (this.currentTool === 'circle') {
                     this.drawCircle(this.startX, this.startY, x, y);
@@ -1047,6 +1284,7 @@ class DrawingController {
             label: label || String.fromCharCode(64 + this.points.length + 1) // A, B, C...
         };
         this.points.push(point);
+        this.saveToHistory();
         this.render();
         return point;
     }
@@ -1078,6 +1316,26 @@ class DrawingController {
             if (!p1 || !p2) return false;
             return this.pointToLineDistance(x, y, p1.x, p1.y, p2.x, p2.y) < threshold;
         });
+    }
+    
+    findLineAt(x, y) {
+        const threshold = 8;
+        return this.lines.find(line => {
+            const p1 = this.points.find(p => p.id === line.startId);
+            const p2 = this.points.find(p => p.id === line.endId);
+            if (!p1 || !p2) return false;
+            // For extended lines, use infinite line distance
+            return this.pointToInfiniteLineDistance(x, y, p1.x, p1.y, p2.x, p2.y) < threshold;
+        });
+    }
+    
+    pointToInfiniteLineDistance(px, py, x1, y1, x2, y2) {
+        // Distance from point to infinite line (not segment)
+        const A = y2 - y1;
+        const B = x1 - x2;
+        const C = (x2 - x1) * y1 - (y2 - y1) * x1;
+        const dist = Math.abs(A * px + B * py + C) / Math.sqrt(A * A + B * B);
+        return dist;
     }
     
     pointToLineDistance(px, py, x1, y1, x2, y2) {
@@ -1119,6 +1377,7 @@ class DrawingController {
                 endId: endId,
                 color: this.currentColor
             });
+            this.saveToHistory();
             this.render();
         }
     }
@@ -1134,6 +1393,26 @@ class DrawingController {
                 endId: endId,
                 color: this.currentColor
             });
+            this.saveToHistory();
+            this.render();
+        }
+    }
+    
+    addLine(startId, endId) {
+        // Lines extend to canvas boundaries (infinite lines through two points)
+        // Check if line already exists
+        const exists = this.lines.some(l => 
+            (l.startId === startId && l.endId === endId) ||
+            (l.startId === endId && l.endId === startId)
+        );
+        if (!exists) {
+            this.lines.push({
+                startId: startId,
+                endId: endId,
+                color: this.currentColor,
+                lineWidth: this.brushSize
+            });
+            this.saveToHistory();
             this.render();
         }
     }
@@ -1149,6 +1428,10 @@ class DrawingController {
         this.vectors = this.vectors.filter(v => 
             v.startId !== pointId && v.endId !== pointId
         );
+        // Remove lines connected to this point
+        this.lines = this.lines.filter(l => 
+            l.startId !== pointId && l.endId !== pointId
+        );
         this.render();
     }
     
@@ -1156,23 +1439,79 @@ class DrawingController {
         this.points = [];
         this.segments = [];
         this.vectors = [];
+        this.lines = [];
+        this.texts = [];
         this.nextPointId = 1;
+        this.nextTextId = 1;
         this.segmentStartPoint = null;
+        this.lineStartPoint = null;
         this.selectedPoint = null;
         this.draggedPoint = null;
+        this.draggedText = null;
+        this.hoveredText = null;
         this.render();
     }
 
     addText(x, y) {
         const text = prompt(window.t('msgEnterText'));
         if (text) {
-            this.drawingCtx.font = `${this.brushSize * 8}px Arial`;
-            this.drawingCtx.fillStyle = this.currentColor;
-            this.drawingCtx.fillText(text, x, y);
+            const fontSize = this.brushSize * 8;
+            const textObj = {
+                id: this.nextTextId++,
+                x: x,
+                y: y,
+                text: text,
+                color: this.currentColor,
+                fontSize: fontSize
+            };
+            this.texts.push(textObj);
             this.saveToHistory();
             this.render();
         }
         this.isDrawing = false;
+    }
+
+    findTextAt(x, y) {
+        // Find text at position by checking bounding boxes
+        for (let i = this.texts.length - 1; i >= 0; i--) {
+            const textObj = this.texts[i];
+            // Measure text width
+            this.ctx.font = `${textObj.fontSize}px Arial`;
+            const metrics = this.ctx.measureText(textObj.text);
+            const textWidth = metrics.width;
+            const textHeight = textObj.fontSize;
+            
+            // Check if point is within bounding box (with some padding)
+            const padding = 5;
+            if (x >= textObj.x - padding && 
+                x <= textObj.x + textWidth + padding &&
+                y >= textObj.y - textHeight - padding && 
+                y <= textObj.y + padding) {
+                return textObj;
+            }
+        }
+        return null;
+    }
+
+    findAxisAt(x, y) {
+        // Check if mouse is near an axis (only when axis is shown)
+        if (!this.showAxis) return null;
+        
+        const tolerance = 8; // Pixels from axis line
+        const centerX = this.axisOriginX !== null ? this.axisOriginX : Math.floor(this.canvas.width / 2);
+        const centerY = this.axisOriginY !== null ? this.axisOriginY : Math.floor(this.canvas.height / 2);
+        
+        // Check Y axis (vertical line at centerX) - movable horizontally
+        if (Math.abs(x - centerX) <= tolerance) {
+            return 'y';
+        }
+        
+        // Check X axis (horizontal line at centerY) - movable vertically
+        if (Math.abs(y - centerY) <= tolerance) {
+            return 'x';
+        }
+        
+        return null;
     }
 
     saveTemp() {
@@ -1187,10 +1526,23 @@ class DrawingController {
     }
 
     saveToHistory() {
-        // Only save if canvas has valid dimensions - save the drawing layer only
+        // Only save if canvas has valid dimensions - save complete state
         if (this.canvas.width > 0 && this.canvas.height > 0) {
-            const imageData = this.drawingCtx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-            this.history.push(imageData);
+            const state = {
+                imageData: this.drawingCtx.getImageData(0, 0, this.canvas.width, this.canvas.height),
+                // Deep copy geometry objects
+                points: JSON.parse(JSON.stringify(this.points)),
+                segments: JSON.parse(JSON.stringify(this.segments)),
+                vectors: JSON.parse(JSON.stringify(this.vectors)),
+                lines: JSON.parse(JSON.stringify(this.lines)),
+                texts: JSON.parse(JSON.stringify(this.texts)),
+                nextPointId: this.nextPointId,
+                nextTextId: this.nextTextId,
+                // Axis position
+                axisOriginX: this.axisOriginX,
+                axisOriginY: this.axisOriginY
+            };
+            this.history.push(state);
             
             if (this.history.length > this.maxHistory) {
                 this.history.shift();
@@ -1199,21 +1551,55 @@ class DrawingController {
     }
 
     undo() {
-        if (this.history.length > 0) {
+        if (this.history.length > 1) {
             this.history.pop(); // Remove current state
             
-            if (this.history.length > 0) {
-                const previousState = this.history[this.history.length - 1];
-                this.drawingCtx.putImageData(previousState, 0, 0);
-                this.render();
-            } else {
-                this.clearCanvas();
-            }
+            const previousState = this.history[this.history.length - 1];
+            
+            // Restore drawing canvas
+            this.drawingCtx.putImageData(previousState.imageData, 0, 0);
+            
+            // Restore geometry objects
+            this.points = JSON.parse(JSON.stringify(previousState.points));
+            this.segments = JSON.parse(JSON.stringify(previousState.segments));
+            this.vectors = JSON.parse(JSON.stringify(previousState.vectors));
+            this.lines = JSON.parse(JSON.stringify(previousState.lines));
+            this.texts = JSON.parse(JSON.stringify(previousState.texts));
+            this.nextPointId = previousState.nextPointId;
+            this.nextTextId = previousState.nextTextId;
+            
+            // Restore axis position
+            this.axisOriginX = previousState.axisOriginX;
+            this.axisOriginY = previousState.axisOriginY;
+            
+            // Clear selection states
+            this.selectedPoint = null;
+            this.segmentStartPoint = null;
+            this.lineStartPoint = null;
+            
+            this.render();
+        } else if (this.history.length === 1) {
+            // Only initial state left, clear everything
+            this.clearCanvas();
+        }
+    }
+    
+    handleKeyDown(e) {
+        // Ctrl+Z or Cmd+Z for undo
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z' || e.keyCode === 90)) {
+            e.preventDefault();
+            this.undo();
         }
     }
 
     setTool(tool) {
         this.currentTool = tool;
+        // Clear hover state when changing tools
+        if (this.hoveredText || this.hoveredAxis) {
+            this.hoveredText = null;
+            this.hoveredAxis = null;
+            this.render();
+        }
         this.updateCursor();
     }
 
