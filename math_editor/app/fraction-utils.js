@@ -10,6 +10,11 @@ class FractionRenderer {
         // More complex: match nested parentheses
         let html = expr;
         
+        // Pattern 0: Mixed numbers (e.g., "4 1/6" or "7 2/3")
+        html = html.replace(/(\d+)\s+(\d+)\/(\d+)/g, (match, whole, num, den) => {
+            return `<span class="math-mixed-number">${whole}${this.createFractionHTML(num, den)}</span>`;
+        });
+        
         // Pattern 1: (complex)/(complex) - with parentheses
         html = html.replace(/\(([^()]+)\)\/\(([^()]+)\)/g, (match, num, den) => {
             return this.createFractionHTML(num, den);

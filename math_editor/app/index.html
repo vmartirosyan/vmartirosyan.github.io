@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
     <title>Ultimate Math Tool</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -42,7 +46,7 @@
             <!-- Expression Editor Tab -->
             <div id="editorTab" class="tab-content active">
             <div class="whiteboard-container">
-                <div id="expressionDisplay" class="expression-display">
+                <div id="expressionDisplay" class="expression-display" tabindex="0" contenteditable="true" inputmode="text" enterkeyhint="done">
                     <span class="cursor active" data-position="0"></span>
                 </div>
                 <div id="evaluationResult" class="evaluation-result" style="display: none;">
@@ -201,10 +205,21 @@
                             <div class="trainer-controls">
                                 <div class="control-group">
                                     <label data-i18n="secDifficulty">Difficulty:</label>
-                                    <div class="difficulty-buttons">
+                                    <div class="difficulty-buttons arithmetic-difficulty-buttons">
                                         <button class="difficulty-btn active" data-difficulty="easy" data-i18n="btnEasy">Easy</button>
                                         <button class="difficulty-btn" data-difficulty="medium" data-i18n="btnMedium">Medium</button>
                                         <button class="difficulty-btn" data-difficulty="hard" data-i18n="btnHard">Hard</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label data-i18n="arithmeticProblemType">Problem Type:</label>
+                                    <div class="problem-type-buttons">
+                                        <button class="arithmetic-type-btn active" data-type="wholeNumbers" data-i18n="arithmeticWholeNumbers">Whole Numbers</button>
+                                        <button class="arithmetic-type-btn" data-type="fractions" data-i18n="arithmeticFractions">Fractions</button>
+                                        <button class="arithmetic-type-btn" data-type="decimals" data-i18n="arithmeticDecimals">Decimals</button>
+                                        <button class="arithmetic-type-btn" data-type="conversions" data-i18n="arithmeticConversions">Conversions</button>
+                                        <button class="arithmetic-type-btn" data-type="percents" data-i18n="arithmeticPercents">Percents</button>
                                     </div>
                                 </div>
                                 
@@ -239,6 +254,24 @@
 
                                 <div id="trainerFeedback" class="trainer-feedback" style="display: none;">
                                     <!-- Feedback will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="arithmetic-reference">
+                            <h4 data-i18n="arithmeticReference">Reference</h4>
+                            <div class="reference-content">
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="arithmeticOrderOps">Order of Operations:</span>
+                                    <span class="reference-example">PEMDAS (Parentheses, Exponents, ×÷, +−)</span>
+                                </div>
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="arithmeticFractionOps">Fractions:</span>
+                                    <span class="reference-example">a/b + c/d = (ad + bc)/(bd)</span>
+                                </div>
+                                <div class="reference-item">
+                                    <span class="reference-label" data-i18n="arithmeticPercentOps">Percents:</span>
+                                    <span class="reference-example">x% of y = (x/100) × y</span>
                                 </div>
                             </div>
                         </div>
@@ -683,6 +716,7 @@
     <script src="graphing.js"></script>
     <script src="transformations.js"></script>
     <script src="drawing.js"></script>
+    <script src="mini-math-editor.js"></script>
     <script src="trainer.js"></script>
     <script src="algebra.js"></script>
     <script src="equations.js"></script>

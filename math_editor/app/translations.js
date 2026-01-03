@@ -78,6 +78,14 @@ const translations = {
         "trainerTryAgain": "Try again!",
         "trainerNextProblem": "Next Problem",
         
+        // Arithmetic Problem Types
+        "arithmeticProblemType": "Problem Type",
+        "arithmeticWholeNumbers": "Whole Numbers",
+        "arithmeticFractions": "Fractions",
+        "arithmeticDecimals": "Decimals",
+        "arithmeticConversions": "Conversions",
+        "arithmeticPercents": "Percents",
+        
         // Algebra
         "algebraProblemType": "Problem Type",
         "equationsSolution": "Solution",
@@ -318,6 +326,15 @@ const translations = {
         "trainerTryAgain": "\u0553\u0578\u0580\u0571\u0565\u0584 \u0576\u0578\u0580\u056b\u0581!",
         "trainerComplete": "\u053d\u0576\u0564\u056b\u0580\u0568 \u053c\u0578\u0582\u056e\u057e\u0565\u0581!",
         "trainerNextProblem": "\u0540\u0561\u057b\u0578\u0580\u0564 \u053d\u0576\u0564\u056b\u0580",
+        
+        // Arithmetic Problem Types
+        "arithmeticProblemType": "\u053d\u0576\u0564\u0580\u056b \u054f\u0565\u057d\u0561\u056f",
+        "arithmeticWholeNumbers": "\u0531\u0574\u0562\u0578\u0572\u057b \u0539\u057e\u0565\u0580",
+        "arithmeticFractions": "\u053f\u0578\u057f\u0578\u0580\u0561\u056f\u0576\u0565\u0580",
+        "arithmeticDecimals": "\u054f\u0561\u057d\u0576\u0578\u0580\u0564\u0561\u056f\u0561\u0576\u0576\u0565\u0580",
+        "arithmeticConversions": "\u0553\u0578\u056d\u0561\u0580\u056f\u0578\u0582\u0574\u0576\u0565\u0580",
+        "arithmeticPercents": "\u054f\u0578\u056f\u0578\u057d\u0576\u0565\u0580",
+        
         "placeOnes": "\u0544\u056b\u0561\u057e\u0578\u0580\u0576\u0565\u0580",
         "placeTens": "\u054f\u0561\u057d\u0576\u0561\u057e\u0578\u0580\u0576\u0565\u0580",
         "placeHundreds": "\u0540\u0561\u0580\u0575\u0578\u0582\u0580\u0561\u057e\u0578\u0580\u0576\u0565\u0580",

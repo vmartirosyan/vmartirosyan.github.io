@@ -1004,9 +1004,100 @@ class MathExpressionApp {
 
     // Initialize mouse click handling
     initMouseHandling() {
+        // Click on display
         this.displayElement.addEventListener('click', (e) => {
             this.handleDisplayClick(e);
         });
+        
+        // Initialize contenteditable input handling for mobile keyboard
+        this.initContentEditableInput();
+    }
+    
+    // Initialize contenteditable input handling (for mobile keyboard support)
+    initContentEditableInput() {
+        // Handle text input from mobile keyboard via beforeinput event
+        this.displayElement.addEventListener('beforeinput', (e) => {
+            e.preventDefault(); // Prevent default contenteditable behavior
+            
+            const inputType = e.inputType;
+            const data = e.data;
+            
+            if (inputType === 'insertText' && data) {
+                // Process each character
+                for (const char of data) {
+                    this.processMobileInput(char);
+                }
+            } else if (inputType === 'deleteContentBackward') {
+                this.keyboardController.handleBackspace();
+            } else if (inputType === 'insertLineBreak' || inputType === 'insertParagraph') {
+                this.expression.insertAt(this.navContext.currentPosition, ElementFactory.createLineBreak());
+                this.navContext.currentPosition++;
+                this.render();
+            }
+        });
+        
+        // Fallback for older browsers - handle input event
+        this.displayElement.addEventListener('input', (e) => {
+            // If beforeinput handled it, the content should be empty
+            // Clear any text that got inserted by contenteditable
+            this.render();
+        });
+        
+        // Prevent paste from inserting formatted content
+        this.displayElement.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const text = (e.clipboardData || window.clipboardData).getData('text');
+            if (text) {
+                for (const char of text) {
+                    this.processMobileInput(char);
+                }
+            }
+        });
+    }
+    
+    // Process a single character from mobile input
+    processMobileInput(char) {
+        // Numbers
+        if (char >= '0' && char <= '9') {
+            this.insertElementAtCursor(ElementFactory.createNumber(char));
+            return;
+        }
+        
+        // Decimal point
+        if (char === '.') {
+            this.insertElementAtCursor(ElementFactory.createNumber('.'));
+            return;
+        }
+        
+        // Operators
+        const operators = {'+': '+', '-': '-', '*': '*', '/': '/', '=': '='};
+        if (operators[char]) {
+            this.insertElementAtCursor(ElementFactory.createOperator(operators[char]));
+            return;
+        }
+        
+        // Letters (variables)
+        if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+            this.insertElementAtCursor(ElementFactory.createSymbol(char.toLowerCase()));
+            return;
+        }
+        
+        // Parentheses
+        if (char === '(') {
+            this.insertElementAtCursor(ElementFactory.createSymbol('('));
+            return;
+        }
+        if (char === ')') {
+            this.insertElementAtCursor(ElementFactory.createSymbol(')'));
+            return;
+        }
+    }
+    
+    // Insert element at cursor position
+    insertElementAtCursor(element) {
+        this.expression.insertAt(this.navContext.currentPosition, element);
+        this.navContext.currentPosition++;
+        this.render();
     }
 
     // Handle clicks on the expression display
