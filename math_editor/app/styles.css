@@ -108,7 +108,7 @@ header h1 {
 .control-btn:hover {
     background: #5568d3;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 12px rgba(107, 143, 113, 0.4);
 }
 
 .control-btn:active {
@@ -145,18 +145,18 @@ main {
 /* Whiteboard Area */
 .whiteboard-container {
     background: white;
-    padding: 40px;
-    min-height: 300px;
-    border-bottom: 3px solid #f0f0f0;
+    padding: 20px 24px;
+    min-height: 200px;
+    border-bottom: 1px solid #e4e8e5;
 }
 
 .expression-display {
-    background: #fafafa;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    min-height: 200px;
-    padding: 30px;
-    font-size: 32px;
+    background: #ffffff;
+    border: 2px solid #d8d8e9;
+    border-radius: 12px;
+    min-height: 80px;
+    padding: 20px 24px;
+    font-size: 28px;
     font-family: 'Cambria Math', 'Times New Roman', serif;
     position: relative;
     display: flex;
@@ -173,7 +173,7 @@ main {
 .expression-display:focus,
 .expression-display:focus-within {
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.1);
     outline: none;
 }
 
@@ -195,7 +195,7 @@ main {
 }
 
 .expr-element.focused {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
     outline: 2px solid #667eea;
 }
 
@@ -283,7 +283,7 @@ main {
 .fraction-denominator.active {
     border-width: 2px;
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
     border-radius: 4px;
 }
 
@@ -303,7 +303,7 @@ main {
 
 .fraction-numerator.active,
 .fraction-denominator.active {
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
     border-radius: 4px;
 }
 
@@ -331,7 +331,7 @@ main {
 .subscript-base.active {
     border-width: 2px;
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
 }
 
 .power-exponent {
@@ -351,7 +351,7 @@ main {
 .power-exponent.active {
     border-width: 2px;
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
 }
 
 .subscript-index {
@@ -371,14 +371,14 @@ main {
 .subscript-index.active {
     border-width: 2px;
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
 }
 
 .power-exponent.active,
 .subscript-index.active,
 .power-base.active,
 .subscript-base.active {
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
     border-radius: 4px;
     padding: 2px 4px;
 }
@@ -439,7 +439,7 @@ main {
     border-left-color: #667eea;
     border-right-color: #667eea;
     border-bottom-color: #667eea;
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
     border-radius: 0 4px 4px 0;
 }
 
@@ -464,7 +464,7 @@ main {
 .parens-content.active {
     border-width: 2px;
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.15);
+    background: rgba(107, 143, 113, 0.15);
 }
 
 /* Line Break */
@@ -485,7 +485,7 @@ main {
     align-self: center;
     flex-shrink: 0;
     border-radius: 2px;
-    box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 0 8px rgba(107, 143, 113, 0.6);
     position: relative;
     cursor: pointer;
 }
@@ -537,139 +537,141 @@ main {
 }
 
 /* Keyboard */
+/* ===== Keyboard Container: Two-Panel Layout ===== */
 .keyboard-container {
-    background: #f8f9fa;
-    padding: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    background: #f0f1ff;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    align-items: stretch;
+    border-top: 1px solid #e0e4e2;
 }
 
-.keyboard-section {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* Left math panel + right numpad panel */
+.keyboard-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
 }
 
-.keyboard-section h3 {
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.keyboard-math-panel {
+    flex: 0 0 auto;
+    min-width: 200px;
+}
+
+.keyboard-numpad-panel {
+    flex: 1;
+}
+
+/* Vertical divider between panels */
+.keyboard-divider {
+    width: 1px;
+    background: #d0d5d2;
+    margin: 0 16px;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+/* Mode panels: only one shown at a time */
+.key-mode-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.key-mode-panel.active {
+    display: flex;
 }
 
 .keyboard-row {
     display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
+    gap: 6px;
+    flex-wrap: nowrap;
 }
 
-.keyboard-row:last-child {
-    margin-bottom: 0;
-}
-
+/* Unified button style — clean, flat, calculator-like */
 .key-btn {
     flex: 1;
-    min-width: 50px;
-    padding: 15px 10px;
-    background: #f0f0f0;
-    border: 2px solid #e0e0e0;
+    min-width: 44px;
+    padding: 13px 6px;
+    background: #ffffff;
+    border: 1.5px solid #d8d8e9;
     border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    color: #333;
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    color: #2d3a30;
+    text-align: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .key-btn:hover {
-    background: #e8e8e8;
+    background: #eef2ef;
     border-color: #667eea;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .key-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #ddeadf;
+    border-color: #5568d3;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    transform: none;
 }
 
-.key-btn.number {
-    background: #e3f2fd;
-    border-color: #90caf9;
-}
-
-.key-btn.number:hover {
-    background: #bbdefb;
-}
-
-.key-btn.operator {
-    background: #fff3e0;
-    border-color: #ffb74d;
-    color: #e65100;
-}
-
-.key-btn.operator:hover {
-    background: #ffe0b2;
-}
-
+/* Function keys: slightly muted text */
 .key-btn.function {
-    background: #f3e5f5;
-    border-color: #ce93d8;
-    color: #6a1b9a;
+    color: #3d3d8a;
 }
 
-.key-btn.function:hover {
-    background: #e1bee7;
+/* Backspace: soft red accent */
+.key-btn.backspace-btn {
+    flex: 2;
+    color: #7a3535;
+    background: #fff5f5;
+    border-color: #e8c8c8;
 }
 
-.key-btn.trig {
-    background: #e8f5e9;
-    border-color: #81c784;
-    color: #2e7d32;
+.key-btn.backspace-btn:hover {
+    background: #fde8e8;
+    border-color: #c97a7a;
 }
 
-.key-btn.trig:hover {
-    background: #c8e6c9;
+/* Navigation arrows: tinted */
+.key-btn.nav-btn {
+    color: #3d3d8a;
+    font-size: 18px;
 }
 
-.key-btn.symbol {
-    background: #fce4ec;
-    border-color: #f48fb1;
-    color: #c2185b;
+/* Mode row at bottom of left panel */
+.keyboard-mode-row {
+    margin-top: 4px;
 }
 
-.key-btn.symbol:hover {
-    background: #f8bbd0;
+.key-btn.mode-btn {
+    background: #eef0ff;
+    border-color: #b0b8f0;
+    color: #3d3d8a;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 4px;
 }
 
-/* Navigation Help */
-.navigation-help {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+.key-btn.mode-btn:hover {
+    background: #d8d8ff;
+    border-color: #667eea;
 }
 
-.navigation-help h3 {
-    color: white;
+.key-btn.mode-btn.active {
+    background: #667eea;
+    border-color: #5568d3;
+    color: #ffffff;
 }
 
-.navigation-help p {
-    margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.navigation-help kbd {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-family: monospace;
-    font-weight: bold;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
+/* ===== End Keyboard ===== */
 
 /* Responsive Design */
 @media (max-width: 900px) {
@@ -781,50 +783,32 @@ main {
     }
 
     .keyboard-container {
-        padding: 8px;
-        gap: 8px;
-        grid-template-columns: 1fr;
-        background: #fff;
+        padding: 10px 12px;
+        gap: 0;
+        flex-direction: column;
     }
 
-    .keyboard-section {
-        padding: 10px;
-        box-shadow: none;
-        border: 1px solid #eee;
-        border-radius: 8px;
+    .keyboard-divider {
+        width: auto;
+        height: 1px;
+        margin: 8px 0;
     }
-    
-    .keyboard-section h3 {
-        font-size: 13px;
-        margin-bottom: 8px;
+
+    .keyboard-math-panel {
+        min-width: unset;
     }
 
     .key-btn {
-        padding: 14px 0;
-        font-size: 16px;
+        padding: 12px 4px;
+        font-size: 15px;
         border-radius: 8px;
-        min-height: 48px; /* Touch-friendly minimum */
+        min-height: 46px;
         touch-action: manipulation;
     }
-    
-    .key-btn:active {
-        transform: scale(0.95);
-        background: #d0d0d0;
-    }
 
-    /* Navigation help section - more compact on mobile */
-    .navigation-help {
-        padding: 12px;
-    }
-    
-    .navigation-help p {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-    
-    .navigation-help kbd {
-        padding: 2px 6px;
-        font-size: 11px;
+    .key-btn:active {
+        background: #ddeadf;
+        transform: none;
     }
 
     /* Graphing & Drawing Layouts */
@@ -1824,7 +1808,7 @@ body.drawing-fullscreen .fullscreen-hint {
 
 .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(107, 143, 113, 0.4);
 }
 
 .large-btn {
@@ -1985,7 +1969,7 @@ body.drawing-fullscreen .fullscreen-hint {
 .step-result-input:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.15);
 }
 
 .step-expression-input:disabled,
@@ -2015,7 +1999,7 @@ body.drawing-fullscreen .fullscreen-hint {
 .step-input:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.15);
 }
 
 .step-input:disabled {
@@ -2975,7 +2959,7 @@ body.drawing-fullscreen .fullscreen-hint {
 
 .mini-editor-wrapper.focused {
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.15);
 }
 
 .mini-editor-wrapper.disabled {
@@ -3117,7 +3101,7 @@ body.drawing-fullscreen .fullscreen-hint {
 
 .mini-mixednum-whole.active {
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
 }
 
 .mini-mixednum-fraction {
@@ -3144,7 +3128,7 @@ body.drawing-fullscreen .fullscreen-hint {
 .mini-numerator.active,
 .mini-denominator.active {
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
 }
 
 .mini-fraction-line {
@@ -3174,7 +3158,7 @@ body.drawing-fullscreen .fullscreen-hint {
 
 .mini-power-base.active {
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
 }
 
 .mini-power-exp {
@@ -3193,7 +3177,7 @@ body.drawing-fullscreen .fullscreen-hint {
 
 .mini-power-exp.active {
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
 }
 
 /* Mini Square Root */
@@ -3226,7 +3210,7 @@ body.drawing-fullscreen .fullscreen-hint {
 .mini-sqrt-content.active {
     border-color: #667eea;
     border-top: 2px solid #333;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
 }
 
 /* Mini Parentheses */
@@ -3253,7 +3237,7 @@ body.drawing-fullscreen .fullscreen-hint {
 
 .mini-parens-content.active {
     border-color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(107, 143, 113, 0.1);
 }
 
 /* Step row with mini editor */
@@ -3669,5 +3653,173 @@ body.drawing-fullscreen .fullscreen-hint {
     
     .graphing-sidebar {
         max-height: 30vh;
+    }
+}
+
+/* ===================================================================
+   Math Text Popup
+   =================================================================== */
+
+/* Backdrop overlay */
+.math-text-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 16px;
+}
+
+/* Popup card */
+.math-text-popup {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 44px rgba(0, 0, 0, 0.24);
+    width: 100%;
+    max-width: 580px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.math-text-popup-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f5f5ff;
+    border-bottom: 1px solid #e4e8e5;
+    gap: 8px;
+}
+
+.popup-header-title {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    color: #444;
+    font-weight: 500;
+    user-select: none;
+}
+
+.popup-header-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+    line-height: 1;
+}
+
+.popup-close-btn {
+    background: #efefef;
+    color: #555;
+    font-weight: 400;
+}
+.popup-close-btn:hover  { background: #e0e0e0; }
+.popup-close-btn:active { transform: scale(0.92); }
+
+.popup-confirm-btn {
+    background: #667eea;
+    color: white;
+    font-size: 20px;
+}
+.popup-confirm-btn:hover  { background: #5568d3; }
+.popup-confirm-btn:active { transform: scale(0.92); }
+
+/* Expression display area */
+.math-text-popup-display-wrap {
+    padding: 12px 16px 8px;
+    background: white;
+}
+
+.popup-expr-display {
+    background: #ffffff;
+    border: 2px solid #d8d8e9;
+    border-radius: 10px;
+    min-height: 54px;
+    padding: 10px 16px;
+    font-size: 24px;
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
+    line-height: 1.8;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    cursor: text;
+    caret-color: transparent;
+    outline: none;
+    user-select: none;
+}
+
+.popup-expr-display:focus,
+.popup-expr-display:focus-within {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.15);
+}
+
+/* Popup keyboard container */
+.popup-keyboard-container {
+    background: #f0f1ff;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    align-items: stretch;
+    border-top: 1px solid #e0e4e2;
+}
+
+/* Popup mode panels: only the active one is shown */
+.popup-key-mode-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+.popup-key-mode-panel.active {
+    display: flex;
+}
+
+/* Popup mode buttons – styled independently from main editor's mode-btn */
+.key-btn.popup-mode-btn {
+    background: #eef0ff;
+    border-color: #b0b8f0;
+    color: #3d3d8a;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 4px;
+}
+.key-btn.popup-mode-btn:hover {
+    background: #d8d8ff;
+    border-color: #667eea;
+}
+.key-btn.popup-mode-btn.active {
+    background: #667eea;
+    border-color: #5568d3;
+    color: #ffffff;
+}
+
+/* Mobile: bottom sheet */
+@media (max-width: 600px) {
+    .math-text-popup-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+    .math-text-popup {
+        border-radius: 16px 16px 0 0;
+        max-width: 100%;
+    }
+    .popup-keyboard-container {
+        padding: 10px 12px;
     }
 }

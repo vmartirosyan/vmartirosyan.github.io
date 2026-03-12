@@ -986,20 +986,24 @@ class MathExpressionApp {
             });
         }
 
-        // Latin letters expand/collapse button
-        const expandLatinBtn = document.getElementById('expandLatinBtn');
-        const allLatinLetters = document.getElementById('allLatinLetters');
-        if (expandLatinBtn && allLatinLetters) {
-            expandLatinBtn.addEventListener('click', () => {
-                if (allLatinLetters.style.display === 'none') {
-                    allLatinLetters.style.display = 'block';
-                    expandLatinBtn.textContent = 'Show Less';
-                } else {
-                    allLatinLetters.style.display = 'none';
-                    expandLatinBtn.textContent = 'Show All';
-                }
+        // Keyboard mode switching (f(x) / abc / αβγ)
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        const modePanels = document.querySelectorAll('.key-mode-panel');
+        modeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mode = btn.dataset.mode;
+                modeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                modePanels.forEach(panel => {
+                    if (panel.dataset.mode === mode) {
+                        panel.classList.add('active');
+                    } else {
+                        panel.classList.remove('active');
+                    }
+                });
+                // Re-query keyboard buttons after panel switch (no-op now; delegation handles it)
             });
-        }
+        });
     }
 
     // Initialize mouse click handling

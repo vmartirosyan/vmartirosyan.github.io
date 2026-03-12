@@ -15,14 +15,26 @@ class KeyboardController {
 
     // Initialize keyboard event listeners
     init() {
-        // Physical keyboard events
-        document.addEventListener('keydown', (e) => this.handleKeyDown(e));
-        
-        // Virtual keyboard buttons
-        this.keyboardButtons = document.querySelectorAll('.key-btn');
-        this.keyboardButtons.forEach(btn => {
-            btn.addEventListener('click', () => this.handleButtonClick(btn));
-        });
+        // Physical keyboard events (only attach once)
+        if (!this._keydownAttached) {
+            document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+            this._keydownAttached = true;
+        }
+
+        // Virtual keyboard: use event delegation on the container to avoid
+        // re-binding after mode switches
+        if (!this._delegationAttached) {
+            const container = document.querySelector('.keyboard-container');
+            if (container) {
+                container.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.key-btn');
+                    if (btn && !btn.classList.contains('mode-btn')) {
+                        this.handleButtonClick(btn);
+                    }
+                });
+                this._delegationAttached = true;
+            }
+        }
     }
 
     // Handle physical keyboard input
@@ -144,7 +156,23 @@ class KeyboardController {
     // Handle virtual keyboard button click
     handleButtonClick(button) {
         const value = button.dataset.value;
+        const action = button.dataset.action;
         const type = this.getButtonType(button);
+
+        // Handle action buttons (backspace, navigation)
+        if (action === 'backspace') {
+            this.handleBackspace();
+            this.renderCallback();
+            return;
+        }
+        if (action === 'left') {
+            this.handleArrowLeft();
+            return;
+        }
+        if (action === 'right') {
+            this.handleArrowRight();
+            return;
+        }
         
         switch (type) {
             case 'number':

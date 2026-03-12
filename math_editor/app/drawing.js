@@ -353,30 +353,54 @@ class DrawingController {
         
         // Draw text objects
         this.texts.forEach(textObj => {
-            // Measure text for bounding box
-            this.ctx.font = `${textObj.fontSize}px Arial`;
-            const metrics = this.ctx.measureText(textObj.text);
-            const textWidth = metrics.width;
-            const textHeight = textObj.fontSize;
-            
-            // Draw bounding box if hovered
-            if (textObj === this.hoveredText || textObj === this.draggedText) {
-                const padding = 5;
-                this.ctx.strokeStyle = '#ff6600';
-                this.ctx.lineWidth = 1;
-                this.ctx.setLineDash([3, 3]);
-                this.ctx.strokeRect(
-                    textObj.x - padding,
-                    textObj.y - textHeight - padding,
-                    textWidth + padding * 2,
-                    textHeight + padding * 2
+            if (textObj.type === 'math') {
+                // ── Math expression image ──────────────────────────────────
+                if (!textObj.image) return; // still loading
+
+                // Hover / drag highlight
+                if (textObj === this.hoveredText || textObj === this.draggedText) {
+                    const pad = 4;
+                    this.ctx.strokeStyle = '#667eea';
+                    this.ctx.lineWidth = 1.5;
+                    this.ctx.setLineDash([4, 3]);
+                    this.ctx.strokeRect(
+                        textObj.x - pad,
+                        textObj.y - pad,
+                        textObj.width  + pad * 2,
+                        textObj.height + pad * 2
+                    );
+                    this.ctx.setLineDash([]);
+                }
+
+                this.ctx.drawImage(
+                    textObj.image,
+                    textObj.x, textObj.y,
+                    textObj.width, textObj.height
                 );
-                this.ctx.setLineDash([]);
+            } else {
+                // ── Legacy plain text ──────────────────────────────────────
+                this.ctx.font = `${textObj.fontSize}px Arial`;
+                const metrics   = this.ctx.measureText(textObj.text);
+                const textWidth  = metrics.width;
+                const textHeight = textObj.fontSize;
+
+                if (textObj === this.hoveredText || textObj === this.draggedText) {
+                    const padding = 5;
+                    this.ctx.strokeStyle = '#ff6600';
+                    this.ctx.lineWidth = 1;
+                    this.ctx.setLineDash([3, 3]);
+                    this.ctx.strokeRect(
+                        textObj.x - padding,
+                        textObj.y - textHeight - padding,
+                        textWidth  + padding * 2,
+                        textHeight + padding * 2
+                    );
+                    this.ctx.setLineDash([]);
+                }
+
+                this.ctx.fillStyle = textObj.color;
+                this.ctx.fillText(textObj.text, textObj.x, textObj.y);
             }
-            
-            // Draw the text
-            this.ctx.fillStyle = textObj.color;
-            this.ctx.fillText(textObj.text, textObj.x, textObj.y);
         });
     }
     
@@ -1453,41 +1477,87 @@ class DrawingController {
     }
 
     addText(x, y) {
-        const text = prompt(window.t('msgEnterText'));
-        if (text) {
-            const fontSize = this.brushSize * 8;
-            const textObj = {
-                id: this.nextTextId++,
-                x: x,
-                y: y,
-                text: text,
-                color: this.currentColor,
-                fontSize: fontSize
-            };
-            this.texts.push(textObj);
-            this.saveToHistory();
-            this.render();
+        if (window.mathTextPopup) {
+            window.mathTextPopup.show(x, y, this);
+        } else {
+            // Fallback for environments without the popup
+            const text = prompt(window.t('msgEnterText'));
+            if (text) {
+                const fontSize = this.brushSize * 8;
+                const textObj = {
+                    id: this.nextTextId++,
+                    x, y,
+                    text,
+                    color: this.currentColor,
+                    fontSize
+                };
+                this.texts.push(textObj);
+                this.saveToHistory();
+                this.render();
+            }
         }
         this.isDrawing = false;
     }
 
+    /**
+     * Called by MathTextPopup.confirm() with a rasterised expression image.
+     * x, y are the top-left corner in canvas coordinates.
+     */
+    addMathText(x, y, imageData, width, height) {
+        const textObj = {
+            id: this.nextTextId++,
+            x, y,
+            type:      'math',
+            imageData,
+            width,
+            height,
+            image:     null   // set once the Image has loaded
+        };
+        this.texts.push(textObj);
+
+        const img = new Image();
+        img.onload = () => {
+            textObj.image = img;
+            this.saveToHistory();
+            this.render();
+        };
+        img.src = imageData;
+    }
+
+    /** Re-create Image objects for math texts after undo / history restore. */
+    _reloadMathImages() {
+        this.texts.forEach(textObj => {
+            if (textObj.type === 'math' && textObj.imageData && !textObj.image) {
+                const img = new Image();
+                img.onload = () => { textObj.image = img; this.render(); };
+                img.src = textObj.imageData;
+            }
+        });
+    }
+
     findTextAt(x, y) {
-        // Find text at position by checking bounding boxes
+        const padding = 6;
         for (let i = this.texts.length - 1; i >= 0; i--) {
-            const textObj = this.texts[i];
-            // Measure text width
-            this.ctx.font = `${textObj.fontSize}px Arial`;
-            const metrics = this.ctx.measureText(textObj.text);
-            const textWidth = metrics.width;
-            const textHeight = textObj.fontSize;
-            
-            // Check if point is within bounding box (with some padding)
-            const padding = 5;
-            if (x >= textObj.x - padding && 
-                x <= textObj.x + textWidth + padding &&
-                y >= textObj.y - textHeight - padding && 
-                y <= textObj.y + padding) {
-                return textObj;
+            const t = this.texts[i];
+            if (t.type === 'math') {
+                // Math texts use top-left origin with explicit width/height
+                if (x >= t.x - padding &&
+                    x <= t.x + t.width  + padding &&
+                    y >= t.y - padding &&
+                    y <= t.y + t.height + padding) {
+                    return t;
+                }
+            } else {
+                // Legacy plain text: origin is text baseline
+                this.ctx.font = `${t.fontSize}px Arial`;
+                const tw = this.ctx.measureText(t.text).width;
+                const th = t.fontSize;
+                if (x >= t.x - padding &&
+                    x <= t.x + tw + padding &&
+                    y >= t.y - th - padding &&
+                    y <= t.y + padding) {
+                    return t;
+                }
             }
         }
         return null;
@@ -1565,6 +1635,7 @@ class DrawingController {
             this.vectors = JSON.parse(JSON.stringify(previousState.vectors));
             this.lines = JSON.parse(JSON.stringify(previousState.lines));
             this.texts = JSON.parse(JSON.stringify(previousState.texts));
+            this._reloadMathImages();
             this.nextPointId = previousState.nextPointId;
             this.nextTextId = previousState.nextTextId;
             
