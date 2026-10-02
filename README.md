@@ -19,19 +19,31 @@ This directory contains a client-side implementation of polynomial neural networ
 ## 📂 Structure
 
 ```
-github_pages/
-├── index.html              # Main landing page
-├── digit-recognition.html  # Digit recognition demo
+vmartirosyan.github.io/
+├── index.html              # Personal homepage (portfolio)
 ├── css/
-│   ├── main.css           # Main page styles
-│   └── digit-recognition.css
-├── js/
-│   ├── sparse-network-2d.js      # Neural network implementation
-│   └── digit-recognition.js       # Demo logic
-├── models/
-│   └── digit_*_sparse.bin        # 10 trained models (12MB total)
+│   └── home.css           # Homepage styles
+├── assets/
+│   └── profile.jpg        # Profile photo
+├── cv/                    # (separate repo) published at /cv/cv.html
+├── demos/                 # Client-side AI demos
+│   ├── index.html              # Demos landing page
+│   ├── digit-recognition.html  # Digit recognition demo
+│   ├── css/
+│   │   ├── main.css
+│   │   └── digit-recognition.css
+│   ├── js/
+│   │   ├── sparse-network-2d.js  # Neural network implementation
+│   │   └── digit-recognition.js  # Demo logic
+│   └── models/
+│       └── digit_*_sparse.bin   # 10 trained models (12MB total)
+├── math_editor/           # Math expression editor
+├── parallel/              # HPC++ / LEAP speed-up report
 └── README.md
 ```
+
+The interactive CV is hosted in the separate [`vmartirosyan/cv`](https://github.com/vmartirosyan/cv)
+repository and published as a project page at `/cv/cv.html`.
 
 ## 🌐 Deployment to GitHub Pages
 
