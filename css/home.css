@@ -295,6 +295,51 @@ h1, h2, h3, h4 {
     margin-top: 4px;
 }
 
+/* ── ACHIEVEMENTS ── */
+.ach-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.ach {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.ach:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 204, 170, 0.4);
+}
+
+.ach .v {
+    font-size: 1.5em;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ach .l {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.ach .l small {
+    display: block;
+    color: var(--teal);
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 4px;
+}
+
 /* ── SECTIONS ── */
 .section {
     padding: 72px 0;
@@ -616,6 +661,7 @@ footer .cv-links {
     .grid-3,
     .grid-2,
     .stats-grid,
+    .ach-strip,
     .contact-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -633,6 +679,7 @@ footer .cv-links {
     .grid-3,
     .grid-2,
     .stats-grid,
+    .ach-strip,
     .contact-grid {
         grid-template-columns: 1fr;
     }
