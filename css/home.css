@@ -491,8 +491,38 @@ h1, h2, h3, h4 {
     margin-top: 4px;
 }
 
+.pub .body .pub-head {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.status-pill {
+    flex-shrink: 0;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+}
+
+.status-pill.pill-accepted { color: #00ccaa; background: rgba(0, 204, 170, 0.12); }
+.status-pill.pill-review   { color: #f0b429; background: rgba(240, 180, 41, 0.12); }
+.status-pill.pill-progress { color: #4aa3df; background: rgba(74, 163, 223, 0.12); }
+.status-pill.pill-draft    { color: #93aec0; background: rgba(147, 174, 192, 0.12); }
+.status-pill.pill-rejected { color: #e05d5d; background: rgba(224, 93, 93, 0.12); }
+.status-pill.pill-muted    { color: #6b8397; background: rgba(107, 131, 151, 0.12); }
+
 .pub-cta {
     margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 /* ── CONTACT ── */

@@ -21,75 +21,56 @@ This directory contains a client-side implementation of polynomial neural networ
 ```
 vmartirosyan.github.io/
 ├── index.html              # Personal homepage (portfolio)
-├── css/
-│   └── home.css           # Homepage styles
-├── assets/
-│   └── profile.jpg        # Profile photo
-├── cv/                    # (separate repo) published at /cv/cv.html
-├── demos/                 # Client-side AI demos
-│   ├── index.html              # Demos landing page
-│   ├── digit-recognition.html  # Digit recognition demo
-│   ├── css/
-│   │   ├── main.css
-│   │   └── digit-recognition.css
-│   ├── js/
-│   │   ├── sparse-network-2d.js  # Neural network implementation
-│   │   └── digit-recognition.js  # Demo logic
-│   └── models/
-│       └── digit_*_sparse.bin   # 10 trained models (12MB total)
-├── math_editor/           # Math expression editor
-├── parallel/              # HPC++ / LEAP speed-up report
+├── css/                    # Homepage styles
+├── assets/                 # Profile photo
+├── cv/                     # generated CV artifacts only (served at /cv/)
+│   ├── cv.html
+│   └── *.pdf
+├── demos/                  # Client-side AI demos
+├── math_editor/            # Math expression editor
+├── parallel/               # HPC++ / LEAP speed-up report
 └── README.md
 ```
 
-The interactive CV is hosted in the separate [`vmartirosyan/cv`](https://github.com/vmartirosyan/cv)
-repository and published as a project page at `/cv/cv.html`.
+This repository contains **public assets only**. The CV pipeline
+(`data/cv.yaml`, `build.py`, references) and the paper tracker live in a separate
+**private** repository. Generated CV outputs are built there and copied into
+`cv/`; the paper tracker is never published.
+
+> The paper tracker is the authoritative source for publication status and feeds
+> the CV at build time (in the private repository).
+
+## 🛠 Build / publish
+
+There is nothing to build in this repository. From the private source repository:
+
+```bash
+make publish        # build the CV and copy cv.html + *.pdf into this repo's cv/
+```
+
+Then commit and push this repository.
 
 ## 🌐 Deployment to GitHub Pages
 
-### Option 1: Deploy from this directory
+This repository is the GitHub Pages **user site** and is served from the `main`
+branch root (`https://vmartirosyan.github.io/`). No `gh-pages` branch or
+subtree is used: commit the intended assets and Pages serves them directly.
 
-1. **Enable GitHub Pages**:
-   - Go to your repository settings
-   - Navigate to "Pages" section
-   - Set source to "Deploy from a branch"
-   - Select branch: `polynomial`
-   - Set folder: `/github_pages`
-   - Save
-
-2. **Wait for deployment**: GitHub will automatically deploy your site
-
-3. **Access**: Your site will be available at `https://[username].github.io/[repo-name]/`
-
-### Option 2: Deploy from root with subtree
-
-```bash
-# Create a gh-pages branch with only the github_pages content
-git subtree push --prefix github_pages origin gh-pages
-
-# Then in GitHub settings:
-# - Set source to "Deploy from a branch"
-# - Select branch: gh-pages
-# - Set folder: / (root)
-```
+1. **Repository settings → Pages**: source = *Deploy from a branch*, branch =
+   `main`, folder = `/ (root)`.
+2. Publish the CV artifacts from the private source repository (see above).
+3. Commit and push; Pages redeploys automatically.
 
 ## 🛠️ Local Development
 
-To test locally before deploying:
-
 ```bash
-# Navigate to the github_pages directory
-cd github_pages
-
-# Start a simple HTTP server
+# From the repository root
 python3 -m http.server 8000
-# or
-npx http-server -p 8000
-
-# Open browser to http://localhost:8000
+# Open http://localhost:8000
 ```
 
-**Important**: You MUST use a local web server. Opening `index.html` directly in a browser won't work due to CORS restrictions when loading the model files.
+**Important**: Use a local web server (not `file://`); the digit-recognition demo
+loads model files via `fetch`, which browsers block for `file://` URLs.
 
 ## 📦 Model Files
 

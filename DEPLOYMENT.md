@@ -1,5 +1,10 @@
 # Quick Deployment Guide
 
+> **Note (2026-10-13):** This document describes the original `newnn`/`github_pages` demo deployment and is retained for reference.
+> This repository is now the `vmartirosyan.github.io` **user site**, served from the
+> `main` branch root. See [README.md](README.md) and [docs/MERGE_PLAN.md](docs/MERGE_PLAN.md).
+
+
 ## Deploy to GitHub Pages in 3 Steps
 
 ### Step 1: Commit the github_pages directory
