@@ -141,8 +141,8 @@
   li.card-item::after { top:14px; right:12px; }
   .card-item { background:var(--card); border:1px solid var(--border);
             border-left:3px solid var(--navy); border-radius:10px;
-            padding:14px 34px 14px 18px; margin-bottom:10px; }
-  .pub-list, .cert-list, .skills-list { list-style:none; padding-left:0; }
+            padding:14px 34px 14px 18px; margin-bottom:10px; width:100%; }
+  .pub-list, .cert-list, .skills-list { list-style:none; padding-left:0; width:100%; }
   .collapse-item:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   .role-card { background:var(--card); border:1px solid var(--border);
             border-left:3px solid var(--navy); border-radius:10px; padding:14px 18px;
@@ -160,13 +160,11 @@
   .edu-thesis { margin:-2px 0 12px; padding:10px 14px; background:var(--tag-bg);
             border-radius:8px; font-size:12px; color:var(--tag-text);
             font-style:italic; border-left:3px solid var(--accent); }
-  .pub-filters { display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-            margin:0 0 18px; }
-  .pub-search, .pub-select { padding:8px 12px; border-radius:10px;
-            border:1px solid var(--border); background:#fff; color:var(--text);
-            font:inherit; font-size:12px; }
-  .pub-search { flex:1 1 240px; }
-  .pub-select { flex:0 1 170px; }
+  .pub-filters { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
+            gap:8px; align-items:center; margin:0 0 18px; }
+  .pub-search, .pub-select { width:100%; min-width:0; padding:8px 12px;
+            border-radius:10px; border:1px solid var(--border); background:#fff;
+            color:var(--text); font:inherit; font-size:12px; }
   .pub-search:focus, .pub-select:focus { outline:2px solid var(--accent);
             outline-offset:1px; }
   .pub-links { position:absolute; top:14px; right:42px; display:inline-flex;
@@ -204,6 +202,7 @@
     .content { padding:20px 16px 48px; }
     .stats-bar { grid-template-columns:repeat(2,1fr); }
     .course-grid { grid-template-columns:1fr; }
+    .pub-filters { grid-template-columns:1fr; }
     .pub-search, .pub-select { width:100%; }
     .card-item.has-links { padding-right:96px; }
     .pub-links { right:38px; }
