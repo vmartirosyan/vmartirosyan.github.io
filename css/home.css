@@ -58,6 +58,38 @@ h1, h2, h3, h4 {
     padding: 0 24px;
 }
 
+/* ── monochrome outline icons ── */
+.ic svg,
+.badge svg,
+.contact-card svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: block;
+}
+
+.card .ic svg {
+    width: 30px;
+    height: 30px;
+}
+
+.project .ic svg {
+    width: 26px;
+    height: 26px;
+}
+
+.badge svg {
+    width: 20px;
+    height: 20px;
+}
+
+.contact-card .ic svg {
+    width: 22px;
+    height: 22px;
+}
+
 /* ── NAV ── */
 .nav {
     position: sticky;
