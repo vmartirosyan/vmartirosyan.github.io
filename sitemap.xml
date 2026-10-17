@@ -62,6 +62,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://vmartirosyan.github.io/papers/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://vmartirosyan.github.io/publications/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/publications/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/publications/"/>
