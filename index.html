@@ -389,14 +389,6 @@
                     <span class="txt"><small>GitHub</small>@vmartirosyan</span>
                 </a>
             </div>
-            <form class="contact-form" onsubmit="return sendContact(event)">
-                <div class="contact-form-row">
-                    <input id="cf-name" type="text" placeholder="Name" required>
-                    <input id="cf-email" type="email" placeholder="Email" required>
-                </div>
-                <textarea id="cf-message" placeholder="Message" required></textarea>
-                <button type="submit" class="btn btn-primary">Send message</button>
-            </form>
         </div>
     </section>
 
@@ -413,16 +405,6 @@ document.addEventListener('click', function (e) {
         if (!d.contains(e.target)) d.removeAttribute('open');
     });
 });
-    function sendContact(e) {
-    e.preventDefault();
-    var n = document.getElementById('cf-name').value.trim();
-    var em = document.getElementById('cf-email').value.trim();
-    var m = document.getElementById('cf-message').value.trim();
-    var subject = encodeURIComponent('Website contact from ' + n);
-    var body = encodeURIComponent(m + '\n\n— ' + n + ' <' + em + '>');
-    window.location.href = 'mailto:vmartirosyan@gmail.com?subject=' + subject + '&body=' + body;
-    return false;
-}
 </script>
 </body>
 </html>

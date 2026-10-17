@@ -235,14 +235,6 @@
                 <a class="contact-card" href="https://www.researchgate.net/profile/Vahram-Martirosyan-2" target="_blank" rel="noopener"><span class="ic"><svg class="ico"><use href="#i-file"/></svg></span><span class="txt"><small>ResearchGate</small>Vahram-Martirosyan-2</span></a>
                 <a class="contact-card" href="https://github.com/vmartirosyan" target="_blank" rel="noopener"><span class="ic"><svg class="ico"><use href="#i-code"/></svg></span><span class="txt"><small>GitHub</small>@vmartirosyan</span></a>
             </div>
-            <form class="contact-form" onsubmit="return sendContact(event)">
-                <div class="contact-form-row">
-                    <input id="cf-name" type="text" placeholder="Անուն" required>
-                    <input id="cf-email" type="email" placeholder="Էլ. փոստ" required>
-                </div>
-                <textarea id="cf-message" placeholder="Հաղորդագրություն" required></textarea>
-                <button type="submit" class="btn btn-primary">Ուղարկել</button>
-            </form>
         </div>
     </section>
 
@@ -259,16 +251,6 @@ document.addEventListener('click', function (e) {
         if (!d.contains(e.target)) d.removeAttribute('open');
     });
 });
-    function sendContact(e) {
-    e.preventDefault();
-    var n = document.getElementById('cf-name').value.trim();
-    var em = document.getElementById('cf-email').value.trim();
-    var m = document.getElementById('cf-message').value.trim();
-    var subject = encodeURIComponent('Website contact from ' + n);
-    var body = encodeURIComponent(m + '\n\n— ' + n + ' <' + em + '>');
-    window.location.href = 'mailto:vmartirosyan@gmail.com?subject=' + subject + '&body=' + body;
-    return false;
-}
 </script>
 </body>
 </html>

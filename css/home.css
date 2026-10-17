@@ -765,53 +765,6 @@ h1, h2, h3, h4 {
     letter-spacing: 1px;
 }
 
-.contact-form {
-    display: grid;
-    gap: 10px;
-    max-width: 680px;
-    margin-top: 28px;
-}
-
-.contact-form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font: inherit;
-    font-size: 14px;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: 2px solid var(--teal);
-    outline-offset: 1px;
-    border-color: transparent;
-}
-
-.contact-form textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.contact-form .btn {
-    justify-self: start;
-}
-
-@media (max-width: 620px) {
-    .contact-form-row {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* ── FOOTER ── */
 footer {
     padding: 36px 0;
