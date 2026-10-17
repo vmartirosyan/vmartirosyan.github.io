@@ -76,8 +76,15 @@
                     <a href="#achievements">Достижения</a>
                     <a href="#publications">Публикации</a>
                     <a href="#contact">Контакты</a>
-                    <a href="/cv/cv.ru.html" target="_blank" rel="noopener" class="cta-link">Резюме →</a>
                 </div>
+                <details class="cv-menu nav-cv">
+                    <summary>Резюме ▾</summary>
+                    <div class="cv-menu-list">
+                        <a href="/cv/Vahram_Martirosyan_CV_RU.pdf" target="_blank" rel="noopener">Резюме исследователя <small>PDF</small></a>
+                        <a href="/cv/Vahram_Martirosyan_Engineer_CV_RU.pdf" target="_blank" rel="noopener">Резюме инженера <small>PDF</small></a>
+                        <a href="/cv/cv.ru.html" target="_blank" rel="noopener">Интерактивное резюме <small>HTML</small></a>
+                    </div>
+                </details>
                 <div class="lang-switch">
                     <a href="/" class="lang-link">EN</a>
                     <a href="/ru/" class="lang-link active">RU</a>
@@ -108,7 +115,14 @@
                     Higher Colleges of Technology, Абу-Даби.
                 </p>
                 <div class="hero-actions">
-                    <a href="/cv/cv.ru.html" target="_blank" rel="noopener" class="btn btn-primary">Смотреть резюме</a>
+                    <details class="cv-menu hero-cv">
+                        <summary class="btn btn-primary">Смотреть резюме ▾</summary>
+                        <div class="cv-menu-list">
+                            <a href="/cv/Vahram_Martirosyan_CV_RU.pdf" target="_blank" rel="noopener">Резюме исследователя <small>PDF</small></a>
+                            <a href="/cv/Vahram_Martirosyan_Engineer_CV_RU.pdf" target="_blank" rel="noopener">Резюме инженера <small>PDF</small></a>
+                            <a href="/cv/cv.ru.html" target="_blank" rel="noopener">Интерактивное резюме <small>HTML</small></a>
+                        </div>
+                    </details>
                     <a href="https://www.explainableai.app" target="_blank" rel="noopener" class="btn btn-ghost">ExplainableAI.app ↗</a>
                     <a href="#projects" class="btn btn-ghost">Проекты</a>
                 </div>
@@ -212,11 +226,11 @@
             </div>
             <div>
                 <div class="pub"><div class="badge"><svg class="ico"><use href="#i-book"/></svg></div><div class="body"><div class="pub-head"><h3>Accuracy and Interpretability from a Single Solver: Polynomial Regression up to Degree 5 for Concrete Compressive Strength Prediction</h3><span class="status-pill pill-accepted">Принято</span></div><div class="meta"><em>ICACTE 2026</em> · Martirosyan, V.</div><div class="metrics">R² 0.859 · 74% значимых членов соответствуют известной физике бетона</div></div></div>
-                <div class="pub"><div class="badge"><svg class="ico"><use href="#i-ocean"/></svg></div><div class="body"><div class="pub-head"><h3>On-Device TinyML for Multi-Variable Ocean Profiling</h3><span class="status-pill pill-accepted">Принято</span></div><div class="meta"><em>eICocean 2027</em> · Martirosyan, V.</div><div class="metrics">R² 0.973 T / 0.794 S / 0.895 DO · 0.88 мс на ESP32 · 180 мкДж/вывод</div></div></div>
+                <div class="pub"><div class="badge"><svg class="ico"><use href="#i-ocean"/></svg></div><div class="body"><div class="pub-head"><h3>On-Device TinyML for Multi-Variable Ocean Profiling</h3><span class="status-pill pill-accepted">Принято</span></div><div class="meta"><em>eICocean 2027</em><span class="date-tag">Ожидается</span> · Martirosyan, V.</div><div class="metrics">R² 0.973 T / 0.794 S / 0.895 DO · 0.88 мс на ESP32 · 180 мкДж/вывод</div></div></div>
                 <div class="pub"><div class="badge"><svg class="ico"><use href="#i-heart"/></svg></div><div class="body"><div class="pub-head"><h3>Efficient Multi-Class ECG Classification Using Polynomial Regression with an Analytical Solver</h3><span class="status-pill pill-review">На рассмотрении</span></div><div class="meta"><em>Applied Computational Intelligence and Soft Computing</em> · Martirosyan, V.</div><div class="metrics">82.75% точности на шести классах · 12 мкс вывод · превосходит CNN, RF, XGBoost, SVM</div></div></div>
-                <div class="pub"><div class="badge"><svg class="ico"><use href="#i-bolt"/></svg></div><div class="body"><div class="pub-head"><h3>LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization</h3><span class="status-pill pill-accepted">Принято</span></div><div class="meta"><em>ITCA 2026, Гуанчжоу</em> · Martirosyan, V.</div><div class="metrics">100%/98% подъёма (43 программы) · 10.4× над -O0 · 958× GPU · 377/377 тестов</div></div></div>
+                <div class="pub"><div class="badge"><svg class="ico"><use href="#i-bolt"/></svg></div><div class="body"><div class="pub-head"><h3>LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization</h3><span class="status-pill pill-accepted">Принято</span></div><div class="meta"><em>ITCA 2026, Гуанчжоу</em><span class="date-tag">Ожидается</span> · Martirosyan, V.</div><div class="metrics">100%/98% подъёма (43 программы) · 10.4× над -O0 · 958× GPU · 377/377 тестов</div></div></div>
             </div>
-            <div class="pub-cta"><a href="/cv/cv.ru.html" target="_blank" rel="noopener" class="btn btn-primary">Полный список публикаций и резюме →</a></div>
+            <div class="pub-cta"><a href="/cv/cv.ru.html" target="_blank" rel="noopener" class="btn btn-primary">Полный список публикаций →</a></div>
         </div>
     </section>
 
@@ -247,6 +261,13 @@
         </div>
     </footer>
 
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener('click', function (e) {
+    document.querySelectorAll('details.cv-menu[open]').forEach(function (d) {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+});
+</script>
 </body>
 </html>

@@ -89,8 +89,15 @@
                     <a href="#achievements">Achievements</a>
                     <a href="#publications">Publications</a>
                     <a href="#contact">Contact</a>
-                    <a href="/cv/cv.html" target="_blank" rel="noopener" class="cta-link">CV →</a>
                 </div>
+                <details class="cv-menu nav-cv">
+                    <summary>CV ▾</summary>
+                    <div class="cv-menu-list">
+                        <a href="/cv/Vahram_Martirosyan_Researcher_CV.pdf" target="_blank" rel="noopener">Researcher <small>PDF</small></a>
+                        <a href="/cv/Vahram_Martirosyan_Engineer_CV.pdf" target="_blank" rel="noopener">Engineer <small>PDF</small></a>
+                        <a href="/cv/cv.html" target="_blank" rel="noopener">Interactive CV <small>HTML</small></a>
+                    </div>
+                </details>
                 <div class="lang-switch">
                     <a href="/" class="lang-link active">EN</a>
                     <a href="/ru/" class="lang-link">RU</a>
@@ -120,7 +127,14 @@
                     <strong>Assistant Professor</strong> at Higher Colleges of Technology, Abu Dhabi.
                 </p>
                 <div class="hero-actions">
-                    <a href="cv/cv.html" target="_blank" rel="noopener" class="btn btn-primary">View CV</a>
+                    <details class="cv-menu hero-cv">
+                        <summary class="btn btn-primary">View CV ▾</summary>
+                        <div class="cv-menu-list">
+                            <a href="/cv/Vahram_Martirosyan_Researcher_CV.pdf" target="_blank" rel="noopener">Researcher <small>PDF</small></a>
+                            <a href="/cv/Vahram_Martirosyan_Engineer_CV.pdf" target="_blank" rel="noopener">Engineer <small>PDF</small></a>
+                            <a href="/cv/cv.html" target="_blank" rel="noopener">Interactive CV <small>HTML</small></a>
+                        </div>
+                    </details>
                     <a href="https://www.explainableai.app" target="_blank" rel="noopener" class="btn btn-ghost">ExplainableAI.app ↗</a>
                     <a href="#projects" class="btn btn-ghost">Projects</a>
                 </div>
@@ -330,7 +344,7 @@
                             <h3>On-Device TinyML for Multi-Variable Ocean Profiling</h3>
                             <span class="status-pill pill-accepted">Accepted</span>
                         </div>
-                        <div class="meta"><em>eICocean 2027</em> · Martirosyan, V.</div>
+                        <div class="meta"><em>eICocean 2027</em><span class="date-tag">Forthcoming</span> · Martirosyan, V.</div>
                         <div class="metrics">R² 0.973 T / 0.794 S / 0.895 DO · 0.88 ms on ESP32 · 180 µJ/inference</div>
                     </div>
                 </div>
@@ -352,13 +366,13 @@
                             <h3>LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization</h3>
                             <span class="status-pill pill-accepted">Accepted</span>
                         </div>
-                        <div class="meta"><em>ITCA 2026, Guangzhou</em> · Martirosyan, V.</div>
+                        <div class="meta"><em>ITCA 2026, Guangzhou</em><span class="date-tag">Forthcoming</span> · Martirosyan, V.</div>
                         <div class="metrics">100%/98% liftability (43 programs) · 10.4× over -O0 · 958× GPU · 377/377 tests</div>
                     </div>
                 </div>
             </div>
             <div class="pub-cta">
-                <a href="cv/cv.html" target="_blank" rel="noopener" class="btn btn-primary">Full list of publications &amp; CV →</a>
+                <a href="cv/cv.html" target="_blank" rel="noopener" class="btn btn-primary">Full list of publications →</a>
             </div>
         </div>
     </section>
@@ -402,6 +416,13 @@
         </div>
     </footer>
 
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener('click', function (e) {
+    document.querySelectorAll('details.cv-menu[open]').forEach(function (d) {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+});
+</script>
 </body>
 </html>
