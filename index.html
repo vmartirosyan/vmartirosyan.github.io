@@ -53,9 +53,9 @@
         "Compiler Engineering"
       ]
     }
-    </script>
+</script>
     <link rel="stylesheet" href="css/home.css">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23003366'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Segoe UI,sans-serif' font-weight='700' fill='%2300ccaa' text-anchor='middle'%3EVM%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -127,21 +127,8 @@
                     <strong>Assistant Professor</strong> at Higher Colleges of Technology, Abu Dhabi.
                 </p>
                 <div class="hero-actions">
-                    <details class="cv-menu hero-cv">
-                        <summary class="btn btn-primary">View CV ▾</summary>
-                        <div class="cv-menu-list">
-                            <a href="/cv/Vahram_Martirosyan_Researcher_CV.pdf" target="_blank" rel="noopener">Researcher <small>PDF</small></a>
-                            <a href="/cv/Vahram_Martirosyan_Engineer_CV.pdf" target="_blank" rel="noopener">Engineer <small>PDF</small></a>
-                            <a href="/cv/cv.html" target="_blank" rel="noopener">Interactive CV <small>HTML</small></a>
-                        </div>
-                    </details>
                     <a href="https://www.explainableai.app" target="_blank" rel="noopener" class="btn btn-ghost">ExplainableAI.app ↗</a>
                     <a href="#projects" class="btn btn-ghost">Projects</a>
-                </div>
-                <div class="hero-langs">
-                    <span class="lang-badge">Armenian</span>
-                    <span class="lang-badge">Russian</span>
-                    <span class="lang-badge">English</span>
                 </div>
             </div>
             <div class="hero-photo">
@@ -181,15 +168,15 @@
                 </div>
                 <div class="ach">
                     <div class="v">0.88 ms</div>
-                    <div class="l">on-device inference (ESP32)<small>eICocean 2027</small></div>
+                    <div class="l">on-device inference (ESP32)<small>eICocean 2027 <span class="date-tag">Forthcoming</span></small></div>
                 </div>
                 <div class="ach">
                     <div class="v">R² 0.973</div>
-                    <div class="l">ocean temperature reconstruction<small>eICocean 2027</small></div>
+                    <div class="l">ocean temperature reconstruction<small>eICocean 2027 <span class="date-tag">Forthcoming</span></small></div>
                 </div>
                 <div class="ach">
                     <div class="v">16.7%</div>
-                    <div class="l">certified CO₂ saving, concrete design<small>ICACTE 2027</small></div>
+                    <div class="l">certified CO₂ saving, concrete design<small>ICACTE 2027 <span class="date-tag">Forthcoming</span></small></div>
                 </div>
             </div>
             <div class="pub-cta">
@@ -372,7 +359,7 @@
                 </div>
             </div>
             <div class="pub-cta">
-                <a href="cv/cv.html" target="_blank" rel="noopener" class="btn btn-primary">Full list of publications →</a>
+                <a href="/publications/" target="_blank" rel="noopener" class="btn btn-primary">Full list of publications →</a>
             </div>
         </div>
     </section>
@@ -402,16 +389,19 @@
                     <span class="txt"><small>GitHub</small>@vmartirosyan</span>
                 </a>
             </div>
+            <form class="contact-form" onsubmit="return sendContact(event)">
+                <div class="contact-form-row">
+                    <input id="cf-name" type="text" placeholder="Name" required>
+                    <input id="cf-email" type="email" placeholder="Email" required>
+                </div>
+                <textarea id="cf-message" placeholder="Message" required></textarea>
+                <button type="submit" class="btn btn-primary">Send message</button>
+            </form>
         </div>
     </section>
 
     <footer>
         <div class="wrap">
-            <div class="cv-links">
-                <a href="/cv/Vahram_Martirosyan_Researcher_CV.pdf">Researcher CV (PDF)</a>
-                <a href="/cv/Vahram_Martirosyan_Engineer_CV.pdf">Engineer CV (PDF)</a>
-                <a href="/cv/cv.html" target="_blank" rel="noopener">Interactive CV</a>
-            </div>
             <p>Abu Dhabi, United Arab Emirates · © <span id="year">2026</span> Vahram Martirosyan</p>
         </div>
     </footer>
@@ -423,6 +413,16 @@ document.addEventListener('click', function (e) {
         if (!d.contains(e.target)) d.removeAttribute('open');
     });
 });
+    function sendContact(e) {
+    e.preventDefault();
+    var n = document.getElementById('cf-name').value.trim();
+    var em = document.getElementById('cf-email').value.trim();
+    var m = document.getElementById('cf-message').value.trim();
+    var subject = encodeURIComponent('Website contact from ' + n);
+    var body = encodeURIComponent(m + '\n\n— ' + n + ' <' + em + '>');
+    window.location.href = 'mailto:vmartirosyan@gmail.com?subject=' + subject + '&body=' + body;
+    return false;
+}
 </script>
 </body>
 </html>

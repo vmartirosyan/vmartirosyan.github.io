@@ -40,9 +40,9 @@
       ],
       "knowsAbout": ["Explainable AI", "Interpretable Machine Learning", "Ocean Science", "Edge AI", "High-Performance Computing", "Compiler Engineering"]
     }
-    </script>
+</script>
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23003366'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Segoe UI,sans-serif' font-weight='700' fill='%2300ccaa' text-anchor='middle'%3EVM%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -115,21 +115,8 @@
                     Higher Colleges of Technology, Абу-Даби.
                 </p>
                 <div class="hero-actions">
-                    <details class="cv-menu hero-cv">
-                        <summary class="btn btn-primary">Смотреть резюме ▾</summary>
-                        <div class="cv-menu-list">
-                            <a href="/cv/Vahram_Martirosyan_CV_RU.pdf" target="_blank" rel="noopener">Резюме исследователя <small>PDF</small></a>
-                            <a href="/cv/Vahram_Martirosyan_Engineer_CV_RU.pdf" target="_blank" rel="noopener">Резюме инженера <small>PDF</small></a>
-                            <a href="/cv/cv.ru.html" target="_blank" rel="noopener">Интерактивное резюме <small>HTML</small></a>
-                        </div>
-                    </details>
                     <a href="https://www.explainableai.app" target="_blank" rel="noopener" class="btn btn-ghost">ExplainableAI.app ↗</a>
                     <a href="#projects" class="btn btn-ghost">Проекты</a>
-                </div>
-                <div class="hero-langs">
-                    <span class="lang-badge">Армянский</span>
-                    <span class="lang-badge">Русский</span>
-                    <span class="lang-badge">Английский</span>
                 </div>
             </div>
             <div class="hero-photo">
@@ -155,9 +142,9 @@
             </div>
             <div class="ach-strip">
                 <div class="ach"><div class="v">958×</div><div class="l">пиковое ускорение GPU<small>LEAP · ITCA 2026</small></div></div>
-                <div class="ach"><div class="v">0.88 ms</div><div class="l">вывод на устройстве (ESP32)<small>eICocean 2027</small></div></div>
-                <div class="ach"><div class="v">R² 0.973</div><div class="l">реконструкция температуры океана<small>eICocean 2027</small></div></div>
-                <div class="ach"><div class="v">16.7%</div><div class="l">сертифицированная экономия CO₂, проектирование бетона<small>ICACTE 2027</small></div></div>
+                <div class="ach"><div class="v">0.88 ms</div><div class="l">вывод на устройстве (ESP32)<small>eICocean 2027 <span class="date-tag">Ожидается</span></small></div></div>
+                <div class="ach"><div class="v">R² 0.973</div><div class="l">реконструкция температуры океана<small>eICocean 2027 <span class="date-tag">Ожидается</span></small></div></div>
+                <div class="ach"><div class="v">16.7%</div><div class="l">сертифицированная экономия CO₂, проектирование бетона<small>ICACTE 2027 <span class="date-tag">Ожидается</span></small></div></div>
             </div>
             <div class="pub-cta"><a href="/achievements/" class="btn btn-primary">Все достижения →</a></div>
         </div>
@@ -230,7 +217,7 @@
                 <div class="pub"><div class="badge"><svg class="ico"><use href="#i-heart"/></svg></div><div class="body"><div class="pub-head"><h3>Efficient Multi-Class ECG Classification Using Polynomial Regression with an Analytical Solver</h3><span class="status-pill pill-review">На рассмотрении</span></div><div class="meta"><em>Applied Computational Intelligence and Soft Computing</em> · Martirosyan, V.</div><div class="metrics">82.75% точности на шести классах · 12 мкс вывод · превосходит CNN, RF, XGBoost, SVM</div></div></div>
                 <div class="pub"><div class="badge"><svg class="ico"><use href="#i-bolt"/></svg></div><div class="body"><div class="pub-head"><h3>LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization</h3><span class="status-pill pill-accepted">Принято</span></div><div class="meta"><em>ITCA 2026, Гуанчжоу</em><span class="date-tag">Ожидается</span> · Martirosyan, V.</div><div class="metrics">100%/98% подъёма (43 программы) · 10.4× над -O0 · 958× GPU · 377/377 тестов</div></div></div>
             </div>
-            <div class="pub-cta"><a href="/cv/cv.ru.html" target="_blank" rel="noopener" class="btn btn-primary">Полный список публикаций →</a></div>
+            <div class="pub-cta"><a href="/ru/publications/" target="_blank" rel="noopener" class="btn btn-primary">Полный список публикаций →</a></div>
         </div>
     </section>
 
@@ -247,16 +234,19 @@
                 <a class="contact-card" href="https://www.researchgate.net/profile/Vahram-Martirosyan-2" target="_blank" rel="noopener"><span class="ic"><svg class="ico"><use href="#i-file"/></svg></span><span class="txt"><small>ResearchGate</small>Vahram-Martirosyan-2</span></a>
                 <a class="contact-card" href="https://github.com/vmartirosyan" target="_blank" rel="noopener"><span class="ic"><svg class="ico"><use href="#i-code"/></svg></span><span class="txt"><small>GitHub</small>@vmartirosyan</span></a>
             </div>
+            <form class="contact-form" onsubmit="return sendContact(event)">
+                <div class="contact-form-row">
+                    <input id="cf-name" type="text" placeholder="Имя" required>
+                    <input id="cf-email" type="email" placeholder="Эл. почта" required>
+                </div>
+                <textarea id="cf-message" placeholder="Сообщение" required></textarea>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
         </div>
     </section>
 
     <footer>
         <div class="wrap">
-            <div class="cv-links">
-                <a href="/cv/Vahram_Martirosyan_CV_RU.pdf">Резюме исследователя (RU, PDF)</a>
-                <a href="/cv/Vahram_Martirosyan_Engineer_CV_RU.pdf">Резюме инженера (RU, PDF)</a>
-                <a href="/cv/cv.ru.html" target="_blank" rel="noopener">Интерактивное резюме</a>
-            </div>
             <p>Абу-Даби, ОАЭ · © <span id="year">2026</span> Vahram Martirosyan</p>
         </div>
     </footer>
@@ -268,6 +258,16 @@ document.addEventListener('click', function (e) {
         if (!d.contains(e.target)) d.removeAttribute('open');
     });
 });
+    function sendContact(e) {
+    e.preventDefault();
+    var n = document.getElementById('cf-name').value.trim();
+    var em = document.getElementById('cf-email').value.trim();
+    var m = document.getElementById('cf-message').value.trim();
+    var subject = encodeURIComponent('Website contact from ' + n);
+    var body = encodeURIComponent(m + '\n\n— ' + n + ' <' + em + '>');
+    window.location.href = 'mailto:vmartirosyan@gmail.com?subject=' + subject + '&body=' + body;
+    return false;
+}
 </script>
 </body>
 </html>
