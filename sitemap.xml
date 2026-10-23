@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://vmartirosyan.github.io/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/hy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/cv/cv.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/cv/cv.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/cv/cv.ru.html"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/cv/cv.hy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/cv/cv.html"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/cv/cv.ru.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/cv/cv.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/cv/cv.ru.html"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/cv/cv.hy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/cv/cv.html"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/cv/cv.hy.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/cv/cv.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/cv/cv.ru.html"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/cv/cv.hy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/cv/cv.html"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/papers/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/publications/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/publications/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/publications/"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/publications/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/publications/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/ru/publications/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/publications/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/publications/"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/publications/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/publications/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/hy/publications/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/publications/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/publications/"/>
+    <xhtml:link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/publications/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/publications/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/achievements/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/demos/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/demos/digit-recognition.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/math_editor/deployment/math-editor-standalone.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/math_editor/app/index.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://vmartirosyan.github.io/parallel/SPEEDUP_REPORT.pdf</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+</urlset>

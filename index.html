@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Vahram Martirosyan — Interpretable ML, Explainable AI, HPC</title>
+    <meta name="description" content="Dr. Vahram Martirosyan — Doctor of Computational Mathematics. Interpretable ML for ocean & climate science, explainable AI with polynomial regression models, edge AI, and LLVM-based HPC/compiler engineering.">
+    <meta name="author" content="Vahram Martirosyan">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vmartirosyan.github.io/">
+    <link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/">
+    <link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/">
+    <link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/">
+    <link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Dr. Vahram Martirosyan — Interpretable ML, Explainable AI, HPC">
+    <meta property="og:description" content="Interpretable ML for ocean & climate science, explainable AI with polynomial regression models, edge AI, and LLVM-based HPC/compiler engineering.">
+    <meta property="og:url" content="https://vmartirosyan.github.io/">
+    <meta property="og:image" content="https://vmartirosyan.github.io/assets/profile.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dr. Vahram Martirosyan — Interpretable ML, Explainable AI, HPC">
+    <meta name="twitter:description" content="Interpretable ML for ocean & climate science, explainable AI with polynomial regression models, edge AI, and LLVM-based HPC/compiler engineering.">
+    <meta name="twitter:image" content="https://vmartirosyan.github.io/assets/profile.jpg">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Vahram Martirosyan",
+      "honorificPrefix": "Dr.",
+      "url": "https://vmartirosyan.github.io/",
+      "image": "https://vmartirosyan.github.io/assets/profile.jpg",
+      "jobTitle": "Chief Scientist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "ExplainableAI.app",
+        "url": "https://www.explainableai.app"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Yerevan State University"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/vahrammartirosyan",
+        "https://www.researchgate.net/profile/Vahram-Martirosyan-2",
+        "https://github.com/vmartirosyan"
+      ],
+      "knowsAbout": [
+        "Explainable AI",
+        "Interpretable Machine Learning",
+        "Ocean Science",
+        "Edge AI",
+        "High-Performance Computing",
+        "Compiler Engineering"
+      ]
+    }
+</script>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-ocean" viewBox="0 0 24 24"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 7c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></symbol>
+  <symbol id="i-ai" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 6V3M12 6V3M17 6V3M7 21v-3M12 21v-3M17 21v-3"/><path d="M7 10h3v4H7zM14 10h3v4h-3z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></symbol>
+  <symbol id="i-tools" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.2-2.2 2.8-2.8Z"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 1.8 2h10.4A2 2 0 0 0 19 19l-5-10V3"/><path d="M7.5 14h9"/></symbol>
+  <symbol id="i-digits" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 8h3v8M9 16h6"/></symbol>
+  <symbol id="i-divide" viewBox="0 0 24 24"><circle cx="12" cy="6" r="1"/><circle cx="12" cy="18" r="1"/><path d="M5 12h14"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7Z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+</svg>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#top" class="monogram">
+                <span class="mark">VM</span>
+                <span>Vahram&nbsp;Martirosyan</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#focus">Focus</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#books">Books</a>
+                    <a href="#achievements">Achievements</a>
+                    <a href="#publications">Publications</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <details class="cv-menu nav-cv">
+                    <summary>CV ▾</summary>
+                    <div class="cv-menu-list">
+                        <a href="cv/Vahram_Martirosyan_Researcher_CV.pdf" target="_blank" rel="noopener">Researcher <small>PDF</small></a>
+                        <a href="cv/Vahram_Martirosyan_Engineer_CV.pdf" target="_blank" rel="noopener">Engineer <small>PDF</small></a>
+                        <a href="cv/Vahram_Martirosyan_Educator_CV.pdf" target="_blank" rel="noopener">Educator <small>PDF</small></a>
+                        <a href="cv/cv.html" target="_blank" rel="noopener">Interactive CV <small>HTML</small></a>
+                    </div>
+                </details>
+                <div class="lang-switch">
+                    <a href="index.html" class="lang-link active">EN</a>
+                    <a href="ru/index.html" class="lang-link">RU</a>
+                    <a href="hy/index.html" class="lang-link">HY</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="top">
+        <div class="wrap hero-grid">
+            <div>
+                <span class="eyebrow">Doctor · Researcher · Engineer · Educator</span>
+                <h1>Dr. Vahram Martirosyan</h1>
+                <p class="role">
+                    <strong>Interpretable ML for Ocean Science</strong> ·
+                    <strong>Explainable AI</strong> ·
+                    <strong>Edge AI</strong> ·
+                    <strong>HPC &amp; Compiler Engineering</strong>
+                </p>
+                <p class="blurb">
+                    Doctor of Computational Mathematics with 23+ years across research, industry, and academia.
+                    I build <strong>intrinsically interpretable</strong> polynomial regression models for ocean and
+                    climate science, medicine, materials, and remote sensing — and the <strong>compilers and
+                    runtimes</strong> that make them fast, from LLVM auto-parallelisation to sub-millisecond
+                    inference on tiny devices. Currently <strong>Chief Scientist at ExplainableAI.app</strong> and
+                    <strong>Assistant Professor</strong> at Higher Colleges of Technology, Abu Dhabi.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://www.explainableai.app" target="_blank" rel="noopener" class="btn btn-ghost">ExplainableAI.app ↗</a>
+                    <a href="#projects" class="btn btn-ghost">Projects</a>
+                </div>
+            </div>
+            <div class="hero-photo">
+                <img src="assets/profile.jpg" alt="Dr. Vahram Martirosyan" width="260" height="260">
+            </div>
+        </div>
+    </header>
+
+    <section class="stats">
+        <div class="wrap stats-grid">
+            <div class="stat">
+                <div class="num">23+</div>
+                <div class="label">Years of experience</div>
+            </div>
+            <div class="stat">
+                <div class="num">~20</div>
+                <div class="label">Years of teaching</div>
+            </div>
+            <div class="stat">
+                <div class="num">25+</div>
+                <div class="label">Publications</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="achievements">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="kicker">Track record</span>
+                <h2>Significant achievements</h2>
+                <p>Headline results from research, books, and teaching — on-device inference, certified design, GPU speed-ups, and published textbooks.</p>
+            </div>
+            <div class="ach-strip">
+                <div class="ach">
+                    <div class="v">958×</div>
+                    <div class="l">peak GPU speed-up<small>LEAP · ITCA 2026</small></div>
+                </div>
+                <div class="ach">
+                    <div class="v">0.88 ms</div>
+                    <div class="l">on-device inference (ESP32)<small>eICocean 2027 <span class="date-tag">Forthcoming</span></small></div>
+                </div>
+                <div class="ach">
+                    <div class="v">R² 0.973</div>
+                    <div class="l">ocean temperature reconstruction<small>eICocean 2027 <span class="date-tag">Forthcoming</span></small></div>
+                </div>
+                <div class="ach">
+                    <div class="v">16.7%</div>
+                    <div class="l">certified CO₂ saving, concrete design<small>ICACTE 2027 <span class="date-tag">Forthcoming</span></small></div>
+                </div>
+                <div class="ach">
+                    <div class="v">3 books</div>
+                    <div class="l">Operating systems &amp; Linux programming<small>2011, 2022, 2024</small></div>
+                </div>
+            </div>
+            <div class="pub-cta">
+                <a href="achievements/" class="btn btn-primary">See all achievements →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="focus">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="kicker">What I work on</span>
+                <h2>Focus areas</h2>
+                <p>Making complex computational problems both efficient and interpretable — no black boxes.</p>
+            </div>
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-ocean"/></svg></div>
+                    <h3>Interpretable ML for Ocean &amp; Climate</h3>
+                    <p>Polynomial zone ensembles for global ocean temperature, salinity, and dissolved-oxygen reconstruction, and significant-wave-height modelling.</p>
+                    <div class="tags">
+                        <span class="tag">Ocean T/S/DO</span>
+                        <span class="tag">WOA / IAP</span>
+                        <span class="tag">Sub-MB models</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-ai"/></svg></div>
+                    <h3>Explainable AI</h3>
+                    <p>Polynomial regression models with stagewise and elastic-net regularisation, explicit feature importance, and model sparsification.</p>
+                    <div class="tags">
+                        <span class="tag">PRMs</span>
+                        <span class="tag">Interpretability</span>
+                        <span class="tag">Compression</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-chip"/></svg></div>
+                    <h3>Edge / On-Device AI</h3>
+                    <p>int8/int16 quantisation and fixed-point kernels running sub-MB models on ESP32, RP2350, and Arduino with strict latency and energy budgets.</p>
+                    <div class="tags">
+                        <span class="tag">TinyML</span>
+                        <span class="tag">ESP32</span>
+                        <span class="tag">180 µJ/inference</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-bolt"/></svg></div>
+                    <h3>HPC &amp; Compiler Engineering</h3>
+                    <p>LLVM/Clang passes for automatic parallelisation and binary lifting, with CPU and GPU (OpenCL/SPIR-V) backends — no source modification required.</p>
+                    <div class="tags">
+                        <span class="tag">HPC++</span>
+                        <span class="tag">LEAP</span>
+                        <span class="tag">LLVM</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-tools"/></svg></div>
+                    <h3>Systems Programming</h3>
+                    <p>C/C++ expert with Linux kernel modules, device drivers (Ext4, XFS, JFS, BtrFS), Win32 API, GTK+, and embedded/IoT experience.</p>
+                    <div class="tags">
+                        <span class="tag">Linux kernel</span>
+                        <span class="tag">Drivers</span>
+                        <span class="tag">IoT</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-cap"/></svg></div>
+                    <h3>Teaching &amp; Academic Leadership</h3>
+                    <p>Assistant Professor, designing and standardising courses across campuses in programming, architecture, IoT, and statistics.</p>
+                    <div class="tags">
+                        <span class="tag">HCT Abu Dhabi</span>
+                        <span class="tag">Curriculum</span>
+                        <span class="tag">Mentoring</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects" style="background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="kicker">Selected work</span>
+                <h2>Projects &amp; demos</h2>
+                <p>A mix of research platforms, engineering tools, and interactive browser demos.</p>
+            </div>
+            <div class="grid grid-2">
+                <a class="project" href="https://www.explainableai.app" target="_blank" rel="noopener">
+                    <div class="top">
+                        <span class="ic"><svg class="ico"><use href="#i-flask"/></svg></span>
+                        <span class="pill pill-live">Live</span>
+                    </div>
+                    <h3>ExplainableAI.app</h3>
+                    <p>No-code ML platform built entirely on intrinsically interpretable polynomial regression models. Browser-side WebAssembly training, a hand-written C++ inference engine, and an AI App Builder.</p>
+                    <span class="go">Visit site ↗</span>
+                </a>
+                <a class="project" href="demos/">
+                    <div class="top">
+                        <span class="ic"><svg class="ico"><use href="#i-digits"/></svg></span>
+                        <span class="pill pill-live">Live demo</span>
+                    </div>
+                    <h3>Client-Side Digit Recognition</h3>
+                    <p>An ensemble of 10 sparse polynomial networks recognising handwritten digits ~5 ms per prediction, running fully in the browser with no server.</p>
+                    <span class="go">Try the demo →</span>
+                </a>
+                <a class="project" href="math_editor/deployment/math-editor-standalone.html">
+                    <div class="top">
+                        <span class="ic"><svg class="ico"><use href="#i-divide"/></svg></span>
+                        <span class="pill pill-live">Live demo</span>
+                    </div>
+                    <h3>Math Expression Editor</h3>
+                    <p>A visual editor for building and rendering math expressions with fractions, powers, and roots — LaTeX export, JPEG round-trip, and offline support.</p>
+                    <span class="go">Open the editor →</span>
+                </a>
+                <a class="project" href="parallel/SPEEDUP_REPORT.pdf">
+                    <div class="top">
+                        <span class="ic"><svg class="ico"><use href="#i-bolt"/></svg></span>
+                        <span class="pill pill-live">Report</span>
+                    </div>
+                    <h3>HPC++ / LEAP Speed-up Report</h3>
+                    <p>LLVM-based automatic parallelisation with heterogeneous CPU-GPU execution: 8.4× average and up to 958× peak GPU speed-up, plus byte-identical lifting of legacy x86-64 binaries.</p>
+                    <span class="go">Read the PDF ↗</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="books">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="kicker">Books &amp; teaching</span>
+                <h2>Books, tutorials &amp; school</h2>
+                <p>Beyond research: textbooks, teaching materials, and building a programming school.</p>
+            </div>
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="ic"><svg class="ico"><use href="#i-book"/></svg></div>
+                    <h3>Books</h3>
+                    <p>Three books on operating systems, systems programming, and Linux fundamentals.</p>
+                    <ul class="book-list">
+                        <li><a href="https://www.researchgate.net/publication/384331222_Programming_via_Operating_Systems_Second_Edition#fullTextFileContent" target="_blank" rel="noopener">Programming via Operating Systems, Second Edition</a><span class="book-year">2024</span></li>
+                        <li><span>Programming via Operating Systems</span><span class="book-year">2022</span></li>
+                        <li><a href="https://www.researchgate.net/publication/384332530_Basics_of_programming_in_OS_Linux_environment" target="_blank" rel="noopener">Basics of Programming in OS Linux Environment</a><span class="book-year">2011</span></li>
+                    </ul>
+                    <a class="card-cta" href="publications/index.html">All books →</a>
+                </div>
+                <a class="card" href="publications/index.html" style="text-decoration:none">
+                    <div class="ic"><svg class="ico"><use href="#i-code"/></svg></div>
+                    <h3>Linux programming tutorials</h3>
+                    <p>Co-authored two Russian-language tutorials on Linux/POSIX programming, from system calls to the GUI, used at MIPT and RAU.</p>
+                    <div class="tags"><span class="tag">MIPT 2011</span><span class="tag">RAU 2010</span></div>
+                    <span class="card-cta">See in publications →</span>
+                </a>
+                <a class="card" href="https://www.mutexschool.com" target="_blank" rel="noopener" style="text-decoration:none">
+                    <div class="ic"><svg class="ico"><use href="#i-cap"/></svg></div>
+                    <h3>Founder, MutEx School</h3>
+                    <p>Founded and ran a programming school in Yerevan (2019–2023), delivering courses and public lectures.</p>
+                    <div class="tags"><span class="tag">Yerevan</span><span class="tag">2019–2023</span></div>
+                    <span class="card-cta">See in CV →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="publications">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="kicker">Research</span>
+                <h2>Selected publications</h2>
+                <p>25+ publications spanning ocean and climate data science, medical ML, materials, and compiler engineering.</p>
+            </div>
+            <div>
+                <div class="pub">
+                    <div class="badge"><svg class="ico"><use href="#i-book"/></svg></div>
+                    <div class="body">
+                        <div class="pub-head">
+                            <h3>Accuracy and Interpretability from a Single Solver: Polynomial Regression up to Degree 5 for Concrete Compressive Strength Prediction</h3>
+                            <span class="status-pill pill-accepted">Accepted</span>
+                        </div>
+                        <div class="meta"><em>ICACTE 2026</em> · Martirosyan, V.</div>
+                        <div class="metrics">R² 0.859 · 74% of retained terms match known concrete physics</div>
+                    </div>
+                </div>
+                <div class="pub">
+                    <div class="badge"><svg class="ico"><use href="#i-ocean"/></svg></div>
+                    <div class="body">
+                        <div class="pub-head">
+                            <h3>On-Device TinyML for Multi-Variable Ocean Profiling</h3>
+                            <span class="status-pill pill-accepted">Accepted</span>
+                        </div>
+                        <div class="meta"><em>eICocean 2027</em><span class="date-tag">Forthcoming</span> · Martirosyan, V.</div>
+                        <div class="metrics">R² 0.973 T / 0.794 S / 0.895 DO · 0.88 ms on ESP32 · 180 µJ/inference</div>
+                    </div>
+                </div>
+                <div class="pub">
+                    <div class="badge"><svg class="ico"><use href="#i-heart"/></svg></div>
+                    <div class="body">
+                        <div class="pub-head">
+                            <h3>Efficient Multi-Class ECG Classification Using Polynomial Regression with an Analytical Solver</h3>
+                            <span class="status-pill pill-review">Under Review</span>
+                        </div>
+                        <div class="meta"><em>Applied Computational Intelligence and Soft Computing</em> · Martirosyan, V.</div>
+                        <div class="metrics">82.75% six-class accuracy · 12 µs inference · beats CNN, RF, XGBoost, SVM</div>
+                    </div>
+                </div>
+                <div class="pub">
+                    <div class="badge"><svg class="ico"><use href="#i-bolt"/></svg></div>
+                    <div class="body">
+                        <div class="pub-head">
+                            <h3>LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization</h3>
+                            <span class="status-pill pill-accepted">Accepted</span>
+                        </div>
+                        <div class="meta"><em>ITCA 2026, Guangzhou</em><span class="date-tag">Forthcoming</span> · Martirosyan, V.</div>
+                        <div class="metrics">100%/98% liftability (43 programs) · 10.4× over -O0 · 958× GPU · 377/377 tests</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pub-cta">
+                <a href="publications/index.html" target="_blank" rel="noopener" class="btn btn-primary">Full list of publications →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="wrap section" style="padding: 56px 24px;">
+            <div class="section-head">
+                <span class="kicker">Get in touch</span>
+                <h2>Contact</h2>
+                <p>Open to research collaborations, consulting, and talks.</p>
+            </div>
+            <div class="contact-grid">
+                <a class="contact-card" href="mailto:vmartirosyan@gmail.com">
+                    <span class="ic"><svg class="ico"><use href="#i-mail"/></svg></span>
+                    <span class="txt"><small>Email</small>vmartirosyan@gmail.com</span>
+                </a>
+                <a class="contact-card" href="https://www.linkedin.com/in/vahrammartirosyan" target="_blank" rel="noopener">
+                    <span class="ic"><svg class="ico"><use href="#i-link"/></svg></span>
+                    <span class="txt"><small>LinkedIn</small>in/vahrammartirosyan</span>
+                </a>
+                <a class="contact-card" href="https://www.researchgate.net/profile/Vahram-Martirosyan-2" target="_blank" rel="noopener">
+                    <span class="ic"><svg class="ico"><use href="#i-file"/></svg></span>
+                    <span class="txt"><small>ResearchGate</small>Vahram-Martirosyan-2</span>
+                </a>
+                <a class="contact-card" href="https://github.com/vmartirosyan" target="_blank" rel="noopener">
+                    <span class="ic"><svg class="ico"><use href="#i-code"/></svg></span>
+                    <span class="txt"><small>GitHub</small>@vmartirosyan</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">
+            <p>Abu Dhabi, United Arab Emirates · © <span id="year">2026</span> Vahram Martirosyan</p>
+        </div>
+    </footer>
+
+    <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener('click', function (e) {
+    document.querySelectorAll('details.cv-menu[open]').forEach(function (d) {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+});
+</script>
+</body>
+</html>

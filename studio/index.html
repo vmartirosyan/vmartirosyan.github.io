@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ExAI Studio — private ML workspace</title>
+  <meta name="description" content="A browser-first machine-learning workspace with an AI assistant at the center. Train and run explainable models without your data leaving the device.">
+  <link rel="stylesheet" href="./css/studio.css?v=20261021c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e6b5c'/%3E%3Cpath d='M9 22V10h4l3 7 3-7h4v12h-3v-7l-3 7h-2l-3-7v7z' fill='%23fff'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      if (window.location.protocol === 'file:') return;
+      var RELOAD_KEY = 'studio.coiReloaded';
+      if (!('serviceWorker' in navigator)) return;
+      if (window.crossOriginIsolated) {
+        try { sessionStorage.removeItem(RELOAD_KEY); } catch (_) {}
+        return;
+      }
+      function reloadOnce() {
+        try {
+          if (sessionStorage.getItem(RELOAD_KEY)) return;
+          sessionStorage.setItem(RELOAD_KEY, '1');
+        } catch (_) {}
+        window.location.reload();
+      }
+      navigator.serviceWorker.register('./coi-serviceworker.js').then(function () {
+        return navigator.serviceWorker.ready;
+      }).then(function () {
+        if (!navigator.serviceWorker.controller) {
+          navigator.serviceWorker.addEventListener('controllerchange', reloadOnce, { once: true });
+        } else if (!window.crossOriginIsolated) {
+          reloadOnce();
+        }
+      }).catch(function (error) {
+        console.warn('Cross-origin isolation service worker failed:', error);
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div id="app" class="app">
+    <aside id="sidebar" class="sidebar"></aside>
+    <main class="main">
+      <header id="header" class="header"></header>
+      <nav id="main-tabs" class="main-tabs" aria-label="Main views"></nav>
+      <section id="chat" class="chat" aria-live="polite"></section>
+      <section id="data-view" class="explain-view" hidden></section>
+      <section id="explain-view" class="explain-view" hidden></section>
+      <section id="deploy-view" class="explain-view" hidden></section>
+      <section id="models-view" class="explain-view" hidden></section>
+      <section id="solutions-view" class="explain-view" hidden></section>
+      <footer id="composer" class="composer">
+        <div id="chat-mode-bar" class="chat-mode-bar" hidden></div>
+        <div id="composer-notice" class="composer-notice"></div>
+        <form id="composer-form" class="composer-form">
+          <textarea id="composer-input" rows="1" placeholder="Ask Studio to clean your data, train a model, explain a result, or build an app…" maxlength="4000"></textarea>
+          <button id="composer-send" type="submit" class="send-btn" disabled>Send</button>
+        </form>
+        <div class="composer-hint">
+          <span>Enter to send · Shift+Enter for a new line</span>
+          <span id="privacy-hint">Data stays in this browser</span>
+        </div>
+      </footer>
+    </main>
+    <aside id="workspace" class="workspace"></aside>
+  </div>
+
+  <div id="solution-modal" class="solution-modal" hidden>
+    <div class="solution-modal-backdrop" data-action="close-solution-modal"></div>
+    <section class="solution-modal-panel" role="dialog" aria-modal="true" aria-labelledby="solution-modal-title">
+      <header class="solution-modal-head">
+        <div>
+          <div class="solutions-kicker">Large preview</div>
+          <h3 id="solution-modal-title">Solution</h3>
+        </div>
+        <div class="btn-row">
+          <button class="btn ghost btn-sm" type="button" data-action="open-solution-edit">Edit with AI</button>
+          <button class="btn ghost btn-sm" type="button" data-action="close-solution-modal">Close</button>
+        </div>
+      </header>
+      <div id="solution-modal-runtime-banner" class="solution-runtime-slot"></div>
+      <iframe id="solution-modal-frame" title="Large solution preview" sandbox="allow-scripts allow-forms"></iframe>
+    </section>
+  </div>
+
+  <div id="solution-edit-modal" class="solution-modal" hidden>
+    <div class="solution-modal-backdrop" data-action="close-solution-edit"></div>
+    <section class="solution-edit-panel" role="dialog" aria-modal="true" aria-labelledby="solution-edit-title">
+      <header class="solution-edit-head">
+        <div>
+          <div class="solutions-kicker">Edit in place</div>
+          <h3 id="solution-edit-title">Edit with AI</h3>
+          <p id="solution-edit-name" class="help"></p>
+        </div>
+        <button class="btn ghost btn-sm" type="button" data-action="close-solution-edit">Cancel</button>
+      </header>
+      <p class="help">Describe what to change. This updates the selected solution in place; it does not create a new one.</p>
+      <label for="solution-edit-instruction" class="help" style="display:block;font-weight:700;margin:10px 0 4px">Your instruction</label>
+      <textarea id="solution-edit-instruction" rows="5" placeholder="Make the chart taller, add a reset button, keep the date-range controls, and improve the CSV error handling…"></textarea>
+      <div id="solution-edit-status" class="solution-edit-status"></div>
+      <div class="btn-row" style="justify-content:flex-end;margin-top:10px">
+        <button class="btn ghost" type="button" data-action="close-solution-edit">Cancel</button>
+        <button class="btn primary" type="button" data-action="apply-solution-edit" id="solution-edit-apply">Apply changes</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="marketing" class="marketing" hidden>
+    <header class="mkt-header">
+      <div class="mkt-header-inner">
+        <button type="button" class="mkt-logo" data-action="main-view" data-view="chat">
+          <span class="mkt-logo-mark">ExAI</span><span>Studio</span>
+        </button>
+        <nav class="mkt-nav" aria-label="Marketing">
+          <button data-action="main-view" data-view="use-cases">Use cases</button>
+          <button data-action="main-view" data-view="technology">Technology</button>
+          <button data-action="main-view" data-view="team">Team</button>
+          <button data-action="main-view" data-view="about">About</button>
+          <button data-action="main-view" data-view="contact">Contact</button>
+          <button class="mkt-cta" data-action="main-view" data-view="chat">Open Studio →</button>
+        </nav>
+      </div>
+    </header>
+    <main id="marketing-content" class="mkt-main"></main>
+    <footer class="mkt-footer">
+      <div class="mkt-footer-inner">
+        <span>© <span id="mkt-year">2026</span> Mutex Software Development</span>
+        <span><a href="https://www.explainableai.app" target="_blank" rel="noopener">ExplainableAI.app ↗</a></span>
+      </div>
+    </footer>
+  </div>
+
+  <input id="file-input" type="file" accept=".csv,text/csv" hidden>
+  <input id="image-input" type="file" webkitdirectory multiple accept="image/*" hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      if (window.location.protocol === 'file:') {
+        document.body.innerHTML =
+          '<main style="max-width:720px;margin:12vh auto;padding:0 22px;font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.6;color:#1c1c19">' +
+            '<div style="display:inline-block;padding:5px 9px;border-radius:999px;background:#e3f0eb;color:#0a5448;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Static build</div>' +
+            '<h1 style="font-size:2rem;letter-spacing:-.03em;margin:14px 0 8px">Open this build through a web server</h1>' +
+            '<p style="color:#727269">The page was opened with <code>file://</code>. Browsers block ES modules, service workers, and cross-origin isolation on that protocol, so the Studio app cannot start.</p>' +
+            '<p style="color:#727269">Use the live site:</p>' +
+            '<p><a href="https://vmartirosyan.github.io/studio/" style="color:#0e6b5c;font-weight:700">https://vmartirosyan.github.io/studio/</a></p>' +
+            '<p style="color:#727269;margin-top:20px">Or serve the folder locally:</p>' +
+            '<pre style="background:#f4f1ea;border:1px solid #ded8ca;border-radius:10px;padding:12px;overflow:auto"><code>cd studio\npython3 -m http.server 8080</code></pre>' +
+            '<p style="color:#727269">Then open <code>http://localhost:8080/</code>.</p>' +
+          '</main>';
+        return;
+      }
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = './js/app.js?v=20261021c';
+      document.body.appendChild(script);
+    })();
+  </script>
+</body>
+</html>

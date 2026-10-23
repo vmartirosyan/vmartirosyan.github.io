@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Significant Achievements</title>
+<meta name="description" content="Headline results from research, books, and teaching"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vmartirosyan.github.io/achievements/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Significant Achievements"/>
+<meta property="og:description" content="Headline results from research, books, and teaching"/>
+<meta property="og:url" content="https://vmartirosyan.github.io/achievements/"/>
+<meta property="og:image" content="https://vmartirosyan.github.io/assets/profile.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Significant Achievements"/>
+<meta name="twitter:description" content="Headline results from research, books, and teaching"/>
+<meta name="twitter:image" content="https://vmartirosyan.github.io/assets/profile.jpg"/>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="achievements.css"/>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="../">← Vahram Martirosyan</a>
+    <h1>Significant Achievements</h1>
+    <p class="subtitle">Headline results from research, books, and teaching</p>
+    <p class="intro">Each card lists results exactly as reported in the corresponding paper or book. Metrics are measured figures, not projections.</p>
+    <p class="updated">Last updated: 2026-10-17</p>
+  </div>
+</header>
+<main class="wrap">
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">On-Device / Edge AI</span>
+        <span class="pill pill-accepted">Accepted</span>
+      </div>
+      <h3>Efficient and Interpretable On-Device Polynomial Inference for Multi-Variable Ocean Profiling</h3>
+      <div class="ach-metrics"><span class="metric"><b>R² 0.973</b> ocean temperature</span><span class="metric"><b>R² 0.895 / 0.794</b> dissolved oxygen / salinity</span><span class="metric"><b>0.88 ms</b> inference on ESP32 (180 µJ)</span><span class="metric"><b>1.12 ms</b> inference on RP2350 (96 µJ)</span><span class="metric"><b>4.4 µs</b> desktop inference</span></div>
+      <p class="ach-summary">Interpretable polynomial zone ensembles reconstruct global ocean temperature, salinity and dissolved oxygen, and run on flight-class microcontrollers with no cloud dependency and a sub-megabyte footprint.</p>
+      <div class="ach-venue">IEEE eICocean 2027 (Qingdao)</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Remote Sensing / SAR + TinyML</span>
+        <span class="pill pill-accepted">Accepted</span>
+      </div>
+      <h3>Deterministic and Auditable On-Device Polynomial Inference for On-Board SAR Oil-Spill Screening</h3>
+      <div class="ach-metrics"><span class="metric"><b>G-mean 0.822</b> Deep-SAR SOS benchmark</span><span class="metric"><b>657 → 82 KB</b> int8 model (G-mean cost 0.001)</span><span class="metric"><b>15 KB</b> model on ATmega328P (G-mean 0.803)</span><span class="metric"><b>3.76&ndash;9.2 ms</b> per tile on 32-bit microcontrollers</span><span class="metric"><b>54,371</b> held-out tiles</span></div>
+      <p class="ach-summary">A frozen PCA front end and closed-form degree-2 polynomial head are folded and quantised into a fixed-point kernel, screening SAR tiles (Sentinel-1 C-band and ALOS PALSAR L-band) for oil spills entirely on-board with a deterministic, auditable model.</p>
+      <div class="ach-venue">IEEE EIECS 2026</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Edge AI / Physics</span>
+        <span class="pill pill-review">Submitted</span>
+      </div>
+      <h3>Real-Time Phase Classification and Instability Prediction in Bose&ndash;Einstein Condensates with Edge-Deployed Interpretable Polynomial Surrogates</h3>
+      <div class="ach-metrics"><span class="metric"><b>27.8 µs</b> on RP2350 (Cortex-M33)</span><span class="metric"><b>33.4 µs</b> on ESP32</span><span class="metric"><b>300 B</b> int16 model</span></div>
+      <p class="ach-summary">An interpretable polynomial surrogate classifies Bose&ndash;Einstein condensate phase and predicts supercritical collapse in real time on microcontrollers.</p>
+      <div class="ach-venue">IEEE ICET 2027 (Chengdu)</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Compilers / HPC</span>
+        <span class="pill pill-accepted">Accepted</span>
+      </div>
+      <h3>LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization</h3>
+      <div class="ach-metrics"><span class="metric"><b>958×</b> peak GPU offload speed-up</span><span class="metric"><b>10.4×</b> geometric mean over -O0</span><span class="metric"><b>2.2×</b> vs. -O2 baseline</span><span class="metric"><b>98&ndash;100%</b> liftability (43 programs)</span><span class="metric"><b>377</b> tests pass</span></div>
+      <p class="ach-summary">Lifts legacy x86-64 binaries to recompilable LLVM IR and automatically parallelizes them across CPU and GPU &mdash; no source code, annotations, or recompilation of the original program required.</p>
+      <div class="ach-venue">ITCA 2026 (Guangzhou)</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Explainable ML / Medicine</span>
+        <span class="pill pill-accepted">Accepted</span>
+      </div>
+      <h3>Automated Multi-Class ECG Arrhythmia Classification Using an Ensemble of Polynomial Regression Models</h3>
+      <div class="ach-metrics"><span class="metric"><b>78.32%</b> balanced accuracy</span><span class="metric"><b>82.75%</b> six-class accuracy</span><span class="metric"><b>99.7%</b> smaller (123.1M → 330K terms)</span><span class="metric"><b>~1 MB</b> sparsified model</span></div>
+      <p class="ach-summary">A one-vs-rest ensemble of polynomial regressors classifies six arrhythmia classes from ECG images, with a sparsified model 99.7% smaller within ~1 percentage point of the full ensemble.</p>
+      <div class="ach-venue">IEEE ICCA 2026 (Cairo); journal expansion under review (Wiley)</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Explainable ML / Materials</span>
+        <span class="pill pill-accepted">Accepted</span>
+      </div>
+      <h3>Accuracy and Interpretability from a Single Solver: Polynomial Regression up to Degree 5 for Concrete Compressive Strength Prediction</h3>
+      <div class="ach-metrics"><span class="metric"><b>R² 0.859</b> degree-5 accuracy</span><span class="metric"><b>6.25 MPa</b> RMSE</span><span class="metric"><b>88%</b> fewer terms</span><span class="metric"><b>74%</b> retained terms match concrete physics</span></div>
+      <p class="ach-summary">A single closed-form polynomial solver (up to degree 5) predicts concrete compressive strength, matching black-box baselines while exposing physically meaningful terms &mdash; no gradient descent.</p>
+      <div class="ach-venue">ICACTE 2026</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Explainable ML / Design</span>
+        <span class="pill pill-review">Submitted</span>
+      </div>
+      <h3>Physics-Informed Polynomial Regression for Certified Concrete Mix Design</h3>
+      <div class="ach-metrics"><span class="metric"><b>R² 0.919</b> degree-3, 5-fold CV</span><span class="metric"><b>4.73 MPa</b> RMSE</span><span class="metric"><b>gap 0</b> certified optimality (all instances)</span><span class="metric"><b>16.7%</b> embodied-CO₂ saving</span><span class="metric"><b>12.7&ndash;15.6%</b> cost saving vs. measured mixes</span></div>
+      <p class="ach-summary">Inverts a physics-informed polynomial surrogate via interval branch-and-bound to recommend cost- and carbon-optimal concrete mixes with a certified optimality gap.</p>
+      <div class="ach-venue">ICACTE 2027</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Books &amp; Teaching</span>
+        <span class="pill pill-accepted">Published</span>
+      </div>
+      <h3>Books: three titles</h3>
+      <div class="ach-metrics"><span class="metric"><b>3 books</b> 2011, 2022, 2024</span><span class="metric"><b>2 editions</b> Programming via OS</span></div>
+      <p class="ach-summary">Authored three books: Programming via Operating Systems (2022), its Second Edition (2024), and Basics of Programming in OS Linux Environment (2011). <a href="https://www.researchgate.net/publication/384331222_Programming_via_Operating_Systems_Second_Edition#fullTextFileContent" target="_blank" rel="noopener">Second Edition on ResearchGate</a>. <a href="https://www.researchgate.net/publication/384332530_Basics_of_programming_in_OS_Linux_environment" target="_blank" rel="noopener">Basics on ResearchGate</a>.</p>
+      <div class="ach-venue">Hilfmann Press · MIPT · 2011, 2022, 2024</div>
+    </article>
+
+    <article class="ach-card">
+      <div class="ach-top">
+        <span class="domain">Education &amp; Community</span>
+        <span class="pill pill-draft">Founded</span>
+      </div>
+      <h3>Founder &amp; Lecturer, MutEx School</h3>
+      <div class="ach-metrics"><span class="metric"><b>2019&ndash;2023</b> founded &amp; led</span><span class="metric"><b>Courses</b> public lectures &amp; mentoring</span></div>
+      <p class="ach-summary">Founded and ran a programming school in Yerevan, delivering courses and public lectures and mentoring students entering computer science. <a href="https://www.mutexschool.com" target="_blank" rel="noopener">mutexschool.com</a>.</p>
+      <div class="ach-venue">Yerevan, Armenia · 2019&ndash;2023</div>
+    </article>
+</main>
+<footer class="wrap foot">
+  <p><a href="../cv/cv.html" target="_blank" rel="noopener">CV</a> · <a href="../">Home</a></p>
+  <p>© <span id="year">2026</span> Vahram Martirosyan</p>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

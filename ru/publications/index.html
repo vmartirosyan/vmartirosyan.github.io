@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Публикации — Д-р Ваграм Мартиросян</title>
+<meta name="description" content="Полный список публикаций д-ра Ваграма Мартиросяна: науки об океане и климате, объяснимый ИИ, edge AI, материаловедение, медицина и компиляторная инженерия."/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vmartirosyan.github.io/ru/publications/"/>
+<link rel="alternate" hreflang="en" href="https://vmartirosyan.github.io/publications/"/>
+<link rel="alternate" hreflang="ru" href="https://vmartirosyan.github.io/ru/publications/"/>
+<link rel="alternate" hreflang="hy" href="https://vmartirosyan.github.io/hy/publications/"/>
+<link rel="alternate" hreflang="x-default" href="https://vmartirosyan.github.io/publications/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Публикации — Д-р Ваграм Мартиросян"/>
+<meta property="og:description" content="Полный список публикаций д-ра Ваграма Мартиросяна: науки об океане и климате, объяснимый ИИ, edge AI, материаловедение, медицина и компиляторная инженерия."/>
+<meta property="og:url" content="https://vmartirosyan.github.io/ru/publications/"/>
+<meta property="og:locale" content="ru_RU"/>
+<meta property="og:image" content="https://vmartirosyan.github.io/assets/profile.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Публикации — Д-р Ваграм Мартиросян"/>
+<meta name="twitter:description" content="Полный список публикаций д-ра Ваграма Мартиросяна: науки об океане и климате, объяснимый ИИ, edge AI, материаловедение, медицина и компиляторная инженерия."/>
+<meta name="twitter:image" content="https://vmartirosyan.github.io/assets/profile.jpg"/>
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml"/>
+<style>
+  :root { --navy:#003366; --navy-light:#1a4d8a; --accent:#0077cc; --bg:#f4f6f9;
+          --card:#fff; --text:#222; --muted:#555; --border:#dde3ec; --tag-bg:#e8f0fb;
+          --tag-text:#1a4d8a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text);
+         font-size:14px; line-height:1.6; min-height:100vh; display:flex;
+         flex-direction:column; }
+  a { color:var(--navy); }
+  .pub-link { color:var(--navy); text-decoration:none; border-bottom:1px solid transparent;
+              transition:border-color .15s, color .15s; }
+  .pub-link:hover { color:var(--accent); border-bottom-color:var(--accent); }
+
+  /* ── top bar ── */
+  .topbar { position:sticky; top:0; z-index:100; background:#fff;
+            border-bottom:1px solid var(--border);
+            box-shadow:0 2px 12px rgba(0,51,102,.06); }
+  .topbar-inner { max-width:1180px; margin:0 auto; padding:12px 24px;
+            display:flex; align-items:center; justify-content:space-between;
+            gap:18px; }
+  .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+  .avatar { width:52px; height:52px; border-radius:50%; object-fit:cover;
+            border:2px solid var(--border); flex-shrink:0; }
+  .avatar-fallback { width:52px; height:52px; border-radius:50%; display:none;
+            align-items:center; justify-content:center; font-size:18px; font-weight:700;
+            color:#fff; background:linear-gradient(135deg,#0077cc,#00ccaa); flex-shrink:0; }
+  .brand-text { min-width:0; }
+  .brand-text h1 { font-size:17px; font-weight:700; color:var(--navy); line-height:1.2; }
+  .brand-text p { font-size:11px; color:var(--muted); margin-top:2px; line-height:1.35;
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:560px; }
+  .actions { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .downloads { display:flex; gap:6px; }
+  .dl-btn { display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px;
+            background:var(--tag-bg); border:1px solid #c8d9f5; color:var(--navy);
+            font-size:11px; font-weight:600; text-decoration:none; white-space:nowrap; }
+  .dl-btn:hover { background:#dbe8fa; }
+  .icon-links { display:flex; gap:4px; }
+  .icon-btn { display:flex; align-items:center; justify-content:center; width:30px;
+            height:30px; border-radius:8px; border:1px solid var(--border); background:#fff;
+            text-decoration:none; font-size:14px; }
+  .icon-btn:hover { background:var(--tag-bg); border-color:#c8d9f5; }
+  .lang-switch { display:flex; border:1px solid var(--border); border-radius:8px;
+            overflow:hidden; }
+  .lang-link { padding:5px 8px; font-size:11px; font-weight:700; color:var(--muted);
+            text-decoration:none; }
+  .lang-link:hover { background:var(--tag-bg); color:var(--navy); }
+  .lang-link.active { background:var(--navy); color:#fff; }
+
+  /* ── tabs ── */
+  .tabs-wrap { border-top:1px solid var(--border); background:#f8fafd; }
+  .tabs { max-width:1180px; margin:0 auto; padding:8px 24px; display:flex;
+          flex-wrap:wrap; gap:6px; }
+  .tab { display:flex; align-items:center; gap:7px; padding:8px 14px; border-radius:20px;
+         border:1px solid transparent; background:none; color:var(--muted); cursor:pointer;
+         font-size:12.5px; font-weight:600; white-space:nowrap; transition:all .18s; }
+  .tab:hover { background:#e8f0fb; color:var(--navy); }
+  .tab.active { background:var(--navy); color:#fff;
+         box-shadow:0 4px 12px rgba(0,51,102,.25); }
+  .ico { display:inline-block; vertical-align:middle; flex-shrink:0; }
+  .tab-icon { display:inline-flex; align-items:center; }
+  .dl-ic { display:inline-flex; align-items:center; }
+  .foot-ico { vertical-align:-2px; margin-right:4px; }
+
+  /* ── second-level tabs ── */
+  .subtabs { display:flex; flex-wrap:wrap; gap:4px; margin:-4px 0 20px;
+            padding-bottom:10px; border-bottom:1px solid var(--border); }
+  .subtab { padding:7px 14px; border-radius:8px; border:1px solid var(--border);
+            background:#fff; color:var(--muted); cursor:pointer; font-size:12.5px;
+            font-weight:600; transition:all .18s; }
+  .subtab:hover { background:var(--tag-bg); color:var(--navy); }
+  .subtab.active { background:var(--navy-light); color:#fff;
+            border-color:var(--navy-light); }
+  .subpanel { display:none; animation:fadeIn .18s ease; }
+  .subpanel.active { display:block; }
+
+  /* ── content ── */
+  .content { max-width:1180px; width:100%; margin:0 auto; padding:28px 24px 64px;
+            flex:1 0 auto; }
+  .section { display:none; animation:fadeIn .22s ease; }
+  .section.active { display:block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(5px); }
+                      to { opacity:1; transform:none; } }
+  .section-title { font-size:22px; font-weight:700; color:var(--navy);
+            border-bottom:2px solid var(--navy); padding-bottom:8px; margin-bottom:22px; }
+  .sub-title { font-size:15px; font-weight:700; color:var(--navy-light);
+            margin:26px 0 12px; padding-bottom:4px;
+            border-bottom:1px solid var(--border); }
+  .section-title + .sub-title { margin-top:0; }
+  .stats-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+               margin-bottom:24px; }
+  .stat-card { background:var(--card); border:1px solid var(--border); border-radius:10px;
+               padding:16px; text-align:center; }
+  .stat-num { font-size:26px; font-weight:800; color:var(--navy); }
+  .stat-label { font-size:11px; color:var(--muted); margin-top:2px; }
+  .summary-text p { margin-bottom:12px; line-height:1.8; }
+  .course-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  .course-card { background:var(--card); border:1px solid var(--border);
+            border-left:3px solid var(--navy); border-radius:10px; padding:14px 18px; }
+  .course-label { font-weight:700; color:var(--navy); font-size:13px; margin-bottom:6px; }
+  .course-items { color:var(--muted); font-size:13px; line-height:1.65; }
+  .collapse-item { position:relative; cursor:pointer; padding-right:34px; }
+  .collapse-body { height:0; overflow:hidden; opacity:0;
+            transition:height .6s cubic-bezier(.4,0,.2,1), opacity .45s ease; }
+  .collapse-item::after { content:"+"; position:absolute; top:14px; right:10px;
+            width:20px; height:20px; border-radius:50%; display:flex;
+            align-items:center; justify-content:center; font-size:14px;
+            font-weight:700; line-height:1; color:var(--muted); background:#fff;
+            border:1px solid var(--border); pointer-events:none;
+            transition:color .2s, background .2s, border-color .2s; }
+  .collapse-item:hover::after,
+  .collapse-item.pinned::after { content:"−"; color:var(--navy);
+            background:var(--tag-bg); border-color:#c8d9f5; }
+  .collapse-item.collapsed::after { content:"+"; color:var(--muted);
+            background:#fff; border-color:var(--border); }
+  li.collapse-item::after { top:1px; right:0; }
+  li.card-item::after { top:14px; right:12px; }
+  .card-item { background:var(--card); border:1px solid var(--border);
+            border-left:3px solid var(--navy); border-radius:10px;
+            padding:14px 34px 14px 18px; margin-bottom:10px; width:100%; }
+  .pub-list, .cert-list, .skills-list { list-style:none; padding-left:0; width:100%; }
+  .collapse-item:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .role-card { background:var(--card); border:1px solid var(--border);
+            border-left:3px solid var(--navy); border-radius:10px; padding:14px 18px;
+            margin-bottom:10px; }
+  .role-head { display:flex; justify-content:space-between; align-items:flex-start;
+               gap:12px; }
+  .role-title { font-weight:700; font-size:14px; color:var(--navy); }
+  .role-date { font-size:11px; color:var(--muted); background:var(--bg);
+            border:1px solid var(--border); padding:2px 8px; border-radius:12px;
+            white-space:nowrap; }
+  .role-org { font-size:12px; color:var(--muted); font-style:italic; margin-top:2px; }
+  .role-card ul { padding-left:18px; margin-top:8px; }
+  .role-card li { font-size:13px; color:var(--muted); margin-bottom:4px; }
+  .role-card.collapse-item { padding-right:34px; }
+  .edu-thesis { margin:-2px 0 12px; padding:10px 14px; background:var(--tag-bg);
+            border-radius:8px; font-size:12px; color:var(--tag-text);
+            font-style:italic; border-left:3px solid var(--accent); }
+  .papers-note { margin:-8px 0 16px; font-size:12px; }
+  .pub-filters { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
+            gap:8px; align-items:center; margin:0 0 18px; }
+  .pub-search, .pub-select { width:100%; min-width:0; padding:8px 12px;
+            border-radius:10px; border:1px solid var(--border); background:#fff;
+            color:var(--text); font:inherit; font-size:12px; }
+  .pub-search:focus, .pub-select:focus { outline:2px solid var(--accent);
+            outline-offset:1px; }
+  .pub-links { position:absolute; top:14px; right:42px; display:inline-flex;
+            gap:4px; margin:0; z-index:1; }
+  .pub-link-btn { display:inline-flex; align-items:center; justify-content:center;
+            width:52px; height:22px; padding:0; border-radius:10px;
+            border:1px solid #c8d9f5; background:var(--tag-bg); color:var(--navy);
+            font-size:10px; font-weight:700; text-decoration:none;
+            text-transform:uppercase; letter-spacing:.4px; }
+  .pub-link-btn:hover { background:#dbe8fa; color:var(--accent); }
+  .card-item.has-links { padding-right:104px; }
+  .card-item.has-two-links { padding-right:160px; }
+  .pub-group-title { font-size:13px; font-weight:700; color:var(--navy);
+            text-transform:uppercase; letter-spacing:.5px; margin:20px 0 10px;
+            padding-bottom:4px; border-bottom:1px solid var(--border); }
+  .pub-list li { margin-bottom:10px; }
+  .pub-note { background:#f0faf5; color:#1a6640; border-left:3px solid #2ecc71;
+            padding:4px 10px; border-radius:6px; font-size:11px; margin-top:4px; }
+  .cert-list li { margin-bottom:6px; }
+  ul { padding-left:20px; } li { margin-bottom:4px; }
+
+  footer { border-top:1px solid var(--border); background:#fff; margin-top:auto;
+            flex-shrink:0; }
+  .foot { max-width:1180px; margin:0 auto; padding:18px 24px; color:var(--muted);
+          font-size:12px; display:flex; justify-content:space-between; gap:12px;
+          flex-wrap:wrap; }
+  .foot a { color:var(--navy); }
+
+  @media (max-width:820px) {
+    .topbar-inner { flex-wrap:wrap; padding:10px 16px; }
+    .brand-text p { display:none; }
+    .actions { width:100%; justify-content:space-between; }
+    .dl-label { display:none; }
+    .dl-btn { padding:6px 9px; }
+    .tabs { padding:6px 16px; }
+    .content { padding:20px 16px 48px; }
+    .stats-bar { grid-template-columns:repeat(2,1fr); }
+    .course-grid { grid-template-columns:1fr; }
+    .pub-filters { grid-template-columns:1fr; }
+    .pub-search, .pub-select { width:100%; }
+    .card-item.has-links { padding-right:96px; }
+    .card-item.has-two-links { padding-right:150px; }
+    .pub-links { right:38px; }
+    .pub-link-btn { width:48px; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" style="text-decoration:none">
+      <img class="avatar" src="../../assets/profile.jpg" alt="Д-р Ваграм Мартиросян" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <h1>Д-р Ваграм Мартиросян</h1>
+        <p>Публикации</p>
+      </div>
+    </a>
+    <div class="actions">
+      <div class="lang-switch"><a class="lang-link" href="../../publications/index.html">EN</a><a class="lang-link active" href="index.html">RU</a><a class="lang-link" href="../../hy/publications/index.html">HY</a></div>
+      <a class="icon-btn" href="../index.html" title="Главная" aria-label="Главная">←</a>
+    </div>
+  </div>
+</header>
+<main class="content">
+<div id="sec4" class="section active"><div class="section-title">Публикации</div><div class="pub-filters"><input class="pub-search" type="search" placeholder="Поиск статей…"><select class="pub-select pub-author" aria-label="Все авторы"><option value="all">Все авторы</option><option value="Gishyan">Gishyan</option><option value="Hakopian">Hakopian</option><option value="Martirosyan">Martirosyan</option><option value="Rubanov">Rubanov</option><option value="Shatokhin">Shatokhin</option><option value="Stallman">Stallman</option><option value="Tsirunyan">Tsirunyan</option><option value="Tsyvarev">Tsyvarev</option></select><select class="pub-select pub-year" aria-label="Все годы"><option value="all">Все годы</option><option value="2027">2027</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2022">2022</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option></select><select class="pub-select pub-topic" aria-label="Все темы"><option value="all">Все темы</option><option value="ocean">Океан и климат</option><option value="ai">Объяснимый ИИ / ML</option><option value="edge">Edge AI</option><option value="hpc">HPC и компиляторы</option><option value="systems">Системы и верификация</option><option value="books">Книги и учебные пособия</option><option value="translations">Переводы</option></select><select class="pub-select pub-status" aria-label="Все статусы"><option value="all">Все статусы</option><option value="published">Опубликовано и принято</option><option value="review">На рассмотрении / подано</option><option value="preprints">Препринты</option><option value="translations">Переводы</option></select></div><p class="papers-note"><a href="../../papers/index.html">Авторские рукописи →</a></p><ul class="pub-list"><li class="collapse-item card-item has-links" tabindex="0" data-tags="ai" data-status="published" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Accuracy and Interpretability from a Single Solver: Polynomial Regression up to Degree 5 for Concrete Compressive Strength Prediction.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-concrete-strength-polynomial.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>ICACTE 2026</em> (IEEE-indexed conference), 2026.<div class="pub-note">Степень 5: R² = 0.859, RMSE 6.25 МПа; сокращение числа членов на 88%, при этом 74% оставленных членов соответствуют известной физике бетона; единое решение в замкнутой форме, без градиентного спуска.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ocean edge" data-status="published" data-authors="Martirosyan" data-year="2027"><strong>Martirosyan, V.</strong> “Efficient and Interpretable On-Device Polynomial Inference for Multi-Variable Ocean Profiling.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2027-eicocean-ocean-profiling.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>eICocean 2027</em> (принято), 2027.<div class="pub-note">Температура R² = 0.973, солёность 0.794, растворённый кислород 0.895; вывод 4.4 мкс на настольном ПК; 0.88 мс на ESP32 и 1.12 мс на RP2350; 180 мкДж/96 мкДж на один вывод.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ai" data-status="published" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Automated Multi-Class ECG Arrhythmia Classification Using an Ensemble of Polynomial Regression Models.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-icca-ecg-ensemble.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>IEEE ICCA 2026</em> (принято), 2026.<div class="pub-note">Сбалансированная точность 78.32%, macro-F1 68.23%; разреживание сокращает 123.1 млн членов до 330 тыс. — 1.3 МБ, сокращение на 99.7% — в пределах ≈1 п.п.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="hpc compilers" data-status="published" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “LEAP: Lifting Legacy x86-64 Binaries to Recompilable IR for Automatic Parallelization.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-itca-leap.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>ITCA 2026</em> (принято), Dec 2026.<div class="pub-note">Исследование подъёма 43 программ: 100% при <code>-O0</code> и 98% при <code>-O1/-O2/-O3</code>; геометрическое среднее 3.7× из исходного IR; поднятый бинарный код 10.4× относительно <code>-O0</code> и 2.2× относительно <code>-O2</code>; пиковая выгрузка на GPU 958×; пройдено 377/377 тестов.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ocean edge" data-status="published" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Deterministic and Auditable On-Device Polynomial Inference for On-Board SAR Oil-Spill Screening.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-eiecs-oil-spill.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>IEEE EIECS 2026</em> (принято), 2026.<div class="pub-note">Модель int8: 657 КБ → 82 КБ при G-mean 0.822; модель 15 КБ при G-mean 0.803 помещается на ATmega328P; 3.76-9.2 мс/тайл на реальных микроконтроллерах.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan Tsyvarev" data-year="2012"><strong>Tsyvarev, A. V., Martirosyan, V. A.</strong> “Testing of Linux File System Drivers.” <span class="pub-links"><a class="pub-link-btn" href="https://doi.org/10.15514/ISPRAS-2012-23-24" target="_blank" rel="noopener">DOI</a></span><div class="collapse-body"><em>Proceedings of the Institute for System Programming of the RAS, vol. 23, pp. 413-426</em>, 2012.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan Tsirunyan Tsyvarev" data-year="2012"><strong>Tsirunyan, K., Martirosyan, V., Tsyvarev, A.</strong> “The Spruce System: Quality Verification of Linux File Systems Drivers.” <span class="pub-links"><a class="pub-link-btn" href="https://doi.org/10.15514/SYRCOSE-2012-6-25" target="_blank" rel="noopener">DOI</a></span><div class="collapse-body"><em>SYRCoSE 2012</em>, May 2012.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="systems" data-status="published" data-authors="Gishyan Martirosyan Shatokhin" data-year="2011"><strong>Martirosyan, V., Gishyan, S., Shatokhin, E.</strong> “Dynamic Verification of Linux File System Drivers.” <span class="pub-links"><a class="pub-link-btn" href="https://www.researchgate.net/publication/384332453_Dynamic_Verification_of_Linux_File_System_Drivers" target="_blank" rel="noopener">Link</a></span><div class="collapse-body"><em>Computer Science and Information Technologies Conference (CSIT 2011), Yerevan</em>, Sep 2011.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan" data-year="2012"><strong>Martirosyan, V. et al.</strong> “The Spruce System: Linux Kernel Module Verification Automation (in Russian).” <div class="collapse-body"><em>7th Annual Conference of RAU</em>, Dec 2012.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan" data-year="2012"><strong>Martirosyan, V. et al.</strong> “Fault Simulation in Linux Kernel Module Verification (in Russian).” <div class="collapse-body"><em>7th Annual Conference of RAU</em>, Dec 2012.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan" data-year="2012"><strong>Martirosyan, V.</strong> “Linux Verification - Challenge of Today.” <span class="pub-links"><a class="pub-link-btn" href="https://www.researchgate.net/publication/384332617_LINUX_VERIFICATION_-CHALLENGE_OF_TODAY" target="_blank" rel="noopener">Link</a></span><div class="collapse-body"><em>7th Annual Conference of RAU</em>, Dec 2012.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan" data-year="2009"><strong>Martirosyan, V. et al.</strong> “X2C - XML To Code: Advantages of Standards.” <div class="collapse-body"><em>4th Scientific Annual Conference of RAU</em>, Dec 2009.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="systems" data-status="published" data-authors="Martirosyan" data-year=""><strong>Martirosyan, V. et al.</strong> “X2C: Code Generation Technology.” <div class="collapse-body">.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="books" data-status="published" data-authors="Martirosyan" data-year="2022"><strong>Martirosyan, V.</strong> “Programming via Operating Systems.” <div class="collapse-body"><em>Hilfmann Press</em>, Feb 2022.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="books" data-status="published" data-authors="Martirosyan" data-year="2024"><strong>Martirosyan, V.</strong> “Programming via Operating Systems, Second Edition.” <span class="pub-links"><a class="pub-link-btn" href="https://www.researchgate.net/publication/384331222_Programming_via_Operating_Systems_Second_Edition" target="_blank" rel="noopener">Link</a></span><div class="collapse-body"><em>Hilfmann Press</em>, Sep 2024.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="books" data-status="published" data-authors="Martirosyan Rubanov Shatokhin" data-year="2011"><strong>Martirosyan, V., Shatokhin, E., Rubanov, V.</strong> “Basics of Programming in OS Linux Environment (in Russian).” <span class="pub-links"><a class="pub-link-btn" href="https://www.researchgate.net/publication/384332530_Basics_of_programming_in_OS_Linux_environment" target="_blank" rel="noopener">Link</a></span><div class="collapse-body"><em>MIPT</em>, Apr 2011.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="books" data-status="published" data-authors="Martirosyan" data-year="2010"><strong>Martirosyan, V. et al.</strong> “Tutorial: Programming in GNU/Linux Environment - From System Calls to the GUI (in Russian).” <span class="pub-links"><a class="pub-link-btn" href="https://www.researchgate.net/publication/370445350_Programming_via_Operating_Systems" target="_blank" rel="noopener">Link</a></span><div class="collapse-body"><em>RAU Publishing</em>, Dec 2010.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="hpc" data-status="published" data-authors="Martirosyan" data-year="2009"><strong>Martirosyan, V.</strong> “Распараллеливание алгоритма обращения Мура–Пенроуза двухдиагональной матрицы специального вида.” <div class="collapse-body"><em>Herald of Russian-Armenian (Slavonic) University</em>, 2009.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="hpc" data-status="published" data-authors="Hakopian Martirosyan" data-year="2009"><strong>Hakopian, Yu. R., Martirosyan, V.</strong> “О распараллеливании алгоритма псевдообращения матриц.” <div class="collapse-body">2009.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="hpc" data-status="published" data-authors="Martirosyan" data-year="2008"><strong>Martirosyan, V.</strong> “Алгоритм псевдообращения двухдиагональных матриц.” <div class="collapse-body"><em>Herald of Russian-Armenian (Slavonic) University</em>, 2008.</div></li><li class="collapse-item card-item" tabindex="0" data-tags="hpc" data-status="published" data-authors="Martirosyan" data-year="2007"><strong>Martirosyan, V.</strong> “О псевдообращении двухдиагональных матриц.” <div class="collapse-body"><em>Annual Scientific Conference of Russian-Armenian University</em>, 2007.</div></li></ul><ul class="pub-list"><li class="collapse-item card-item" tabindex="0" data-tags="ocean" data-status="review" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Interpretable Polynomial Zone Ensembles for Global Ocean Temperature and Salinity Profile Reconstruction.” <div class="collapse-body">На рассмотрении, <em>Q1 journal (TGRS / JAMES / Comput. Geosci.)</em>, 2026.<div class="pub-note">WOA 2018, 534 090 образцов; объединённый R² = 0.9703 температура / 0.8376 солёность; вывод менее миллисекунды, объём менее мегабайта.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ocean" data-status="review" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Depth-Zone Polynomial Regression for Global Ocean Climatology.” <div class="collapse-body">На рассмотрении, <em>IEEE journal (Q1 attempt)</em>, 2026.<div class="pub-note">IAP T/S Climatology 2024; эластичная сеть, модели степени 6 по зонам: перемешанный слой, термоклин, глубинный океан; пространственно адаптивная подвыборка 534K → 177K строк.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ai" data-status="review" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Efficient Multi-Class ECG Classification Using Polynomial Regression with an Analytical Solver.” <div class="collapse-body"><em>Applied Computational Intelligence and Soft Computing</em> (major revision), 2026.<div class="pub-note">Точность шестиклассовой классификации 82.75% ± 1.03%, macro-F1 0.758; вывод 12 мкс; превосходит базовые модели CNN, случайного леса, XGBoost и SVM.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ai" data-status="review" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Sparse Polynomial Regression for Interpretable Yield-Strength Prediction in High-Entropy Alloys.” <div class="collapse-body">На рассмотрении, <em>IEEE ITT 2026</em>, 2026.<div class="pub-note">Степень 3: R² = 0.738 при n=1,014, статистически на уровне случайного леса и XGBoost и значимо выше нейронной сети (0.618); 8 из 11 оставленных членов соответствуют известным механизмам упрочнения; R² = 0.841 только для BCC.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ai" data-status="review" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Efficient Crop Type Mapping via Degree-2 Polynomial Feature Expansion of Multi-Temporal Optical and SAR Data.” <div class="collapse-body">Подано в <em>IEEE TGRS</em>, 2026.<div class="pub-note">Точность на тесте и macro-F1 98.67%; обучение за 2.3 с на 16 ядрах; ускорение SIMD 17×.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ai" data-status="review" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V. and N. Martirosyan</strong> “Physics-Informed Polynomial Regression for Certified Concrete Mix Design.” <div class="collapse-body">На рассмотрении, <em>ICACTE 2027</em>, 2026.<div class="pub-note">Физически обоснованная SRPR степени 3: R² = 0.919, RMSE 4.73 МПа; сертифицированное глобальное обратное проектирование с экономией 10.6-14.5% по стоимости и 16.7% по CO_2 относительно лучших измеренных составов; интерпретируемые правила проектирования на основе замены клинкера.</div></div></li></ul><ul class="pub-list"><li class="collapse-item card-item" tabindex="0" data-tags="ai" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Interpretable Polynomial Zone Ensembles for Global Ocean Temperature and Salinity Profile Reconstruction.” <div class="collapse-body"><em>Подготовлено для IEEE JSTARS</em>, Oct 2026.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="hpc compilers" data-status="preprints" data-authors="Martirosyan" data-year="2025"><strong>Martirosyan, V.</strong> “hpc++: An LLVM-Based Automatic Parallelization System for C++ with GPU Acceleration.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2025-hpcpp-arxiv.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>arXiv</em>, Dec 2025.<div class="pub-note">7 стратегий распараллеливания, без изменения исходного кода; пик 2009.4× на GPU и 32.1× на CPU; численная корректность на 134 модульных и 18 интеграционных тестах.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ocean" data-status="preprints" data-authors="Martirosyan" data-year="2027"><strong>Martirosyan, V.</strong> “Auditable Kilobyte-Scale Surrogates for the Global Significant-Wave-Height Climatology.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2027-waves-surrogate.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>Подготовлено для IEEE JSTARS</em>, 2027.<div class="pub-note">R² = 0.945, RMSE 0.262 м; R² = 0.933 при удержании ячеек; прибрежный R² улучшается с 0.34 до 0.52 с использованием данных буёв in-situ.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ai" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Polynomial Regression Models for Interpretable Machine Learning: Theory, Optimization, and Medical Applications.” <div class="collapse-body">Подготовленная рукопись, Feb 2026.</div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ai" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Stagewise Regularized Polynomial Regression: A Hybrid Optimization Strategy for Medical Diagnosis on Small Datasets.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-srpr-medical.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body">Подготовленная рукопись, Feb 2026.<div class="pub-note">Точность 86.7% на UCI Cleveland Heart Disease; сжатие модели на 93%; ≈36 FLOP на предсказание.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ai" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Heart Disease Diagnosis Using Third-Order Polynomial Regression Models with L2 Regularization.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-heart-disease.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body">Подготовленная рукопись, Feb 2026.<div class="pub-note">Точность 81.8%, 10-кратная кросс-валидация; полная интерпретируемость через явные полиномиальные коэффициенты.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="edge ai" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Explainable and Efficient Digit Classification via Polynomial Regression Networks: A Transparent Alternative to Deep Learning.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-digit-classification.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body"><em>arXiv</em>, Jan 2026.<div class="pub-note">Средняя точность 96.85% на MNIST; сокращение числа параметров на 84% при потере точности менее 1%.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ocean" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Blended Ocean Visualization: Combining Sparse Polynomial Regression with Residual Fields.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-blended-ocean.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body">Рабочая рукопись, 2026.<div class="pub-note">Рабочая рукопись, 2026.</div></div></li><li class="collapse-item card-item has-links" tabindex="0" data-tags="ocean" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Portability and Limits of an Interpretable Polynomial Framework: A Global Significant-Wave-Height Case Study.” <span class="pub-links"><a class="pub-link-btn" href="../../papers/2026-waves-portability.pdf" target="_blank" rel="noopener">PDF</a></span><div class="collapse-body">Рабочая рукопись, 2026.<div class="pub-note">Anomaly R² = 0.875; offshore buoy RMSE ≈0.5 m; negative result reported for a distance-to-coast feature.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ocean" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Deep-Ocean Temperature Profile Reconstruction via Interpretable Polynomial Zone Ensembles.” <div class="collapse-body">Рабочая рукопись, 2026.<div class="pub-note">Stagewise-Rank-Polynomial-Regression; 5,005-term basis; 2.6 µs per-profile inference in C++; edge-deployment analysis.</div></div></li><li class="collapse-item card-item" tabindex="0" data-tags="ocean" data-status="preprints" data-authors="Martirosyan" data-year="2026"><strong>Martirosyan, V.</strong> “Global Ocean Salinity Profile Reconstruction with Interpretable Polynomial Zone Ensembles.” <div class="collapse-body">Рабочая рукопись, 2026.<div class="pub-note">WOA dataset; degree-8 expansion, 2,001 coefficients per zone; 23 µs inference; river-mouth salinity correction; residual ensemble.</div></div></li></ul><ul class="pub-list"><li class="collapse-item card-item has-links" tabindex="0" data-tags="translations" data-status="translations" data-authors="Stallman" data-year="2010"><em>Jinnetic Engineering by Richard Stallman, translated into Armenian</em><span class="pub-links"><a class="pub-link-btn" href="https://www.stallman.org/articles/jinnetic.hy.html" target="_blank" rel="noopener">Link</a></span><div class="collapse-body">Dec 2010.</div></li></ul></div>
+</main>
+<footer>
+  <div class="foot">
+    <span><a href="../index.html">Главная</a> · <a href="../../cv/cv.ru.html">Резюме</a></span>
+    <span>© <span id="year">2026</span> Vahram Martirosyan</span>
+  </div>
+</footer>
+<script>
+  function show(id, btn) {
+    document.querySelectorAll('.section').forEach(function (s) { s.classList.remove('active'); });
+    document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
+    var el = document.getElementById(id);
+    if (el) el.classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.replaceState(null, '', '#' + id);
+  }
+  function showSub(parentId, subId, btn) {
+    var parent = document.getElementById(parentId);
+    if (!parent) return;
+    parent.querySelectorAll('.subpanel').forEach(function (p) { p.classList.remove('active'); });
+    parent.querySelectorAll('.subtab').forEach(function (b) { b.classList.remove('active'); });
+    var el = document.getElementById(subId);
+    if (el) el.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+  function applyPubFilters(scope) {
+    var bar = scope.querySelector('.pub-filters');
+    if (!bar) return;
+    var q = (bar.querySelector('.pub-search').value || '').toLowerCase();
+    var author = bar.querySelector('.pub-author').value;
+    var year = bar.querySelector('.pub-year').value;
+    var topic = bar.querySelector('.pub-topic').value;
+    var status = bar.querySelector('.pub-status').value;
+    scope.querySelectorAll('.pub-list li').forEach(function (li) {
+      var tags = (li.getAttribute('data-tags') || '').split(' ');
+      var itemAuthors = (li.getAttribute('data-authors') || '').split(' ');
+      var text = li.textContent.toLowerCase();
+      var match = (!q || text.indexOf(q) !== -1) &&
+                  (author === 'all' || itemAuthors.indexOf(author) !== -1) &&
+                  (year === 'all' || (li.getAttribute('data-year') || '') === year) &&
+                  (topic === 'all' || tags.indexOf(topic) !== -1) &&
+                  (status === 'all' || (li.getAttribute('data-status') || '') === status);
+      li.style.display = match ? '' : 'none';
+    });
+  }
+  document.querySelectorAll('.pub-filters').forEach(function (bar) {
+    bar.querySelectorAll('input, select').forEach(function (el) {
+      el.addEventListener('input', function () {
+        applyPubFilters(bar.closest('.section') || document);
+      });
+      el.addEventListener('change', function () {
+        applyPubFilters(bar.closest('.section') || document);
+      });
+    });
+  });
+  function bodyOf(item) {
+    return item.querySelector(':scope > .collapse-body');
+  }
+  function expandItem(item) {
+    var body = bodyOf(item);
+    if (!body) return;
+    body.style.height = body.scrollHeight + 'px';
+    body.style.opacity = '1';
+  }
+  function collapseItem(item) {
+    var body = bodyOf(item);
+    if (!body) return;
+    body.style.height = '0px';
+    body.style.opacity = '0';
+  }
+  function toggleItem(item) {
+    if (item.classList.contains('pinned')) {
+      item.classList.remove('pinned');
+      item.classList.add('collapsed');
+      collapseItem(item);
+    } else {
+      item.classList.add('pinned');
+      item.classList.remove('collapsed');
+      expandItem(item);
+    }
+  }
+  document.addEventListener('click', function (e) {
+    var item = e.target.closest('.collapse-item');
+    if (!item) return;
+    if (e.target.closest('a')) return;
+    toggleItem(item);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var item = e.target.closest('.collapse-item');
+    if (!item || e.target !== item) return;
+    e.preventDefault();
+    toggleItem(item);
+  });
+  document.querySelectorAll('.collapse-item').forEach(function (item) {
+    item.addEventListener('mouseenter', function () {
+      if (item.classList.contains('pinned') || item.classList.contains('collapsed')) return;
+      expandItem(item);
+    });
+    item.addEventListener('mouseleave', function () {
+      item.classList.remove('collapsed');
+      if (!item.classList.contains('pinned')) collapseItem(item);
+    });
+  });
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.collapse-item.pinned').forEach(expandItem);
+  });
+  (function () {
+    var hash = window.location.hash.replace('#', '');
+    var target = hash && document.getElementById(hash);
+    if (!target) return;
+    document.querySelectorAll('.section').forEach(function (s) { s.classList.remove('active'); });
+    document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
+    target.classList.add('active');
+    var idx = Array.prototype.indexOf.call(document.querySelectorAll('.section'), target);
+    var tab = document.querySelectorAll('.tab')[idx];
+    if (tab) tab.classList.add('active');
+  })();
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

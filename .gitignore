@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+*:Zone.Identifier
+
+# Nested projects (.gitignore in cv/ and papers/ handles their build artifacts)
