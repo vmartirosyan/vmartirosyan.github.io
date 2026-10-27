@@ -129,6 +129,50 @@
     </section>
   </div>
 
+  <div id="before-you-start" class="solution-modal guide-modal" hidden>
+    <div class="solution-modal-backdrop" data-action="before-start-close"></div>
+    <section class="guide-panel" role="dialog" aria-modal="true" aria-labelledby="before-you-start-title" tabindex="-1">
+      <header class="guide-head">
+        <div>
+          <div class="solutions-kicker">Before you start</div>
+          <h3 id="before-you-start-title">A quick guide to Studio</h3>
+          <p>Everything runs locally in your browser. Here is the shortest path from raw data to an explainable model.</p>
+        </div>
+        <button class="btn ghost btn-sm" type="button" data-action="before-start-close">Close</button>
+      </header>
+      <div class="guide-body">
+        <div class="guide-steps">
+          <div class="guide-step"><span>1</span><div><strong>Bring data</strong><p>Use a CSV for tabular models or a folder of labelled images for an image classifier. Nothing is uploaded.</p></div></div>
+          <div class="guide-step"><span>2</span><div><strong>Choose the target</strong><p>Studio recommends a target and preselects the model type. For numeric targets, you can switch between regression and classification.</p></div></div>
+          <div class="guide-step"><span>3</span><div><strong>Prepare and train</strong><p>Review the cleaning plan, then train a polynomial model with WASM. The held-out split is scored automatically.</p></div></div>
+          <div class="guide-step"><span>4</span><div><strong>Evaluate and explain</strong><p>Inspect metrics, errors, feature importance, and exact per-prediction contributions.</p></div></div>
+          <div class="guide-step"><span>5</span><div><strong>Run and share</strong><p>Test predictions, check out-of-distribution inputs, and export a standalone app or integration wrappers.</p></div></div>
+        </div>
+        <h4 class="guide-subtitle">Learning materials</h4>
+        <div class="guide-materials">
+          <button type="button" class="guide-material" data-action="main-view" data-view="use-cases">
+            <strong>Use cases</strong><span>Where Studio fits best across engineering, clinical, education, and research work.</span><em>Explore →</em>
+          </button>
+          <button type="button" class="guide-material" data-action="main-view" data-view="technology">
+            <strong>How it works</strong><span>Polynomial models, local training, explainability, and the WASM engine.</span><em>Read more →</em>
+          </button>
+          <button type="button" class="guide-material" data-action="main-view" data-view="about">
+            <strong>About Studio</strong><span>What Studio is, who it is for, and the design principles behind it.</span><em>Read more →</em>
+          </button>
+          <button type="button" class="guide-material" data-action="main-view" data-view="team">
+            <strong>Team</strong><span>The people building ExAI Studio and the research behind it.</span><em>Meet the team →</em>
+          </button>
+        </div>
+        <p class="help guide-reopen-note">You can reopen this guide anytime from <strong>Learn → Before you start</strong>.</p>
+      </div>
+      <footer class="guide-actions">
+        <button class="btn primary" type="button" data-action="before-start-sample">Try the churn sample</button>
+        <button class="btn" type="button" data-action="before-start-import">Import my CSV</button>
+        <button class="btn ghost" type="button" data-action="before-start-close">Maybe later</button>
+      </footer>
+    </section>
+  </div>
+
   <div id="marketing" class="marketing" hidden>
     <header class="mkt-header">
       <div class="mkt-header-inner">
