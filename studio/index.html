@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ExAI Studio — private ML workspace</title>
   <meta name="description" content="A browser-first machine-learning workspace with an AI assistant at the center. Train and run explainable models without your data leaving the device.">
-  <link rel="stylesheet" href="./css/studio.css?v=20261024a">
-  <link rel="modulepreload" href="./js/app.js?v=20261024a">
+  <link rel="stylesheet" href="./css/studio.css?v=20261029k">
+  <link rel="modulepreload" href="./js/app.js?v=20261029k">
   <link rel="modulepreload" href="./js/csv.js">
   <link rel="modulepreload" href="./js/date.js">
   <link rel="modulepreload" href="./js/profile.js">
@@ -21,6 +21,7 @@
   <link rel="modulepreload" href="./js/assistant_tools.js">
   <link rel="modulepreload" href="./js/analysis.js">
   <link rel="modulepreload" href="./js/explain.js">
+  <link rel="modulepreload" href="./js/share.js">
   <link rel="modulepreload" href="./js/charts.js">
   <link rel="modulepreload" href="./js/deepseek_direct.js">
   <link rel="modulepreload" href="./js/inference_agent.js">
@@ -146,7 +147,7 @@
           <div class="guide-step"><span>2</span><div><strong>Choose the target</strong><p>Studio recommends a target and preselects the model type. For numeric targets, you can switch between regression and classification.</p></div></div>
           <div class="guide-step"><span>3</span><div><strong>Prepare and train</strong><p>Review the cleaning plan, then train a polynomial model with WASM. The held-out split is scored automatically.</p></div></div>
           <div class="guide-step"><span>4</span><div><strong>Evaluate and explain</strong><p>Inspect metrics, errors, feature importance, and exact per-prediction contributions.</p></div></div>
-          <div class="guide-step"><span>5</span><div><strong>Run and share</strong><p>Test predictions, check out-of-distribution inputs, and export a standalone app or integration wrappers.</p></div></div>
+          <div class="guide-step"><span>5</span><div><strong>Run and share</strong><p>Test predictions, check out-of-distribution inputs, share a results kit, or export a standalone app.</p></div></div>
         </div>
         <h4 class="guide-subtitle">Learning materials</h4>
         <div class="guide-materials">
@@ -170,6 +171,42 @@
         <button class="btn" type="button" data-action="before-start-import">Import my CSV</button>
         <button class="btn ghost" type="button" data-action="before-start-close">Maybe later</button>
       </footer>
+    </section>
+  </div>
+
+  <div id="share-modal" class="solution-modal share-modal" hidden>
+    <div class="solution-modal-backdrop" data-action="close-share"></div>
+    <section class="share-panel" role="dialog" aria-modal="true" aria-labelledby="share-modal-title" tabindex="-1">
+      <header class="share-head">
+        <div>
+          <div class="solutions-kicker">Share kit</div>
+          <h3 id="share-modal-title">Show off your model</h3>
+          <p>Images and text are generated locally. Nothing is uploaded until you choose to post.</p>
+        </div>
+        <button class="btn ghost btn-sm" type="button" data-action="close-share">Close</button>
+      </header>
+      <div class="share-body">
+        <div id="share-previews" class="share-previews" aria-live="polite"></div>
+        <div class="share-controls">
+          <label class="share-field">Model title
+            <input id="share-title" type="text" maxlength="90" autocomplete="off">
+          </label>
+          <label class="share-check">
+            <input id="share-names" type="checkbox">
+            <span>Include class and feature names</span>
+          </label>
+          <label class="share-field">Caption
+            <textarea id="share-caption" rows="8"></textarea>
+          </label>
+          <div id="share-status" class="help share-status"></div>
+          <div class="share-actions">
+            <button class="btn primary" type="button" data-action="share-facebook">Share</button>
+            <button class="btn" type="button" data-action="share-download">Download images</button>
+            <button class="btn ghost" type="button" data-action="share-copy-caption">Copy caption</button>
+          </div>
+          <p class="help">Uses your system share sheet when it supports file sharing. Pick Facebook there if it is available. Otherwise Studio copies the caption, downloads the images, and opens Facebook for manual attachment.</p>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -220,7 +257,7 @@
       }
       var script = document.createElement('script');
       script.type = 'module';
-      script.src = './js/app.js?v=20261024a';
+      script.src = './js/app.js?v=20261029k';
       document.body.appendChild(script);
     })();
   </script>
