@@ -3114,3 +3114,87 @@ body.share-open { overflow: hidden; }
 .share-preview figcaption { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .share-download-link { color: var(--accent); font-weight: 700; text-decoration: none; white-space: nowrap; }
 .share-download-link:hover { text-decoration: underline; }
+
+/* Solution generation progress */
+.solution-generation {
+  margin-top: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+.solution-generation-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.solution-generation-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.solution-generation-pct {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.solution-generation-spinner {
+  flex: 0 0 auto;
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--accent-soft);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: solution-generation-spin .8s linear infinite;
+}
+.solution-generation-track {
+  height: 6px;
+  margin-top: 9px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+.solution-generation-fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #4c9d83);
+  transition: width .45s ease;
+}
+.solution-generation .help { margin: 7px 0 0; }
+@keyframes solution-generation-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Augmentation class counts */
+.augmentation-counts {
+  margin-top: 8px;
+  max-height: 220px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.augmentation-counts table { margin: 0; }
+.augmentation-counts thead th { position: sticky; top: 0; z-index: 1; }
+.augmentation-counts tfoot td {
+  font-weight: 700;
+  color: var(--ink-2);
+  background: var(--paper);
+  border-top: 1px solid var(--line-strong);
+}
+.augmentation-count-details { margin-top: 8px; }
+.augmentation-count-details > summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  list-style-position: inside;
+}
+.augmentation-count-details[open] > summary { margin-bottom: 2px; }
