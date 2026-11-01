@@ -312,6 +312,17 @@ a { color: var(--accent); }
   letter-spacing: -.02em;
 }
 .view-heading-row span { color: var(--muted); font-size: 11px; }
+.view-heading-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media print {
+  .explain-pdf-break-before { break-before: page; page-break-before: always; }
+}
 #explain-view .card {
   border: 0;
   background: transparent;
@@ -3198,3 +3209,33 @@ body.share-open { overflow: hidden; }
   list-style-position: inside;
 }
 .augmentation-count-details[open] > summary { margin-bottom: 2px; }
+
+/* Models: compact run action bar */
+.run-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+}
+.run-action-bar .run-delete { color: var(--red); border-color: #e5bdb7; }
+.run-action-bar .run-delete:hover { border-color: var(--red); }
+
+/* Models: compact run action bar */
+.run-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+}
+.run-action-bar .run-delete { color: var(--red); border-color: #e5bdb7; }
+.run-action-bar .run-delete:hover { border-color: var(--red); }
