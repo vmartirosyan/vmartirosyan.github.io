@@ -1,521 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kangxi Radicals Mastery</title>
-  <meta name="description" content="A GitHub Pages-friendly Kangxi radicals study and quiz app." />
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kangxi Radicals Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
 
-    :root {
-      --bg: #f8fafc;
-      --panel: #ffffff;
-      --panel-alt: #f8fafc;
-      --text: #1e293b;
-      --muted: #64748b;
-      --primary: #4f46e5;
-      --primary-soft: #eef2ff;
-      --success: #059669;
-      --success-soft: #ecfdf5;
-      --danger: #dc2626;
-      --danger-soft: #fef2f2;
-      --shadow: rgba(15, 23, 42, 0.08);
-    }
+        /* Better font rendering for Chinese Characters */
+        .zh-char {
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
 
-    * { box-sizing: border-box; }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+        }
 
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-    }
+        .option-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+        .option-btn:not(:disabled):active {
+            transform: translateY(0);
+        }
 
-    .zh-char {
-      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-    }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
 
-    .option-btn {
-      transition: all 0.2s ease-in-out;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .option-btn:not(:disabled):hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-
-    .option-btn:not(:disabled):active {
-      transform: translateY(0);
-    }
-
-    .fade-in {
-      animation: fadeIn 0.25s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-  </style>
+        /* Custom Scrollbar for Study Mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col overflow-hidden">
-  <header class="bg-white shadow-sm z-10 flex-shrink-0">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <div class="flex items-center gap-3">
-        <div class="bg-indigo-600 text-white w-10 h-10 rounded-lg flex items-center justify-center text-xl font-bold zh-char">
-          漢
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm z-10 flex-shrink-0">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white w-10 h-10 rounded-lg flex items-center justify-center text-xl font-bold zh-char">
+                    æ¼¢
+                </div>
+                <h1 class="text-xl font-bold text-slate-800">Kangxi Radicals</h1>
+            </div>
+            <div class="flex bg-slate-100 p-1 rounded-lg">
+                <button id="navQuizBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchTab('quiz')">
+                    Quiz Mode
+                </button>
+                <button id="navStudyBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchTab('study')">
+                    Study Reference
+                </button>
+            </div>
         </div>
-        <h1 class="text-xl font-bold text-slate-800">Kangxi Radicals</h1>
-      </div>
+    </header>
 
-      <div class="flex bg-slate-100 p-1 rounded-lg">
-        <button id="navQuizBtn"
-          class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700"
-          type="button"
-          onclick="switchTab('quiz')">
-          Quiz Mode
-        </button>
-        <button id="navStudyBtn"
-          class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900"
-          type="button"
-          onclick="switchTab('study')">
-          Study Reference
-        </button>
-      </div>
-    </div>
-  </header>
+    <!-- Main Content Area -->
+    <main class="flex-grow overflow-hidden relative">
+        
+        <!-- QUIZ MODE SECTION -->
+        <section id="quizSection" class="absolute inset-0 overflow-y-auto w-full h-full flex flex-col items-center py-8 px-4 fade-in">
+            
+            <div class="w-full max-w-2xl">
+                <!-- Stats Bar -->
+                <div class="flex justify-between items-center bg-white px-6 py-4 rounded-2xl shadow-sm border border-slate-100 mb-6">
+                    <div class="text-slate-500 font-medium">
+                        Score: <span id="scoreDisplay" class="text-indigo-600 font-bold text-lg">0</span>
+                    </div>
+                    <div class="text-slate-500 font-medium">
+                        Streak: <span id="streakDisplay" class="text-amber-500 font-bold text-lg">0</span>
+                    </div>
+                </div>
 
-  <main class="flex-grow overflow-hidden relative">
-    <section id="quizSection" class="absolute inset-0 overflow-y-auto w-full h-full flex flex-col items-center py-8 px-4 fade-in">
-      <div class="w-full max-w-2xl">
-        <div class="flex justify-between items-center bg-white px-6 py-4 rounded-2xl shadow-sm border border-slate-100 mb-6">
-          <div class="text-slate-500 font-medium">
-            Score: <span id="scoreDisplay" class="text-indigo-600 font-bold text-lg">0</span>
-          </div>
-          <div class="text-slate-500 font-medium">
-            Streak: <span id="streakDisplay" class="text-amber-500 font-bold text-lg">0</span>
-          </div>
-        </div>
+                <!-- Quiz Card -->
+                <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 sm:p-10 flex flex-col items-center w-full">
+                    
+                    <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">What does this radical mean?</div>
+                    
+                    <!-- Character Display -->
+                    <div id="characterDisplay" class="zh-char text-8xl sm:text-9xl font-medium text-slate-800 my-6 drop-shadow-sm select-none">
+                        <!-- Character gets injected here -->
+                    </div>
+                    
+                    <!-- Pinyin Reveal (Hidden initially) -->
+                    <div id="pinyinDisplay" class="text-xl text-indigo-500 font-medium mb-8 h-8 opacity-0 transition-opacity duration-300">
+                        <!-- Pinyin gets injected here -->
+                    </div>
 
-        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 sm:p-10 flex flex-col items-center w-full">
-          <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">
-            What does this radical mean?
-          </div>
+                    <!-- Options Grid -->
+                    <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                        <!-- Buttons get injected here -->
+                    </div>
 
-          <div id="characterDisplay" class="zh-char text-8xl sm:text-9xl font-medium text-slate-800 my-6 drop-shadow-sm select-none">
-          </div>
+                    <!-- Feedback Area & Next Button -->
+                    <div id="feedbackArea" class="mt-8 flex flex-col items-center justify-center min-h-[80px] w-full hidden">
+                        <p id="feedbackText" class="text-lg font-bold mb-4"></p>
+                        <button id="nextBtn" onclick="nextQuestion()" class="w-full sm:w-auto px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-colors shadow-md shadow-indigo-200">
+                            Next Character &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-          <div id="pinyinDisplay" class="text-xl text-indigo-500 font-medium mb-8 h-8 opacity-0 transition-opacity duration-300">
-          </div>
+        <!-- STUDY MODE SECTION -->
+        <section id="studySection" class="absolute inset-0 overflow-y-auto w-full h-full bg-slate-50 hidden fade-in py-8 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-8 text-center">
+                    <h2 class="text-2xl font-bold text-slate-800">All 214 Kangxi Radicals</h2>
+                    <p class="text-slate-500 mt-2">Browse and memorize the fundamental building blocks of Chinese characters.</p>
+                </div>
+                
+                <div id="studyGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12">
+                    <!-- Study cards get injected here -->
+                </div>
+            </div>
+        </section>
 
-          <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full"></div>
+    </main>
 
-          <div id="feedbackArea" class="mt-8 flex flex-col items-center justify-center min-h-[80px] w-full hidden">
-            <p id="feedbackText" class="text-lg font-bold mb-4"></p>
-            <button id="nextBtn" type="button" onclick="nextQuestion()"
-              class="w-full sm:w-auto px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-colors shadow-md">
-              Next Character &rarr;
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+    <script>
+        // Complete Dataset of all 214 Kangxi Radicals (Simplified Versions)
+        const radicals = [
+            { c: "ä¸€", p: "yÄ«", m: "one" }, { c: "ä¸¨", p: "gÇ”n", m: "line" }, { c: "ä¸¶", p: "zhÇ”", m: "dot" }, { c: "ä¸¿", p: "piÄ›", m: "slash" }, { c: "ä¹™", p: "yÇ", m: "second" }, { c: "äº…", p: "juÃ©", m: "hook" },
+            { c: "äºŒ", p: "Ã¨r", m: "two" }, { c: "äº ", p: "tÃ³u", m: "lid" }, { c: "äºº", p: "rÃ©n", m: "man" }, { c: "å„¿", p: "Ã©r", m: "legs" }, { c: "å…¥", p: "rÃ¹", m: "enter" }, { c: "å…«", p: "bÄ", m: "eight" },
+            { c: "å†‚", p: "jiÅng", m: "down box" }, { c: "å†–", p: "mÃ¬", m: "cover" }, { c: "å†«", p: "bÄ«ng", m: "ice" }, { c: "å‡ ", p: "jÄ«", m: "table" }, { c: "å‡µ", p: "kÇŽn", m: "open box" }, { c: "åˆ€", p: "dÄo", m: "knife" },
+            { c: "åŠ›", p: "lÃ¬", m: "power" }, { c: "å‹¹", p: "bÄo", m: "wrap" }, { c: "åŒ•", p: "bÇ", m: "spoon" }, { c: "åŒš", p: "fÄng", m: "right box" }, { c: "åŒ¸", p: "xÇ", m: "hiding enclosure" }, { c: "å", p: "shÃ­", m: "ten" },
+            { c: "åœ", p: "bÇ”", m: "divination" }, { c: "å©", p: "jiÃ©", m: "seal" }, { c: "åŽ‚", p: "hÇŽn", m: "cliff" }, { c: "åŽ¶", p: "sÄ«", m: "private" }, { c: "åˆ", p: "yÃ²u", m: "again" },
+            { c: "å£", p: "kÇ’u", m: "mouth" }, { c: "å›—", p: "wÃ©i", m: "enclosure" }, { c: "åœŸ", p: "tÇ”", m: "earth" }, { c: "å£«", p: "shÃ¬", m: "scholar" }, { c: "å¤‚", p: "zhÇ", m: "go" }, { c: "å¤Š", p: "suÄ«", m: "go slowly" },
+            { c: "å¤•", p: "xÄ«", m: "evening" }, { c: "å¤§", p: "dÃ ", m: "big" }, { c: "å¥³", p: "nÇš", m: "woman" }, { c: "å­", p: "zÇ", m: "child" }, { c: "å®€", p: "miÃ¡n", m: "roof" }, { c: "å¯¸", p: "cÃ¹n", m: "inch" },
+            { c: "å°", p: "xiÇŽo", m: "small" }, { c: "å°¢", p: "wÄng", m: "lame" }, { c: "å°¸", p: "shÄ«", m: "corpse" }, { c: "å±®", p: "chÃ¨", m: "sprout" }, { c: "å±±", p: "shÄn", m: "mountain" }, { c: "å·›", p: "chuÄn", m: "river" },
+            { c: "å·¥", p: "gÅng", m: "work" }, { c: "å·±", p: "jÇ", m: "oneself" }, { c: "å·¾", p: "jÄ«n", m: "turban" }, { c: "å¹²", p: "gÄn", m: "dry" }, { c: "å¹º", p: "yÄo", m: "short thread" }, { c: "å¹¿", p: "yÇŽn", m: "dotted cliff" },
+            { c: "å»´", p: "yÇn", m: "long stride" }, { c: "å»¾", p: "gÇ’ng", m: "two hands" }, { c: "å¼‹", p: "yÃ¬", m: "shoot" }, { c: "å¼“", p: "gÅng", m: "bow" }, { c: "å½", p: "jÃ¬", m: "snout" }, { c: "å½¡", p: "shÄn", m: "bristle" },
+            { c: "å½³", p: "chÃ¬", m: "step" },
+            { c: "å¿ƒ", p: "xÄ«n", m: "heart" }, { c: "æˆˆ", p: "gÄ“", m: "halberd" }, { c: "æˆ·", p: "hÃ¹", m: "door" }, { c: "æ‰‹", p: "shÇ’u", m: "hand" }, { c: "æ”¯", p: "zhÄ«", m: "branch" }, { c: "æ”´", p: "pÅ«", m: "rap" },
+            { c: "æ–‡", p: "wÃ©n", m: "script" }, { c: "æ–—", p: "dÇ’u", m: "dipper" }, { c: "æ–¤", p: "jÄ«n", m: "axe" }, { c: "æ–¹", p: "fÄng", m: "square" }, { c: "æ— ", p: "wÃº", m: "not" }, { c: "æ—¥", p: "rÃ¬", m: "sun" },
+            { c: "æ›°", p: "yuÄ“", m: "say" }, { c: "æœˆ", p: "yuÃ¨", m: "moon" }, { c: "æœ¨", p: "mÃ¹", m: "tree" }, { c: "æ¬ ", p: "qiÃ n", m: "lack" }, { c: "æ­¢", p: "zhÇ", m: "stop" }, { c: "æ­¹", p: "dÇŽi", m: "death" },
+            { c: "æ®³", p: "shÅ«", m: "weapon" }, { c: "æ¯‹", p: "wÃº", m: "do not" }, { c: "æ¯”", p: "bÇ", m: "compare" }, { c: "æ¯›", p: "mÃ¡o", m: "hair" }, { c: "æ°", p: "shÃ¬", m: "clan" }, { c: "æ°”", p: "qÃ¬", m: "steam" },
+            { c: "æ°´", p: "shuÇ", m: "water" }, { c: "ç«", p: "huÇ’", m: "fire" }, { c: "çˆª", p: "zhÇŽo", m: "claw" }, { c: "çˆ¶", p: "fÃ¹", m: "father" }, { c: "çˆ»", p: "yÃ¡o", m: "trigrams" }, { c: "çˆ¿", p: "qiÃ¡ng", m: "half tree trunk" },
+            { c: "ç‰‡", p: "piÃ n", m: "slice" }, { c: "ç‰™", p: "yÃ¡", m: "fang" }, { c: "ç‰›", p: "niÃº", m: "cow" }, { c: "çŠ¬", p: "quÇŽn", m: "dog" },
+            { c: "çŽ„", p: "xuÃ¡n", m: "profound" }, { c: "çŽ‰", p: "yÃ¹", m: "jade" }, { c: "ç“œ", p: "guÄ", m: "melon" }, { c: "ç“¦", p: "wÇŽ", m: "tile" }, { c: "ç”˜", p: "gÄn", m: "sweet" }, { c: "ç”Ÿ", p: "shÄ“ng", m: "life" },
+            { c: "ç”¨", p: "yÃ²ng", m: "use" }, { c: "ç”°", p: "tiÃ¡n", m: "field" }, { c: "ç–‹", p: "pÇ", m: "bolt of cloth" }, { c: "ç–’", p: "nÃ©", m: "sickness" }, { c: "ç™¶", p: "bÅ", m: "footsteps" }, { c: "ç™½", p: "bÃ¡i", m: "white" },
+            { c: "çš®", p: "pÃ­", m: "skin" }, { c: "çš¿", p: "mÇn", m: "dish" }, { c: "ç›®", p: "mÃ¹", m: "eye" }, { c: "çŸ›", p: "mÃ¡o", m: "spear" }, { c: "çŸ¢", p: "shÇ", m: "arrow" }, { c: "çŸ³", p: "shÃ­", m: "stone" },
+            { c: "ç¤º", p: "shÃ¬", m: "spirit" }, { c: "ç¦¸", p: "rÃ³u", m: "track" }, { c: "ç¦¾", p: "hÃ©", m: "grain" }, { c: "ç©´", p: "xuÃ©", m: "cave" }, { c: "ç«‹", p: "lÃ¬", m: "stand" },
+            { c: "ç«¹", p: "zhÃº", m: "bamboo" }, { c: "ç±³", p: "mÇ", m: "rice" }, { c: "çºŸ", p: "mÃ¬", m: "silk" }, { c: "ç¼¶", p: "fÇ’u", m: "jar" }, { c: "ç½‘", p: "wÇŽng", m: "net" }, { c: "ç¾Š", p: "yÃ¡ng", m: "sheep" },
+            { c: "ç¾½", p: "yÇ”", m: "feather" }, { c: "è€", p: "lÇŽo", m: "old" }, { c: "è€Œ", p: "Ã©r", m: "and" }, { c: "è€’", p: "lÄ›i", m: "plow" }, { c: "è€³", p: "Ä›r", m: "ear" }, { c: "è¿", p: "yÃ¹", m: "brush" },
+            { c: "è‚‰", p: "rÃ²u", m: "meat" }, { c: "è‡£", p: "chÃ©n", m: "minister" }, { c: "è‡ª", p: "zÃ¬", m: "self" }, { c: "è‡³", p: "zhÃ¬", m: "arrive" }, { c: "è‡¼", p: "jiÃ¹", m: "mortar" }, { c: "èˆŒ", p: "shÃ©", m: "tongue" },
+            { c: "èˆ›", p: "chuÇŽn", m: "oppose" }, { c: "èˆŸ", p: "zhÅu", m: "boat" }, { c: "è‰®", p: "gÃ¨n", m: "stopping" }, { c: "è‰²", p: "sÃ¨", m: "color" }, { c: "è‰¹", p: "cÇŽo", m: "grass" }, { c: "è™", p: "hÅ«", m: "tiger" },
+            { c: "è™«", p: "chÃ³ng", m: "insect" }, { c: "è¡€", p: "xuÃ¨", m: "blood" }, { c: "è¡Œ", p: "xÃ­ng", m: "walk enclosure" }, { c: "è¡£", p: "yÄ«", m: "clothes" }, { c: "è¥¾", p: "yÃ ", m: "cover" },
+            { c: "è§", p: "jiÃ n", m: "see" }, { c: "è§’", p: "jiÇŽo", m: "horn" }, { c: "è® ", p: "yÃ¡n", m: "speech" }, { c: "è°·", p: "gÇ”", m: "valley" }, { c: "è±†", p: "dÃ²u", m: "bean" }, { c: "è±•", p: "shÇ", m: "pig" },
+            { c: "è±¸", p: "zhÃ¬", m: "badger" }, { c: "è´", p: "bÃ¨i", m: "shell" }, { c: "èµ¤", p: "chÃ¬", m: "red" }, { c: "èµ°", p: "zÇ’u", m: "run" }, { c: "è¶³", p: "zÃº", m: "foot" }, { c: "èº«", p: "shÄ“n", m: "body" },
+            { c: "è½¦", p: "chÄ“", m: "cart" }, { c: "è¾›", p: "xÄ«n", m: "bitter" }, { c: "è¾°", p: "chÃ©n", m: "morning" }, { c: "è¾¶", p: "chuÃ²", m: "walk" }, { c: "é‚‘", p: "yÃ¬", m: "city" }, { c: "é…‰", p: "yÇ’u", m: "wine" },
+            { c: "é‡‡", p: "cÇŽi", m: "distinguish" }, { c: "é‡Œ", p: "lÇ", m: "village" },
+            { c: "é’…", p: "jÄ«n", m: "gold" }, { c: "é•¿", p: "chÃ¡ng", m: "long" }, { c: "é—¨", p: "mÃ©n", m: "gate" }, { c: "é˜œ", p: "fÃ¹", m: "mound" }, { c: "éš¶", p: "lÃ¬", m: "slave" }, { c: "éš¹", p: "zhuÄ«", m: "short-tailed bird" },
+            { c: "é›¨", p: "yÇ”", m: "rain" }, { c: "é’", p: "qÄ«ng", m: "blue" }, { c: "éž", p: "fÄ“i", m: "wrong" },
+            { c: "é¢", p: "miÃ n", m: "face" }, { c: "é©", p: "gÃ©", m: "leather" }, { c: "éŸ¦", p: "wÃ©i", m: "tanned leather" }, { c: "éŸ­", p: "jiÇ”", m: "leek" }, { c: "éŸ³", p: "yÄ«n", m: "sound" }, { c: "é¡µ", p: "yÃ¨", m: "leaf" },
+            { c: "é£Ž", p: "fÄ“ng", m: "wind" }, { c: "é£ž", p: "fÄ“i", m: "fly" }, { c: "é¥£", p: "shÃ­", m: "eat" }, { c: "é¦–", p: "shÇ’u", m: "head" }, { c: "é¦™", p: "xiÄng", m: "fragrant" },
+            { c: "é©¬", p: "mÇŽ", m: "horse" }, { c: "éª¨", p: "gÇ”", m: "bone" }, { c: "é«˜", p: "gÄo", m: "tall" }, { c: "é«Ÿ", p: "biÄo", m: "hair" }, { c: "æ–—", p: "dÃ²u", m: "fight" }, { c: "é¬¯", p: "chÃ ng", m: "sacrificial wine" },
+            { c: "é¬²", p: "lÃ¬", m: "cauldron" }, { c: "é¬¼", p: "guÇ", m: "ghost" },
+            { c: "é±¼", p: "yÃº", m: "fish" }, { c: "é¸Ÿ", p: "niÇŽo", m: "bird" }, { c: "å¤", p: "lÇ”", m: "salt" }, { c: "é¹¿", p: "lÃ¹", m: "deer" }, { c: "éº¦", p: "mÃ i", m: "wheat" }, { c: "éº»", p: "mÃ¡", m: "hemp" },
+            { c: "é»„", p: "huÃ¡ng", m: "yellow" }, { c: "é»", p: "shÇ”", m: "millet" }, { c: "é»‘", p: "hÄ“i", m: "black" }, { c: "é»¹", p: "zhÇ", m: "embroidery" },
+            { c: "é»¾", p: "mÇn", m: "frog" }, { c: "é¼Ž", p: "dÇng", m: "tripod" }, { c: "é¼“", p: "gÇ”", m: "drum" }, { c: "é¼ ", p: "shÇ”", m: "rat" },
+            { c: "é¼»", p: "bÃ­", m: "nose" }, { c: "é½", p: "qÃ­", m: "even" },
+            { c: "é½¿", p: "chÇ", m: "tooth" },
+            { c: "é¾™", p: "lÃ³ng", m: "dragon" }, { c: "é¾Ÿ", p: "guÄ«", m: "turtle" },
+            { c: "é¾ ", p: "yuÃ¨", m: "flute" }
+        ];
 
-    <section id="studySection" class="absolute inset-0 overflow-y-auto w-full h-full bg-slate-50 hidden fade-in py-8 px-4">
-      <div class="max-w-6xl mx-auto">
-        <div class="mb-8 text-center">
-          <h2 class="text-2xl font-bold text-slate-800">All Kangxi Radicals</h2>
-          <p class="text-slate-500 mt-2">Browse and memorize the basic building blocks of Chinese characters.</p>
-        </div>
+        // Game State Variables
+        let score = 0;
+        let streak = 0;
+        let currentQuestion = null;
+        let currentOptions = [];
+        let hasAnswered = false;
 
-        <div id="studyGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12"></div>
-      </div>
-    </section>
-  </main>
+        // DOM Elements
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const streakDisplay = document.getElementById('streakDisplay');
+        const characterDisplay = document.getElementById('characterDisplay');
+        const pinyinDisplay = document.getElementById('pinyinDisplay');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedbackArea = document.getElementById('feedbackArea');
+        const feedbackText = document.getElementById('feedbackText');
+        
+        // Navigation Elements
+        const quizSection = document.getElementById('quizSection');
+        const studySection = document.getElementById('studySection');
+        const navQuizBtn = document.getElementById('navQuizBtn');
+        const navStudyBtn = document.getElementById('navStudyBtn');
+        const studyGrid = document.getElementById('studyGrid');
 
-  <script>
-    const radicals = [
-      { c: "一", p: "yī", m: "one" },
-      { c: "丨", p: "gǔn", m: "line" },
-      { c: "丶", p: "zhǔ", m: "dot" },
-      { c: "丿", p: "piě", m: "slash" },
-      { c: "乙", p: "yǐ", m: "second" },
-      { c: "亅", p: "jué", m: "hook" },
-      { c: "二", p: "èr", m: "two" },
-      { c: "亠", p: "tóu", m: "lid" },
-      { c: "人", p: "rén", m: "man" },
-      { c: "儿", p: "ér", m: "legs" },
-      { c: "入", p: "rù", m: "enter" },
-      { c: "八", p: "bā", m: "eight" },
-      { c: "冂", p: "jiōng", m: "down box" },
-      { c: "冖", p: "mì", m: "cover" },
-      { c: "冫", p: "bīng", m: "ice" },
-      { c: "几", p: "jī", m: "table" },
-      { c: "凵", p: "kǎn", m: "open box" },
-      { c: "刀", p: "dāo", m: "knife" },
-      { c: "力", p: "lì", m: "power" },
-      { c: "勹", p: "bāo", m: "wrap" },
-      { c: "匕", p: "bǐ", m: "spoon" },
-      { c: "匚", p: "fāng", m: "right box" },
-      { c: "匸", p: "xǐ", m: "hiding enclosure" },
-      { c: "十", p: "shí", m: "ten" },
-      { c: "卜", p: "bǔ", m: "divination" },
-      { c: "卩", p: "jié", m: "seal" },
-      { c: "厂", p: "hǎn", m: "cliff" },
-      { c: "厶", p: "sī", m: "private" },
-      { c: "又", p: "yòu", m: "again" },
-      { c: "口", p: "kǒu", m: "mouth" },
-      { c: "囗", p: "wéi", m: "enclosure" },
-      { c: "土", p: "tǔ", m: "earth" },
-      { c: "士", p: "shì", m: "scholar" },
-      { c: "夂", p: "zhǐ", m: "go" },
-      { c: "夕", p: "xī", m: "evening" },
-      { c: "大", p: "dà", m: "big" },
-      { c: "女", p: "nǚ", m: "woman" },
-      { c: "子", p: "zǐ", m: "child" },
-      { c: "宀", p: "mián", m: "roof" },
-      { c: "小", p: "xiǎo", m: "small" },
-      { c: "尢", p: "wāng", m: "lame" },
-      { c: "尸", p: "shī", m: "corpse" },
-      { c: "屮", p: "chè", m: "sprout" },
-      { c: "山", p: "shān", m: "mountain" },
-      { c: "工", p: "gōng", m: "work" },
-      { c: "己", p: "jǐ", m: "self" },
-      { c: "巾", p: "jīn", m: "turban" },
-      { c: "干", p: "gān", m: "dry" },
-      { c: "幺", p: "yāo", m: "short thread" },
-      { c: "广", p: "guǎng", m: "wide" },
-      { c: "廴", p: "yǐn", m: "long stride" },
-      { c: "廾", p: "gǒng", m: "two hands" },
-      { c: "弋", p: "yì", m: "shoot" },
-      { c: "弓", p: "gōng", m: "bow" },
-      { c: "彐", p: "jì", m: "snout" },
-      { c: "彡", p: "shān", m: "bristle" },
-      { c: "彳", p: "chì", m: "step" },
-      { c: "心", p: "xīn", m: "heart" },
-      { c: "戈", p: "gē", m: "halberd" },
-      { c: "戸", p: "hù", m: "door" },
-      { c: "手", p: "shǒu", m: "hand" },
-      { c: "支", p: "zhī", m: "branch" },
-      { c: "文", p: "wén", m: "script" },
-      { c: "斗", p: "dǒu", m: "dipper" },
-      { c: "斤", p: "jīn", m: "axe" },
-      { c: "方", p: "fāng", m: "square" },
-      { c: "无", p: "wú", m: "not" },
-      { c: "日", p: "rì", m: "sun" },
-      { c: "曰", p: "yuē", m: "say" },
-      { c: "月", p: "yuè", m: "moon" },
-      { c: "木", p: "mù", m: "tree" },
-      { c: "欠", p: "qiàn", m: "lack" },
-      { c: "止", p: "zhǐ", m: "stop" },
-      { c: "歹", p: "dǎi", m: "bad" },
-      { c: "毋", p: "wú", m: "do not" },
-      { c: "比", p: "bǐ", m: "compare" },
-      { c: "毛", p: "máo", m: "hair" },
-      { c: "氏", p: "shì", m: "clan" },
-      { c: "水", p: "shuǐ", m: "water" },
-      { c: "火", p: "huǒ", m: "fire" },
-      { c: "爪", p: "zhǎo", m: "claw" },
-      { c: "父", p: "fù", m: "father" },
-      { c: "爻", p: "yáo", m: "trigrams" },
-      { c: "片", p: "piàn", m: "slice" },
-      { c: "牙", p: "yá", m: "fang" },
-      { c: "牛", p: "niú", m: "cow" },
-      { c: "犬", p: "quǎn", m: "dog" },
-      { c: "玄", p: "xuán", m: "profound" },
-      { c: "玉", p: "yù", m: "jade" },
-      { c: "瓜", p: "guā", m: "melon" },
-      { c: "瓦", p: "wǎ", m: "tile" },
-      { c: "甘", p: "gān", m: "sweet" },
-      { c: "生", p: "shēng", m: "life" },
-      { c: "用", p: "yòng", m: "use" },
-      { c: "田", p: "tián", m: "field" },
-      { c: "疋", p: "pǐ", m: "bolt of cloth" },
-      { c: "疒", p: "né", m: "sickness" },
-      { c: "癶", p: "bō", m: "foot" },
-      { c: "白", p: "bái", m: "white" },
-      { c: "皮", p: "pí", m: "skin" },
-      { c: "皿", p: "mǐn", m: "dish" },
-      { c: "目", p: "mù", m: "eye" },
-      { c: "矛", p: "máo", m: "spear" },
-      { c: "矢", p: "shǐ", m: "arrow" },
-      { c: "石", p: "shí", m: "stone" },
-      { c: "示", p: "shì", m: "spirit" },
-      { c: "禸", p: "róu", m: "track" },
-      { c: "禾", p: "hé", m: "grain" },
-      { c: "穴", p: "xué", m: "cave" },
-      { c: "立", p: "lì", m: "stand" },
-      { c: "竹", p: "zhú", m: "bamboo" },
-      { c: "米", p: "mǐ", m: "rice" },
-      { c: "纟", p: "mì", m: "silk" },
-      { c: "缶", p: "fǒu", m: "jar" },
-      { c: "网", p: "wǎng", m: "net" },
-      { c: "羊", p: "yáng", m: "sheep" },
-      { c: "羽", p: "yǔ", m: "feather" },
-      { c: "老", p: "lǎo", m: "old" },
-      { c: "而", p: "ér", m: "and" },
-      { c: "耒", p: "lěi", m: "plow" },
-      { c: "耳", p: "ěr", m: "ear" },
-      { c: "聿", p: "yù", m: "brush" },
-      { c: "肉", p: "ròu", m: "meat" },
-      { c: "臣", p: "chén", m: "minister" },
-      { c: "自", p: "zì", m: "self" },
-      { c: "至", p: "zhì", m: "arrive" },
-      { c: "臼", p: "jiù", m: "mortar" },
-      { c: "舌", p: "shé", m: "tongue" },
-      { c: "舟", p: "zhōu", m: "boat" },
-      { c: "艮", p: "gèn", m: "stopping" },
-      { c: "色", p: "sè", m: "color" },
-      { c: "艹", p: "cǎo", m: "grass" },
-      { c: "虫", p: "chóng", m: "insect" },
-      { c: "血", p: "xuè", m: "blood" },
-      { c: "行", p: "xíng", m: "walk enclosure" },
-      { c: "衣", p: "yī", m: "clothes" },
-      { c: "襾", p: "yà", m: "west" },
-      { c: "見", p: "jiàn", m: "see" },
-      { c: "角", p: "jiǎo", m: "horn" },
-      { c: "讠", p: "yán", m: "speech" },
-      { c: "谷", p: "gǔ", m: "valley" },
-      { c: "豆", p: "dòu", m: "bean" },
-      { c: "豸", p: "zhì", m: "badger" },
-      { c: "貝", p: "bèi", m: "shell" },
-      { c: "赤", p: "chì", m: "red" },
-      { c: "走", p: "zǒu", m: "run" },
-      { c: "足", p: "zú", m: "foot" },
-      { c: "車", p: "chē", m: "cart" },
-      { c: "辛", p: "xīn", m: "bitter" },
-      { c: "辰", p: "chén", m: "morning" },
-      { c: "辶", p: "chuò", m: "walk" },
-      { c: "邑", p: "yì", m: "city" },
-      { c: "里", p: "lǐ", m: "village" },
-      { c: "金", p: "jīn", m: "gold" },
-      { c: "長", p: "cháng", m: "long" },
-      { c: "門", p: "mén", m: "gate" },
-      { c: "阜", p: "fù", m: "mound" },
-      { c: "隶", p: "lì", m: "slave" },
-      { c: "雨", p: "yǔ", m: "rain" },
-      { c: "青", p: "qīng", m: "blue" },
-      { c: "非", p: "fēi", m: "wrong" },
-      { c: "面", p: "miàn", m: "face" },
-      { c: "革", p: "gé", m: "leather" },
-      { c: "韦", p: "wéi", m: "tanned leather" },
-      { c: "音", p: "yīn", m: "sound" },
-      { c: "風", p: "fēng", m: "wind" },
-      { c: "飛", p: "fēi", m: "fly" },
-      { c: "食", p: "shí", m: "eat" },
-      { c: "首", p: "shǒu", m: "head" },
-      { c: "香", p: "xiāng", m: "fragrant" },
-      { c: "馬", p: "mǎ", m: "horse" },
-      { c: "骨", p: "gǔ", m: "bone" },
-      { c: "高", p: "gāo", m: "tall" },
-      { c: "髟", p: "biāo", m: "hair" },
-      { c: "鬲", p: "lì", m: "cauldron" },
-      { c: "鬼", p: "guǐ", m: "ghost" },
-      { c: "魚", p: "yú", m: "fish" },
-      { c: "鳥", p: "niǎo", m: "bird" },
-      { c: "鹵", p: "lǔ", m: "salt" },
-      { c: "鹿", p: "lù", m: "deer" },
-      { c: "麦", p: "mài", m: "wheat" },
-      { c: "麻", p: "má", m: "hemp" },
-      { c: "黃", p: "huáng", m: "yellow" },
-      { c: "黍", p: "shǔ", m: "millet" },
-      { c: "黑", p: "hēi", m: "black" },
-      { c: "黹", p: "zhǐ", m: "embroidery" },
-      { c: "黾", p: "mǐn", m: "frog" },
-      { c: "鼎", p: "dǐng", m: "tripod" },
-      { c: "鼓", p: "gǔ", m: "drum" },
-      { c: "鼠", p: "shǔ", m: "rat" },
-      { c: "鼻", p: "bí", m: "nose" },
-      { c: "齊", p: "qí", m: "even" },
-      { c: "齒", p: "chǐ", m: "tooth" },
-      { c: "龍", p: "lóng", m: "dragon" },
-      { c: "龜", p: "guī", m: "turtle" },
-      { c: "龠", p: "yuè", m: "flute" }
-    ];
+        let studyGridRendered = false;
 
-    let score = 0;
-    let streak = 0;
-    let currentQuestion = null;
-    let currentOptions = [];
-    let hasAnswered = false;
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            if (tabName === 'quiz') {
+                quizSection.classList.remove('hidden');
+                studySection.classList.add('hidden');
+                
+                // Update button styles
+                navQuizBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
+                navStudyBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
+            } else {
+                quizSection.classList.add('hidden');
+                studySection.classList.remove('hidden');
+                
+                // Update button styles
+                navStudyBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
+                navQuizBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
 
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const streakDisplay = document.getElementById('streakDisplay');
-    const characterDisplay = document.getElementById('characterDisplay');
-    const pinyinDisplay = document.getElementById('pinyinDisplay');
-    const optionsContainer = document.getElementById('optionsContainer');
-    const feedbackArea = document.getElementById('feedbackArea');
-    const feedbackText = document.getElementById('feedbackText');
-
-    const quizSection = document.getElementById('quizSection');
-    const studySection = document.getElementById('studySection');
-    const navQuizBtn = document.getElementById('navQuizBtn');
-    const navStudyBtn = document.getElementById('navStudyBtn');
-    const studyGrid = document.getElementById('studyGrid');
-
-    let studyGridRendered = false;
-
-    function switchTab(tabName) {
-      if (tabName === 'quiz') {
-        quizSection.classList.remove('hidden');
-        studySection.classList.add('hidden');
-
-        navQuizBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
-        navStudyBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
-      } else {
-        quizSection.classList.add('hidden');
-        studySection.classList.remove('hidden');
-
-        navStudyBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
-        navQuizBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
-
-        if (!studyGridRendered) {
-          renderStudyGrid();
-          studyGridRendered = true;
-        }
-      }
-    }
-
-    function getRandomRadical() {
-      return radicals[Math.floor(Math.random() * radicals.length)];
-    }
-
-    function shuffleArray(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    function generateQuestion() {
-      hasAnswered = false;
-      feedbackArea.classList.add('hidden');
-      pinyinDisplay.style.opacity = '0';
-      pinyinDisplay.textContent = '';
-
-      currentQuestion = getRandomRadical();
-
-      let distractors = [];
-      while (distractors.length < 3) {
-        const candidate = getRandomRadical();
-
-        if (
-          candidate.m !== currentQuestion.m &&
-          !distractors.some(d => d.m === candidate.m)
-        ) {
-          distractors.push(candidate);
-        }
-      }
-
-      currentOptions = shuffleArray([currentQuestion, ...distractors]);
-      renderQuizUI();
-    }
-
-    function renderQuizUI() {
-      characterDisplay.textContent = currentQuestion.c;
-
-      optionsContainer.innerHTML = '';
-
-      currentOptions.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'option-btn w-full p-4 rounded-xl text-lg font-medium border-2 border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:border-indigo-300 focus:outline-none';
-        btn.textContent = option.m.charAt(0).toUpperCase() + option.m.slice(1);
-        btn.addEventListener('click', () => handleAnswer(index, btn));
-        optionsContainer.appendChild(btn);
-      });
-    }
-
-    function handleAnswer(selectedIndex, btnElement) {
-      if (hasAnswered) return;
-      hasAnswered = true;
-
-      const selectedOption = currentOptions[selectedIndex];
-      const isCorrect = selectedOption.m === currentQuestion.m;
-
-      const allButtons = optionsContainer.querySelectorAll('button');
-      allButtons.forEach(btn => {
-        btn.disabled = true;
-        btn.classList.remove('hover:bg-slate-100', 'hover:border-indigo-300', 'cursor-pointer');
-        btn.classList.add('cursor-default', 'opacity-80');
-      });
-
-      pinyinDisplay.textContent = `Pinyin: ${currentQuestion.p}`;
-      pinyinDisplay.style.opacity = '1';
-
-      if (isCorrect) {
-        score += 10;
-        streak += 1;
-
-        btnElement.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
-        btnElement.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
-
-        feedbackText.textContent = 'Correct! 🎉';
-        feedbackText.className = 'text-xl font-bold text-emerald-600 mb-4';
-      } else {
-        streak = 0;
-
-        btnElement.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
-        btnElement.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
-
-        const correctIndex = currentOptions.findIndex(opt => opt.m === currentQuestion.m);
-        const correctBtn = allButtons[correctIndex];
-        if (correctBtn) {
-          correctBtn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
-          correctBtn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+                // Render study grid lazily once
+                if (!studyGridRendered) {
+                    renderStudyGrid();
+                    studyGridRendered = true;
+                }
+            }
         }
 
-        feedbackText.textContent = `Incorrect. It means "${currentQuestion.m}".`;
-        feedbackText.className = 'text-xl font-bold text-rose-600 mb-4';
-      }
+        // --- QUIZ LOGIC ---
 
-      scoreDisplay.textContent = score;
-      streakDisplay.textContent = streak;
-      feedbackArea.classList.remove('hidden');
-    }
+        function getRandomRadical() {
+            return radicals[Math.floor(Math.random() * radicals.length)];
+        }
 
-    function nextQuestion() {
-      generateQuestion();
-    }
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-    function renderStudyGrid() {
-      studyGrid.innerHTML = '';
+        function generateQuestion() {
+            hasAnswered = false;
+            feedbackArea.classList.add('hidden');
+            pinyinDisplay.style.opacity = '0';
+            pinyinDisplay.innerText = '';
+            
+            // Pick correct answer
+            currentQuestion = getRandomRadical();
+            
+            // Pick 3 unique distractors
+            let distractors = [];
+            while (distractors.length < 3) {
+                let candidate = getRandomRadical();
+                // Ensure no duplicate meanings and not the correct answer
+                if (candidate.m !== currentQuestion.m && !distractors.find(d => d.m === candidate.m)) {
+                    distractors.push(candidate);
+                }
+            }
 
-      radicals.forEach((radical, index) => {
-        const card = document.createElement('div');
-        card.className = 'bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow cursor-default group';
+            // Combine and shuffle
+            currentOptions = shuffleArray([currentQuestion, ...distractors]);
 
-        const numStr = `<div class="w-full text-left text-xs font-semibold text-slate-300 mb-1 group-hover:text-indigo-300 transition-colors">#${index + 1}</div>`;
-        const charStr = `<div class="zh-char text-4xl font-medium text-slate-800 mb-2">${radical.c}</div>`;
-        const pinStr = `<div class="text-sm font-semibold text-indigo-500 mb-1">${radical.p}</div>`;
-        const meanStr = `<div class="text-xs text-slate-500 text-center uppercase tracking-wide">${radical.m}</div>`;
+            renderQuizUI();
+        }
 
-        card.innerHTML = numStr + charStr + pinStr + meanStr;
-        studyGrid.appendChild(card);
-      });
-    }
+        function renderQuizUI() {
+            // Set Character
+            characterDisplay.innerText = currentQuestion.c;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      generateQuestion();
-    });
-  </script>
+            // Clear and render buttons
+            optionsContainer.innerHTML = '';
+            currentOptions.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full p-4 rounded-xl text-lg font-medium border-2 border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:border-indigo-300 focus:outline-none`;
+                btn.innerText = option.m.charAt(0).toUpperCase() + option.m.slice(1); // Capitalize first letter
+                btn.onclick = () => handleAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIndex, btnElement) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            const selectedOption = currentOptions[selectedIndex];
+            const isCorrect = selectedOption.m === currentQuestion.m;
+
+            // Disable all buttons
+            const allButtons = optionsContainer.querySelectorAll('button');
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-100', 'hover:border-indigo-300', 'cursor-pointer');
+                btn.classList.add('cursor-default', 'opacity-80');
+            });
+
+            // Reveal Pinyin
+            pinyinDisplay.innerText = `Pinyin: ${currentQuestion.p}`;
+            pinyinDisplay.style.opacity = '1';
+
+            if (isCorrect) {
+                // Correct State
+                score += 10;
+                streak += 1;
+                btnElement.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
+                btnElement.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+                
+                feedbackText.innerText = "Correct! ðŸŽ‰";
+                feedbackText.className = "text-xl font-bold text-emerald-600 mb-4";
+            } else {
+                // Wrong State
+                streak = 0;
+                btnElement.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
+                btnElement.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
+                
+                // Highlight correct answer
+                const correctIndex = currentOptions.findIndex(opt => opt.m === currentQuestion.m);
+                const correctBtn = allButtons[correctIndex];
+                correctBtn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
+                correctBtn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+
+                feedbackText.innerText = `Incorrect. It means "${currentQuestion.m}".`;
+                feedbackText.className = "text-xl font-bold text-rose-600 mb-4";
+            }
+
+            // Update Stats UI
+            scoreDisplay.innerText = score;
+            streakDisplay.innerText = streak;
+
+            // Show feedback area
+            feedbackArea.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            generateQuestion();
+        }
+
+        // --- STUDY MODE LOGIC ---
+
+        function renderStudyGrid() {
+            studyGrid.innerHTML = '';
+            radicals.forEach((radical, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow cursor-default group";
+                
+                // Number
+                const numStr = `<div class="w-full text-left text-xs font-semibold text-slate-300 mb-1 group-hover:text-indigo-300 transition-colors">#${index + 1}</div>`;
+                
+                // Character
+                const charStr = `<div class="zh-char text-4xl font-medium text-slate-800 mb-2">${radical.c}</div>`;
+                
+                // Pinyin
+                const pinStr = `<div class="text-sm font-semibold text-indigo-500 mb-1">${radical.p}</div>`;
+                
+                // Meaning
+                const meanStr = `<div class="text-xs text-slate-500 text-center uppercase tracking-wide">${radical.m}</div>`;
+                
+                card.innerHTML = numStr + charStr + pinStr + meanStr;
+                studyGrid.appendChild(card);
+            });
+        }
+
+        // Initialize Game
+        window.onload = function() {
+            generateQuestion();
+        };
+
+    </script>
 </body>
 </html>
