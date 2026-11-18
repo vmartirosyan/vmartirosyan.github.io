@@ -129,7 +129,7 @@
 
     <!-- Header -->
     <header class="bg-white shadow-sm z-10 flex-shrink-0">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4">
             <div class="flex items-center gap-3">
                 <div class="bg-indigo-600 text-white w-10 h-10 rounded-lg flex items-center justify-center text-xl font-bold zh-char">
                     漢
@@ -137,6 +137,14 @@
                 <h1 id="headerTitle" class="text-xl font-bold text-slate-800">Kangxi Radicals</h1>
             </div>
             <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                <div class="flex bg-indigo-50 p-1 rounded-lg" role="tablist" aria-label="Section">
+                    <button id="secKangxiBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchSection('kangxi')">
+                        Kangxi Radicals
+                    </button>
+                    <button id="secHskBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700" onclick="switchSection('hsk')">
+                        HSK 3.0 Level 1
+                    </button>
+                </div>
                 <div class="flex bg-slate-100 p-1 rounded-lg" role="tablist">
                     <button id="navQuizBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchTab('quiz')">
                         Quiz Mode
@@ -241,7 +249,15 @@
             <div class="max-w-6xl mx-auto">
                 <div class="mb-8 text-center">
                     <h2 id="studyTitle" class="text-2xl font-bold text-slate-800">All 214 Kangxi Radicals</h2>
-                    <p id="studySubtitle" class="text-slate-500 mt-2">Browse and memorize the fundamental building blocks of Chinese characters.</p>
+                    <p id="studySubtitle" class="text-slate-500 mt-2">Browse and memorize the fundamental building blocks of Chinese characters. Tap i for traditional meanings.</p>
+                    <div id="hskViewToggle" class="hidden mt-4 inline-flex bg-slate-100 p-1 rounded-lg" role="tablist" aria-label="HSK view">
+                        <button id="hskWordsBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchHskView('words')">
+                            Words (300)
+                        </button>
+                        <button id="hskCharsBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchHskView('chars')">
+                            Characters (248)
+                        </button>
+                    </div>
                 </div>
                 
                 <div id="studyGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12">
@@ -471,6 +487,355 @@
             { c: "龠", p: "yuè", en: ["flute"], ru: ["флейта"], hy: ["ֆլեյտա"] },
         ];
 
+        const hskWords = [
+            { w: "爱", p: "ài", pos: "v.", en: "to love" },
+            { w: "八", p: "bā", pos: "num.", en: "eight" },
+            { w: "吧", p: "ba", pos: "part.", en: "[makes a suggestion, eg. \"Let's …\")]" },
+            { w: "爸爸", p: "bà ba", pos: "n.", en: "father" },
+            { w: "百", p: "bǎi", pos: "num.", en: "hundred" },
+            { w: "白天", p: "bái tiān", pos: "n.", en: "daytime" },
+            { w: "半", p: "bàn", pos: "adv./num.", en: "half" },
+            { w: "包子", p: "bāo zi", pos: "n.", en: "bao zi [steamed stuffed bun]" },
+            { w: "杯子", p: "bēi zi", pos: "n.", en: "cup; glass; mug" },
+            { w: "本", p: "běn", pos: "mw.", en: "root; [measure word for books]" },
+            { w: "边", p: "biān", pos: "n./suf.", en: "side, edge, border, margin" },
+            { w: "病", p: "bìng", pos: "n./v.", en: "illness, disease, sickness" },
+            { w: "不", p: "bù", pos: "adv.", en: "not; no" },
+            { w: "不客气", p: "bú kè qi", pos: "adj./phr.", en: "you're welcome; impolite" },
+            { w: "不要", p: "bú yào", pos: "adv.", en: "don't!" },
+            { w: "菜", p: "cài", pos: "n.", en: "vegetable" },
+            { w: "茶", p: "chá", pos: "n.", en: "tea" },
+            { w: "唱", p: "chàng", pos: "v.", en: "to sing; to chant" },
+            { w: "超市", p: "chāo shì", pos: "n.", en: "supermarket" },
+            { w: "车", p: "chē", pos: "n.", en: "vehicle, wheeled conveyance" },
+            { w: "吃", p: "chī", pos: "v.", en: "to eat" },
+            { w: "出租车", p: "chū zū chē", pos: "n.", en: "taxi" },
+            { w: "穿", p: "chuān", pos: "v.", en: "to wear; to put on" },
+            { w: "大", p: "dà", pos: "adj.", en: "big" },
+            { w: "打电话", p: "dǎ diàn huà", pos: "v./phr.", en: "to make a telephone call" },
+            { w: "大家", p: "dà jiā", pos: "pron.", en: "everybody" },
+            { w: "大学", p: "dà xué", pos: "n.", en: "university" },
+            { w: "大学生", p: "dà xué shēng", pos: "n.", en: "university student" },
+            { w: "到", p: "dào", pos: "v.", en: "to arrive; to get to" },
+            { w: "的", p: "de", pos: "part.", en: "of" },
+            { w: "第", p: "dì", pos: "pref.", en: "sequence prefix (ordinal number marker)" },
+            { w: "弟弟", p: "dì di", pos: "n.", en: "younger brother" },
+            { w: "点", p: "diǎn", pos: "n./mw.", en: "o’clock; spot; dot" },
+            { w: "店", p: "diàn", pos: "n.", en: "shop, store, inn" },
+            { w: "电话", p: "diàn huà", pos: "n.", en: "telephone" },
+            { w: "电脑", p: "diàn nǎo", pos: "n.", en: "computer" },
+            { w: "电视", p: "diàn shì", pos: "n.", en: "TV" },
+            { w: "电影", p: "diàn yǐng", pos: "n.", en: "film; movie" },
+            { w: "电影院", p: "diàn yǐng yuàn", pos: "n.", en: "cinema; movie theater" },
+            { w: "东西", p: "dōng xi", pos: "n.", en: "thing" },
+            { w: "都", p: "dōu", pos: "adv.", en: "both; all" },
+            { w: "读", p: "dú", pos: "v.", en: "read aloud" },
+            { w: "读书", p: "dú shū", pos: "v.", en: "to read a book" },
+            { w: "对", p: "duì", pos: "v./adj./mw.", en: "correct; right" },
+            { w: "对不起", p: "duì bu qǐ", pos: "v.", en: "sorry" },
+            { w: "多", p: "duō", pos: "v./adj./adv.", en: "many; much; more than; how" },
+            { w: "多少", p: "duō shao", pos: "pron.", en: "how much/many?" },
+            { w: "二", p: "èr", pos: "num.", en: "two" },
+            { w: "儿子", p: "ér zi", pos: "n.", en: "son" },
+            { w: "饭", p: "fàn", pos: "n.", en: "cooked rice or food in general" },
+            { w: "饭店", p: "fàn diàn", pos: "n.", en: "restaurant" },
+            { w: "房间", p: "fáng jiān", pos: "n.", en: "room" },
+            { w: "非常", p: "fēi cháng", pos: "adv.", en: "extremely" },
+            { w: "飞机", p: "fēi jī", pos: "n.", en: "plane" },
+            { w: "分", p: "fēn", pos: "n./v./mw.", en: "minute; point; part; to divide" },
+            { w: "分钟", p: "fēn zhōng", pos: "mw.", en: "minute" },
+            { w: "高兴", p: "gāo xìng", pos: "adj.", en: "pleased; happy" },
+            { w: "个", p: "gè", pos: "mw.", en: "individual; [general measure word]" },
+            { w: "歌", p: "gē", pos: "n.", en: "song" },
+            { w: "哥哥", p: "gē ge", pos: "n.", en: "elder brother" },
+            { w: "给", p: "gěi", pos: "v./prep.", en: "to give" },
+            { w: "公司", p: "gōng sī", pos: "n.", en: "company; office" },
+            { w: "工作", p: "gōng zuò", pos: "n./v.", en: "job; work" },
+            { w: "狗", p: "gǒu", pos: "n.", en: "dog" },
+            { w: "贵", p: "guì", pos: "adj.", en: "expensive" },
+            { w: "国", p: "guó", pos: "n.", en: "country, nation, state" },
+            { w: "还", p: "hái", pos: "adv.", en: "still" },
+            { w: "孩子", p: "hái zi", pos: "n.", en: "child; children" },
+            { w: "汉语", p: "hàn yǔ", pos: "n.", en: "Standard Chinese language" },
+            { w: "汉字", p: "hàn zì", pos: "n.", en: "Chinese character" },
+            { w: "号", p: "hào", pos: "n./mw.", en: "number; date; size" },
+            { w: "好", p: "hǎo", pos: "v./adj./adv.", en: "good" },
+            { w: "好吃", p: "hǎo chī", pos: "adj.", en: "delicious" },
+            { w: "好看", p: "hǎo kàn", pos: "adj.", en: "good-looking" },
+            { w: "好听", p: "hǎo tīng", pos: "adj.", en: "pleasant to hear" },
+            { w: "好玩儿", p: "hǎo wánr", pos: "adj.", en: "fun; interesting" },
+            { w: "和", p: "hé", pos: "prep./conj.", en: "and" },
+            { w: "喝", p: "hē", pos: "v.", en: "to drink" },
+            { w: "很", p: "hěn", pos: "adv.", en: "very" },
+            { w: "后", p: "hòu", pos: "n.", en: "queen, empress; behind, after" },
+            { w: "会", p: "huì", pos: "v.", en: "to know how to; can; meeting" },
+            { w: "回", p: "huí", pos: "v./mw.", en: "to return" },
+            { w: "火车", p: "huǒ chē", pos: "n.", en: "train" },
+            { w: "几", p: "jǐ", pos: "pron./num.", en: "how much/many? [expecting a small number]" },
+            { w: "鸡蛋", p: "jī dàn", pos: "n.", en: "(chicken) egg" },
+            { w: "家", p: "jiā", pos: "n./mw./suf.", en: "family; home" },
+            { w: "家人", p: "jiā rén", pos: "n.", en: "family member" },
+            { w: "件", p: "jiàn", pos: "mw.", en: "item; [measure word for items of clothing]" },
+            { w: "见", p: "jiàn", pos: "v.", en: "to see, to perceive with the eyes" },
+            { w: "叫", p: "jiào", pos: "v./prep.", en: "to call; to be called; to ask" },
+            { w: "饺子", p: "jiǎo zi", pos: "n.", en: "dumpling" },
+            { w: "姐姐", p: "jiě jie", pos: "n.", en: "elder sister" },
+            { w: "今年", p: "jīn nián", pos: "n.", en: "this year" },
+            { w: "今天", p: "jīn tiān", pos: "n.", en: "today" },
+            { w: "九", p: "jiǔ", pos: "num.", en: "nine" },
+            { w: "觉得", p: "jué de", pos: "v.", en: "to think; feel" },
+            { w: "开", p: "kāi", pos: "v.", en: "to switch on; open" },
+            { w: "开车", p: "kāi chē", pos: "v.", en: "to drive a car" },
+            { w: "看", p: "kàn", pos: "v.", en: "to see; to read; to watch; to look at" },
+            { w: "看病", p: "kàn bìng", pos: "v.", en: "to visit a doctor" },
+            { w: "看见", p: "kàn jiàn", pos: "v.", en: "see" },
+            { w: "课", p: "kè", pos: "n.", en: "lesson" },
+            { w: "可以", p: "kě yǐ", pos: "v./adj.", en: "can; may" },
+            { w: "口", p: "kǒu", pos: "n./mw.", en: "mouth; [measure word for family members]" },
+            { w: "块", p: "kuài", pos: "mw.", en: "lump; piece" },
+            { w: "来", p: "lái", pos: "v.", en: "to come" },
+            { w: "老师", p: "lǎo shī", pos: "n.", en: "teacher" },
+            { w: "了", p: "le", pos: "part.", en: "particle indicating completed action or change of state; sentence-final particle" },
+            { w: "冷", p: "lěng", pos: "adj.", en: "cold" },
+            { w: "里", p: "lǐ", pos: "n.", en: "in" },
+            { w: "两", p: "liǎng", pos: "num.", en: "two (of something)" },
+            { w: "零", p: "líng", pos: "num.", en: "zero" },
+            { w: "六", p: "liù", pos: "num.", en: "six" },
+            { w: "吗", p: "ma", pos: "part.", en: "[makes a yes; no question]" },
+            { w: "妈妈", p: "mā ma", pos: "n.", en: "mother" },
+            { w: "买", p: "mǎi", pos: "v.", en: "buy" },
+            { w: "卖", p: "mài", pos: "v.", en: "to sell" },
+            { w: "忙", p: "máng", pos: "v./adj.", en: "busy" },
+            { w: "猫", p: "māo", pos: "n.", en: "cat" },
+            { w: "没关系", p: "méi guān xi", pos: "phr.", en: "no problem" },
+            { w: "妹妹", p: "mèi mei", pos: "n.", en: "younger sister" },
+            { w: "没事", p: "méi shì", pos: "v.", en: "it's nothing; it doesn't matter; no problem" },
+            { w: "没有", p: "méi yǒu", pos: "v./adv.", en: "don't have" },
+            { w: "们", p: "men", pos: "suf.", en: "plural suffix for pronouns and nouns referring to people" },
+            { w: "米饭", p: "mǐ fàn", pos: "n.", en: "rice [cooked; boiled]" },
+            { w: "面包", p: "miàn bāo", pos: "n.", en: "bread" },
+            { w: "面条儿", p: "miàn tiáor", pos: "n.", en: "noodles" },
+            { w: "明年", p: "míng nián", pos: "n.", en: "next year" },
+            { w: "明天", p: "míng tiān", pos: "n.", en: "tomorrow" },
+            { w: "名字", p: "míng zi", pos: "n.", en: "given name" },
+            { w: "哪", p: "nǎ", pos: "pron.", en: "which?" },
+            { w: "那", p: "nà", pos: "pron./conj.", en: "that; those" },
+            { w: "那边", p: "nà biān", pos: "pron.", en: "over there" },
+            { w: "哪个", p: "nǎ ge", pos: "pron.", en: "which; which one" },
+            { w: "那个", p: "nà ge", pos: "pron.", en: "that; that one" },
+            { w: "哪里", p: "nǎ lǐ", pos: "pron.", en: "where?" },
+            { w: "那里", p: "nà lǐ", pos: "pron.", en: "there; that place" },
+            { w: "哪些", p: "nǎ xiē", pos: "pron.", en: "which ones?" },
+            { w: "那些", p: "nà xiē", pos: "pron.", en: "those" },
+            { w: "男", p: "nán", pos: "adj.", en: "male" },
+            { w: "男朋友", p: "nán péng you", pos: "n.", en: "boyfriend" },
+            { w: "哪儿", p: "nǎr", pos: "pron.", en: "where?" },
+            { w: "那儿", p: "nàr", pos: "pron.", en: "there" },
+            { w: "呢", p: "ne", pos: "part.", en: "[returns; forwards a question]" },
+            { w: "能", p: "néng", pos: "v.", en: "to be able to; can" },
+            { w: "你", p: "nǐ", pos: "pron.", en: "you" },
+            { w: "你好", p: "nǐ hǎo", pos: "interj.", en: "hello; hi" },
+            { w: "你们", p: "nǐ men", pos: "pron.", en: "you (plural)" },
+            { w: "年", p: "nián", pos: "n./mw.", en: "year" },
+            { w: "您", p: "nín", pos: "pron.", en: "you [polite form]" },
+            { w: "牛奶", p: "niú nǎi", pos: "n.", en: "milk" },
+            { w: "女", p: "nǚ", pos: "adj.", en: "female" },
+            { w: "女儿", p: "nǚ ér", pos: "n.", en: "daughter" },
+            { w: "女朋友", p: "nǚ péng you", pos: "n.", en: "girlfriend" },
+            { w: "女士", p: "nǚ shì", pos: "n.", en: "lady; Madam; Miss" },
+            { w: "朋友", p: "péng you", pos: "n.", en: "friend" },
+            { w: "便宜", p: "pián yi", pos: "adj.", en: "cheap" },
+            { w: "漂亮", p: "piào liang", pos: "adj.", en: "beautiful" },
+            { w: "苹果", p: "píng guǒ", pos: "n.", en: "apple" },
+            { w: "七", p: "qī", pos: "num.", en: "seven" },
+            { w: "起床", p: "qǐ chuáng", pos: "v.", en: "get up (out of bed)" },
+            { w: "前", p: "qián", pos: "n.", en: "front, forward, ahead, before" },
+            { w: "千", p: "qiān", pos: "num.", en: "thousand" },
+            { w: "钱", p: "qián", pos: "n.", en: "money" },
+            { w: "请", p: "qǐng", pos: "v.", en: "to invite; please" },
+            { w: "请问", p: "qǐng wèn", pos: "v.", en: "Excuse me, may I ask...?" },
+            { w: "去", p: "qù", pos: "v.", en: "to go" },
+            { w: "去年", p: "qù nián", pos: "n.", en: "last year" },
+            { w: "热", p: "rè", pos: "adj.", en: "hot" },
+            { w: "人", p: "rén", pos: "n.", en: "person; people" },
+            { w: "认识", p: "rèn shi", pos: "v.", en: "to know [be familiar with]" },
+            { w: "日", p: "rì", pos: "n./mw.", en: "day [date]; sun" },
+            { w: "三", p: "sān", pos: "num.", en: "three" },
+            { w: "上", p: "shàng", pos: "n./v.", en: "up; above; on; previous" },
+            { w: "上班", p: "shàng bān", pos: "v.", en: "start work" },
+            { w: "商店", p: "shāng diàn", pos: "n.", en: "shop" },
+            { w: "上课", p: "shàng kè", pos: "v.", en: "to go to class" },
+            { w: "上午", p: "shàng wǔ", pos: "n.", en: "morning" },
+            { w: "上学", p: "shàng xué", pos: "v.", en: "to go to school" },
+            { w: "少", p: "shǎo", pos: "v./adj.", en: "few" },
+            { w: "谁", p: "shéi/shuí", pos: "pron.", en: "who?" },
+            { w: "什么", p: "shén me", pos: "pron.", en: "what?" },
+            { w: "生病", p: "shēng bìng", pos: "v.", en: "ill; sick; unwell" },
+            { w: "事", p: "shì", pos: "n.", en: "matter, affair, thing" },
+            { w: "十", p: "shí", pos: "num.", en: "ten" },
+            { w: "是", p: "shì", pos: "v.", en: "to be" },
+            { w: "时候", p: "shí hou", pos: "n.", en: "[duration of] time" },
+            { w: "时间", p: "shí jiān", pos: "n.", en: "time" },
+            { w: "手机", p: "shǒu jī", pos: "n.", en: "mobile phone" },
+            { w: "书", p: "shū", pos: "n.", en: "book" },
+            { w: "书店", p: "shū diàn", pos: "n.", en: "bookstore" },
+            { w: "水", p: "shuǐ", pos: "n.", en: "water" },
+            { w: "睡", p: "shuì", pos: "v.", en: "to sleep" },
+            { w: "水果", p: "shuǐ guǒ", pos: "n.", en: "fruit" },
+            { w: "睡觉", p: "shuì jiào", pos: "v.", en: "to go to bed; to sleep" },
+            { w: "说", p: "shuō", pos: "v.", en: "speak" },
+            { w: "说话", p: "shuō huà", pos: "v.", en: "speak" },
+            { w: "四", p: "sì", pos: "num.", en: "four" },
+            { w: "岁", p: "suì", pos: "mw.", en: "year (of crop harvests)" },
+            { w: "他", p: "tā", pos: "pron.", en: "he; him" },
+            { w: "她", p: "tā", pos: "pron.", en: "she; her" },
+            { w: "它", p: "tā", pos: "pron.", en: "it" },
+            { w: "他们", p: "tā men", pos: "pron.", en: "they" },
+            { w: "它们", p: "tā men", pos: "pron.", en: "they (for inanimate objects)" },
+            { w: "她们", p: "tā men", pos: "pron.", en: "they" },
+            { w: "太", p: "tài", pos: "adv.", en: "very" },
+            { w: "天", p: "tiān", pos: "n./mw.", en: "sky, heaven, or the celestial realm" },
+            { w: "天气", p: "tiān qì", pos: "n.", en: "weather" },
+            { w: "听", p: "tīng", pos: "v.", en: "to listen; hear" },
+            { w: "听见", p: "tīng jiàn", pos: "v.", en: "to hear" },
+            { w: "同学", p: "tóng xué", pos: "n.", en: "schoolmate; classmate" },
+            { w: "外", p: "wài", pos: "n.", en: "outside" },
+            { w: "外边", p: "wài bian", pos: "n.", en: "outside" },
+            { w: "晚", p: "wǎn", pos: "adj.", en: "evening, night, late" },
+            { w: "玩", p: "wán", pos: "v.", en: "to play" },
+            { w: "晚饭", p: "wǎn fàn", pos: "n.", en: "evening meal" },
+            { w: "晚上", p: "wǎn shang", pos: "n.", en: "evening" },
+            { w: "喂", p: "wèi", pos: "interj.", en: "hello" },
+            { w: "问", p: "wèn", pos: "v.", en: "to ask" },
+            { w: "问题", p: "wèn tí", pos: "n.", en: "problem" },
+            { w: "我", p: "wǒ", pos: "pron.", en: "I; me" },
+            { w: "我们", p: "wǒ men", pos: "pron.", en: "we; us" },
+            { w: "五", p: "wǔ", pos: "num.", en: "five" },
+            { w: "午饭", p: "wǔ fàn", pos: "n.", en: "lunch" },
+            { w: "喜欢", p: "xǐ huan", pos: "v.", en: "to like" },
+            { w: "下", p: "xià", pos: "n./v./mw.", en: "down; below" },
+            { w: "下班", p: "xià bān", pos: "v.", en: "to finish work" },
+            { w: "下课", p: "xià kè", pos: "v.", en: "to finish class" },
+            { w: "下午", p: "xià wǔ", pos: "n.", en: "afternoon" },
+            { w: "下雨", p: "xià yǔ", pos: "v.", en: "rain" },
+            { w: "先生", p: "xiān sheng", pos: "n.", en: "Mr; Sir" },
+            { w: "现在", p: "xiàn zài", pos: "n.", en: "now" },
+            { w: "想", p: "xiǎng", pos: "v.", en: "to want; to think" },
+            { w: "小", p: "xiǎo", pos: "adj./pref.", en: "small" },
+            { w: "小朋友", p: "xiǎo péng yǒu", pos: "n.", en: "child" },
+            { w: "小时", p: "xiǎo shí", pos: "n.", en: "hour" },
+            { w: "小学", p: "xiǎo xué", pos: "n.", en: "elementary school; primary school" },
+            { w: "小学生", p: "xiǎo xué shēng", pos: "n.", en: "primary school student" },
+            { w: "些", p: "xiē", pos: "mw.", en: "some" },
+            { w: "写", p: "xiě", pos: "v.", en: "to write" },
+            { w: "谢谢", p: "xiè xie", pos: "v.", en: "thank you" },
+            { w: "新", p: "xīn", pos: "adj.", en: "new" },
+            { w: "星期", p: "xīng qī", pos: "n.", en: "week" },
+            { w: "星期日", p: "xīng qī rì", pos: "n.", en: "Sunday" },
+            { w: "星期天", p: "xīng qī tiān", pos: "n.", en: "Sunday" },
+            { w: "休息", p: "xiū xi", pos: "v.", en: "to rest" },
+            { w: "学", p: "xué", pos: "v.", en: "to study, to learn, or knowledge" },
+            { w: "雪", p: "xuě", pos: "n.", en: "snow" },
+            { w: "学生", p: "xué shēng", pos: "n.", en: "student" },
+            { w: "学习", p: "xué xí", pos: "v.", en: "to learn; to study" },
+            { w: "学校", p: "xué xiào", pos: "n.", en: "school" },
+            { w: "要", p: "yào", pos: "v.", en: "want; be going to; ask for; demand" },
+            { w: "也", p: "yě", pos: "adv.", en: "too; also" },
+            { w: "一", p: "yī", pos: "num.", en: "one; once; first; structural word between two of the same verb; as soon as; throughout" },
+            { w: "一半", p: "yí bàn", pos: "num.", en: "half" },
+            { w: "一点儿", p: "yì diǎnr", pos: "num./mw.", en: "a bit" },
+            { w: "衣服", p: "yī fu", pos: "n.", en: "clothes" },
+            { w: "医生", p: "yī shēng", pos: "n.", en: "doctor" },
+            { w: "一下", p: "yí xià", pos: "adv./num./mw.", en: "[used after a verb] give something a go" },
+            { w: "一些", p: "yì xiē", pos: "num./mw.", en: "some" },
+            { w: "医院", p: "yī yuàn", pos: "n.", en: "hospital" },
+            { w: "椅子", p: "yǐ zi", pos: "n.", en: "chair" },
+            { w: "有", p: "yǒu", pos: "v.", en: "to have" },
+            { w: "有的", p: "yǒu de", pos: "pron.", en: "(there are) some (who are...)" },
+            { w: "有点儿", p: "yǒu diǎnr", pos: "adv.", en: "slightly" },
+            { w: "有些", p: "yǒu xiē", pos: "adv./pron.", en: "some" },
+            { w: "雨", p: "yǔ", pos: "n.", en: "rain" },
+            { w: "元", p: "yuán", pos: "mw.", en: "yuan [unit of Chinese currency]; dollar" },
+            { w: "月", p: "yuè", pos: "n.", en: "month; moon" },
+            { w: "再", p: "zài", pos: "adv.", en: "again" },
+            { w: "在", p: "zài", pos: "v./adv./prep.", en: "to be at; in; at; on" },
+            { w: "再见", p: "zài jiàn", pos: "v.", en: "goodbye" },
+            { w: "早", p: "zǎo", pos: "adj.", en: "early; morning" },
+            { w: "早饭", p: "zǎo fàn", pos: "n.", en: "breakfast" },
+            { w: "早上", p: "zǎo shang", pos: "n.", en: "early morning" },
+            { w: "怎么", p: "zěn me", pos: "pron.", en: "how?" },
+            { w: "怎么样", p: "zěn me yàng", pos: "pron.", en: "how about it" },
+            { w: "找", p: "zhǎo", pos: "v.", en: "to find; to look for" },
+            { w: "这", p: "zhè", pos: "pron.", en: "this" },
+            { w: "这边", p: "zhè biān", pos: "pron.", en: "this side" },
+            { w: "这个", p: "zhè ge", pos: "pron.", en: "this; this one" },
+            { w: "这里", p: "zhè lǐ", pos: "pron.", en: "here" },
+            { w: "这些", p: "zhè xiē", pos: "pron.", en: "these" },
+            { w: "真", p: "zhēn", pos: "adj./adv.", en: "real; so (+adjective)" },
+            { w: "正在", p: "zhèng zài", pos: "adv.", en: "currently; in the process of" },
+            { w: "这儿", p: "zhèr", pos: "pron.", en: "here" },
+            { w: "只", p: "zhī", pos: "mw.", en: "individual [measure word for small animals]" },
+            { w: "知道", p: "zhī dào", pos: "v.", en: "know; realise; be aware of" },
+            { w: "中国", p: "zhōng guó", pos: "n.", en: "China" },
+            { w: "中文", p: "zhōng wén", pos: "n.", en: "Chinese [written language]" },
+            { w: "中午", p: "zhōng wǔ", pos: "n.", en: "midday" },
+            { w: "中学", p: "zhōng xué", pos: "n.", en: "middle school" },
+            { w: "中学生", p: "zhōng xué shēng", pos: "n.", en: "middle-school student" },
+            { w: "住", p: "zhù", pos: "v.", en: "to live; stay (a number of nights)" },
+            { w: "桌子", p: "zhuō zi", pos: "n.", en: "table" },
+            { w: "字", p: "zì", pos: "n.", en: "(Chinese) character" },
+            { w: "做", p: "zuò", pos: "v.", en: "to do; to be; become (an occupation)" },
+            { w: "坐", p: "zuò", pos: "v.", en: "to sit" },
+            { w: "做饭", p: "zuò fàn", pos: "v.", en: "to prepare a meal" },
+            { w: "昨天", p: "zuó tiān", pos: "n.", en: "yesterday" },
+        ];
+
+        const hskExtraChars = new Set(["店", "饺"]);
+        const hskCharacters = (() => {
+            const seen = new Set();
+            const readings = new Map();
+            const list = [];
+
+            hskWords.forEach(word => {
+                const chars = [...word.w];
+                let tokens = word.p.split(/\s+/).filter(Boolean);
+
+                if (chars.length === tokens.length + 1 && chars[chars.length - 1] === "儿" && /r$/.test(tokens[tokens.length - 1]) && tokens[tokens.length - 1] !== "ér") {
+                    const last = tokens.pop();
+                    tokens.push(last.slice(0, -1), "r");
+                }
+
+                if (chars.length !== tokens.length) return;
+
+                chars.forEach((ch, index) => {
+                    if (!/[\u3400-\u9fff]/.test(ch)) return;
+                    if (!readings.has(ch)) readings.set(ch, []);
+                    tokens[index].split("/").forEach(reading => {
+                        if (!readings.get(ch).includes(reading)) readings.get(ch).push(reading);
+                    });
+                });
+            });
+
+            hskWords.forEach(word => {
+                for (const ch of word.w) {
+                    if (!/[\u3400-\u9fff]/.test(ch) || seen.has(ch)) continue;
+                    seen.add(ch);
+
+                    let charReadings = readings.get(ch) || [];
+                    if (ch === "一") charReadings = ["yī"];
+                    if (ch === "不") charReadings = ["bù"];
+
+                    list.push({
+                        c: ch,
+                        p: charReadings.join(" / "),
+                        extra: hskExtraChars.has(ch),
+                        examples: hskWords.filter(w => w.w.includes(ch)).slice(0, 3).map(w => w.w)
+                    });
+                }
+            });
+
+            return list;
+        })();
         const I18N = {
             en: {
                 title: "Kangxi Radicals Mastery",
@@ -486,6 +851,20 @@
                 pinyin: "Pinyin",
                 traditional: "Traditional",
                 showTraditional: "Show traditional meaning",
+                hskTitle: "HSK 3.0 Level 1 Practice",
+                hskHeader: "HSK 3.0 Level 1",
+                sectionKangxi: "Kangxi Radicals",
+                sectionHsk: "HSK 3.0 Level 1",
+                hskQuestion: "What does this word mean?",
+                hskNext: "Next Word →",
+                words: "Words",
+                characters: "Characters",
+                hskWordsHeading: "All 300 HSK 3.0 Level 1 Words",
+                hskWordsSubtitle: "All 300 words from the HSK 3.0 Level 1 list, with pinyin, part of speech, and English definitions.",
+                hskCharsHeading: "All 248 HSK 3.0 Level 1 Characters",
+                hskCharsSubtitle: "All 248 unique characters from the 300 words. 店 and 饺 are marked as extra beyond the official 246-character list.",
+                extra: "extra",
+                partOfSpeech: "Part of speech",
                 studyHeading: "All 214 Kangxi Radicals",
                 studySubtitle: "Browse and memorize the fundamental building blocks of Chinese characters. Tap i for traditional meanings."
             },
@@ -503,6 +882,20 @@
                 pinyin: "Փինյին",
                 traditional: "Ավանդական",
                 showTraditional: "Ցույց տալ ավանդական իմաստը",
+                hskTitle: "HSK 3.0 1-ին մակարդակի պարապմունք",
+                hskHeader: "HSK 3.0, 1-ին մակարդակ",
+                sectionKangxi: "Կանսիի արմատներ",
+                sectionHsk: "HSK 3.0, 1-ին մակարդակ",
+                hskQuestion: "Ի՞նչ է նշանակում այս բառը։",
+                hskNext: "Հաջորդ բառը →",
+                words: "Բառեր",
+                characters: "Նշաններ",
+                hskWordsHeading: "HSK 3.0 1-ին մակարդակի բոլոր 300 բառերը",
+                hskWordsSubtitle: "HSK 3.0 1-ին մակարդակի ցանկի բոլոր 300 բառերը՝ փինյինով, խոսքի մասով և անգլերեն բացատրություններով։",
+                hskCharsHeading: "HSK 3.0 1-ին մակարդակի բոլոր 248 նշանները",
+                hskCharsSubtitle: "300 բառերից ստացված բոլոր 248 եզակի նշանները։ 店-ը և 饺-ը նշված են որպես լրացուցիչ՝ պաշտոնական 246 նշանների ցանկից դուրս։",
+                extra: "լրացուցիչ",
+                partOfSpeech: "Խոսքի մաս",
                 studyHeading: "Բոլոր 214 Կանսիի արմատները",
                 studySubtitle: "Դիտեք և անգիր արեք չինարեն նշանների հիմնարար բաղադրիչները։ Սեղմեք i՝ ավանդական իմաստները տեսնելու համար։"
             },
@@ -520,6 +913,20 @@
                 pinyin: "Пиньинь",
                 traditional: "Традиционное",
                 showTraditional: "Показать традиционное значение",
+                hskTitle: "Практика HSK 3.0 уровня 1",
+                hskHeader: "HSK 3.0, уровень 1",
+                sectionKangxi: "Радикалы Канси",
+                sectionHsk: "HSK 3.0, уровень 1",
+                hskQuestion: "Что означает это слово?",
+                hskNext: "Следующее слово →",
+                words: "Слова",
+                characters: "Иероглифы",
+                hskWordsHeading: "Все 300 слов HSK 3.0 уровня 1",
+                hskWordsSubtitle: "Все 300 слов из списка HSK 3.0 уровня 1 с пиньинем, частью речи и английскими определениями.",
+                hskCharsHeading: "Все 248 иероглифов HSK 3.0 уровня 1",
+                hskCharsSubtitle: "Все 248 уникальных иероглифов из 300 слов. 店 и 饺 отмечены как дополнительные сверх официального списка из 246 иероглифов.",
+                extra: "доп.",
+                partOfSpeech: "Часть речи",
                 studyHeading: "Все 214 радикалов Канси",
                 studySubtitle: "Просматривайте и запоминайте фундаментальные строительные блоки китайских иероглифов. Нажмите i, чтобы увидеть традиционные значения."
             }
@@ -529,6 +936,9 @@
 
         // Game State Variables
         let currentLang = 'en';
+        let currentSection = 'kangxi';
+        let currentTab = 'quiz';
+        let hskStudyView = 'words';
         let score = 0;
         let streak = 0;
         let currentQuestion = null;
@@ -536,6 +946,7 @@
         let selectedIndex = null;
         let hasAnswered = false;
         let feedbackKind = null;
+        const savedQuizStates = { kangxi: null, hsk: null };
 
         // DOM Elements
         const scoreDisplay = document.getElementById('scoreDisplay');
@@ -559,6 +970,11 @@
         const studySection = document.getElementById('studySection');
         const navQuizBtn = document.getElementById('navQuizBtn');
         const navStudyBtn = document.getElementById('navStudyBtn');
+        const secKangxiBtn = document.getElementById('secKangxiBtn');
+        const secHskBtn = document.getElementById('secHskBtn');
+        const hskViewToggle = document.getElementById('hskViewToggle');
+        const hskWordsBtn = document.getElementById('hskWordsBtn');
+        const hskCharsBtn = document.getElementById('hskCharsBtn');
         const langSwitch = document.getElementById('langSwitch');
         const studyGrid = document.getElementById('studyGrid');
 
@@ -566,12 +982,25 @@
             return I18N[currentLang];
         }
 
-        function meaningText(radical) {
-            return radical[currentLang].join('; ');
+        function isHsk() {
+            return currentSection === 'hsk';
         }
 
-        function tradText(radical) {
-            const trad = radical.trad;
+        function activeData() {
+            return isHsk() ? hskWords : radicals;
+        }
+
+        function meaningText(item) {
+            if (isHsk()) return item.en;
+            return item[currentLang].join('; ');
+        }
+
+        function itemDisplay(item) {
+            return item.w || item.c;
+        }
+
+        function tradText(item) {
+            const trad = item.trad;
             if (!trad) return '';
             const meanings = (trad[currentLang] || []).join('; ');
             let prefix = '';
@@ -584,8 +1013,93 @@
             return text.charAt(0).toUpperCase() + text.slice(1);
         }
 
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, ch => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[ch]));
+        }
+
+        function highlightHskChars(text) {
+            return [...text].map(ch => hskExtraChars.has(ch)
+                ? `<span class="text-amber-600 font-semibold" title="${escapeHtml(t().extra)}">${escapeHtml(ch)}</span>`
+                : escapeHtml(ch)).join('');
+        }
+
         function sharesMeaning(a, b) {
+            if (isHsk()) return a.en === b.en;
             return a[currentLang].some(meaning => b[currentLang].includes(meaning));
+        }
+
+        function updateScoreUI() {
+            scoreDisplay.textContent = score;
+            streakDisplay.textContent = streak;
+        }
+
+        function updateTabStyles() {
+            const active = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
+            const inactive = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
+            navQuizBtn.className = currentTab === 'quiz' ? active : inactive;
+            navStudyBtn.className = currentTab === 'study' ? active : inactive;
+        }
+
+        function updateSectionStyles() {
+            const active = "px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors bg-white shadow-sm text-indigo-700";
+            const inactive = "px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700";
+            secKangxiBtn.className = currentSection === 'kangxi' ? active : inactive;
+            secHskBtn.className = currentSection === 'hsk' ? active : inactive;
+            secKangxiBtn.setAttribute('aria-selected', String(currentSection === 'kangxi'));
+            secHskBtn.setAttribute('aria-selected', String(currentSection === 'hsk'));
+        }
+
+        function updateHskViewStyles() {
+            const active = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
+            const inactive = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
+            hskWordsBtn.className = hskStudyView === 'words' ? active : inactive;
+            hskCharsBtn.className = hskStudyView === 'chars' ? active : inactive;
+        }
+
+        function updateTexts() {
+            document.documentElement.lang = currentLang;
+            document.title = isHsk() ? t().hskTitle : t().title;
+
+            headerTitle.textContent = isHsk() ? t().hskHeader : t().header;
+            secKangxiBtn.textContent = t().sectionKangxi;
+            secHskBtn.textContent = t().sectionHsk;
+            navQuizBtn.textContent = t().quizTab;
+            navStudyBtn.textContent = t().studyTab;
+            scoreLabel.textContent = t().score;
+            streakLabel.textContent = t().streak;
+            questionPrompt.textContent = isHsk() ? t().hskQuestion : t().question;
+            nextBtn.textContent = isHsk() ? t().hskNext : t().next;
+
+            if (!isHsk()) {
+                studyTitle.textContent = t().studyHeading;
+                studySubtitle.textContent = t().studySubtitle;
+            } else if (hskStudyView === 'words') {
+                studyTitle.textContent = t().hskWordsHeading;
+                studySubtitle.textContent = t().hskWordsSubtitle;
+            } else {
+                studyTitle.textContent = t().hskCharsHeading;
+                studySubtitle.textContent = t().hskCharsSubtitle;
+            }
+
+            hskViewToggle.classList.toggle('hidden', !isHsk());
+            hskWordsBtn.textContent = `${t().words} (${hskWords.length})`;
+            hskCharsBtn.textContent = `${t().characters} (${hskCharacters.length})`;
+
+            langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
+                const isActive = btn.dataset.lang === currentLang;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', String(isActive));
+            });
+
+            updateSectionStyles();
+            updateTabStyles();
+            updateHskViewStyles();
         }
 
         function setLanguage(lang) {
@@ -596,24 +1110,7 @@
                 localStorage.setItem(LANG_STORAGE_KEY, lang);
             } catch {}
 
-            document.documentElement.lang = lang;
-            document.title = t().title;
-
-            headerTitle.textContent = t().header;
-            navQuizBtn.textContent = t().quizTab;
-            navStudyBtn.textContent = t().studyTab;
-            scoreLabel.textContent = t().score;
-            streakLabel.textContent = t().streak;
-            questionPrompt.textContent = t().question;
-            nextBtn.textContent = t().next;
-            studyTitle.textContent = t().studyHeading;
-            studySubtitle.textContent = t().studySubtitle;
-
-            langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
-                const isActive = btn.dataset.lang === lang;
-                btn.classList.toggle('active', isActive);
-                btn.setAttribute('aria-pressed', String(isActive));
-            });
+            updateTexts();
 
             if (currentQuestion) {
                 if (!hasAnswered) buildOptions();
@@ -626,31 +1123,79 @@
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
 
+        function saveQuizState() {
+            savedQuizStates[currentSection] = {
+                score,
+                streak,
+                currentQuestion,
+                currentOptions,
+                selectedIndex,
+                hasAnswered,
+                feedbackKind
+            };
+        }
+
+        function loadQuizState(section) {
+            const saved = savedQuizStates[section];
+            if (saved) {
+                ({ score, streak, currentQuestion, currentOptions, selectedIndex, hasAnswered, feedbackKind } = saved);
+            } else {
+                score = 0;
+                streak = 0;
+                currentQuestion = null;
+                currentOptions = [];
+                selectedIndex = null;
+                hasAnswered = false;
+                feedbackKind = null;
+            }
+            updateScoreUI();
+        }
+
+        function switchSection(section) {
+            if (section !== 'kangxi' && section !== 'hsk') return;
+            if (section === currentSection) return;
+
+            saveQuizState();
+            currentSection = section;
+            loadQuizState(section);
+            updateTexts();
+
+            if (!currentQuestion) {
+                generateQuestion();
+            } else {
+                renderQuizUI();
+            }
+            renderStudyGrid();
+        }
+
+        function switchHskView(view) {
+            if (view !== 'words' && view !== 'chars') return;
+            hskStudyView = view;
+            updateTexts();
+            renderStudyGrid();
+        }
+
         // Tab Switching Logic
         function switchTab(tabName) {
-            if (tabName === 'quiz') {
+            currentTab = tabName === 'study' ? 'study' : 'quiz';
+
+            if (currentTab === 'quiz') {
                 quizSection.classList.remove('hidden');
                 studySection.classList.add('hidden');
-                
-                // Update button styles
-                navQuizBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
-                navStudyBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
             } else {
                 quizSection.classList.add('hidden');
                 studySection.classList.remove('hidden');
-                
-                // Update button styles
-                navStudyBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700";
-                navQuizBtn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
-
                 renderStudyGrid();
             }
+
+            updateTabStyles();
         }
 
         // --- QUIZ LOGIC ---
 
-        function getRandomRadical() {
-            return radicals[Math.floor(Math.random() * radicals.length)];
+        function getRandomItem() {
+            const data = activeData();
+            return data[Math.floor(Math.random() * data.length)];
         }
 
         function shuffleArray(array) {
@@ -670,22 +1215,41 @@
             pinyinDisplay.textContent = '';
             
             // Pick correct answer
-            currentQuestion = getRandomRadical();
+            currentQuestion = getRandomItem();
 
             buildOptions();
             renderQuizUI();
         }
 
         function buildOptions() {
-            // Pick 3 unique distractors, avoiding any meaning overlap with the answer
+            // Pick 3 unique distractors, avoiding identical meanings
+            const data = activeData();
             let distractors = [];
-            while (distractors.length < 3) {
-                let candidate = getRandomRadical();
+            let attempts = 0;
+
+            while (distractors.length < 3 && attempts < 5000) {
+                attempts++;
+                const candidate = getRandomItem();
                 if (candidate === currentQuestion) continue;
-                if (candidate.c === currentQuestion.c) continue;
-                if (sharesMeaning(candidate, currentQuestion)) continue;
-                if (distractors.some(d => sharesMeaning(d, candidate))) continue;
+
+                if (isHsk()) {
+                    if (candidate.en === currentQuestion.en) continue;
+                    if (distractors.some(d => d.en === candidate.en)) continue;
+                } else {
+                    if (candidate.c === currentQuestion.c) continue;
+                    if (sharesMeaning(candidate, currentQuestion)) continue;
+                    if (distractors.some(d => sharesMeaning(d, candidate))) continue;
+                }
+
                 distractors.push(candidate);
+            }
+
+            if (distractors.length < 3) {
+                for (const candidate of shuffleArray(data.slice())) {
+                    if (candidate === currentQuestion || distractors.includes(candidate)) continue;
+                    distractors.push(candidate);
+                    if (distractors.length === 3) break;
+                }
             }
 
             // Combine and shuffle
@@ -694,9 +1258,14 @@
         }
 
         function renderQuizUI() {
-            // Set Character
-            characterDisplay.textContent = currentQuestion.c;
-            if (currentQuestion.trad && currentQuestion.trad.char) {
+            // Set Character or Word
+            const display = itemDisplay(currentQuestion);
+            const length = [...display].length;
+            const sizeClass = length > 3 ? 'text-4xl sm:text-5xl' : length > 1 ? 'text-6xl sm:text-7xl' : 'text-8xl sm:text-9xl';
+            characterDisplay.className = `zh-char ${sizeClass} font-medium text-slate-800 my-6 drop-shadow-sm select-none text-center`;
+            characterDisplay.textContent = display;
+
+            if (!isHsk() && currentQuestion.trad && currentQuestion.trad.char) {
                 const tradChar = document.createElement('span');
                 tradChar.className = 'text-2xl sm:text-3xl text-slate-400 font-normal align-middle ml-2';
                 tradChar.textContent = `(${currentQuestion.trad.char})`;
@@ -704,6 +1273,7 @@
             }
 
             // Clear and render buttons
+            optionsContainer.className = isHsk() ? "grid grid-cols-1 gap-3 w-full" : "grid grid-cols-1 sm:grid-cols-2 gap-4 w-full";
             optionsContainer.innerHTML = '';
             currentOptions.forEach((option, index) => {
                 const btn = document.createElement('button');
@@ -720,7 +1290,8 @@
                     }
                 }
 
-                btn.className = `option-btn w-full p-4 rounded-xl text-lg font-medium border-2 focus:outline-none ${hasAnswered ? 'cursor-default opacity-80' : ''} ${stateClasses}`;
+                const textSize = isHsk() ? 'text-sm sm:text-base' : 'text-lg';
+                btn.className = `option-btn w-full p-4 rounded-xl ${textSize} font-medium border-2 focus:outline-none ${hasAnswered ? 'cursor-default opacity-80' : ''} ${stateClasses}`;
                 btn.textContent = capitalize(meaningText(option));
                 btn.disabled = hasAnswered;
                 btn.onclick = () => handleAnswer(index);
@@ -731,7 +1302,10 @@
                 pinyinDisplay.textContent = `${t().pinyin}: ${currentQuestion.p}`;
                 pinyinDisplay.style.opacity = '1';
 
-                if (currentQuestion.trad) {
+                if (isHsk()) {
+                    quizTradNote.textContent = `${t().partOfSpeech}: ${currentQuestion.pos}`;
+                    quizTradNote.classList.remove('hidden');
+                } else if (currentQuestion.trad) {
                     quizTradNote.textContent = tradText(currentQuestion);
                     quizTradNote.classList.remove('hidden');
                 } else {
@@ -795,6 +1369,17 @@
 
         function renderStudyGrid() {
             studyGrid.innerHTML = '';
+
+            if (isHsk()) {
+                if (hskStudyView === 'words') {
+                    renderHskWords();
+                } else {
+                    renderHskCharacters();
+                }
+                return;
+            }
+
+            studyGrid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12";
             radicals.forEach((radical, index) => {
                 const card = document.createElement('div');
                 card.className = "study-card bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow cursor-default group";
@@ -818,6 +1403,10 @@
                 studyGrid.appendChild(card);
             });
 
+            attachTradToggles();
+        }
+
+        function attachTradToggles() {
             studyGrid.querySelectorAll('.trad-toggle').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const noteEl = btn.closest('.study-card').querySelector('.trad-note');
@@ -826,6 +1415,48 @@
                     btn.setAttribute('aria-expanded', String(!isHidden));
                     btn.classList.toggle('open', !isHidden);
                 });
+            });
+        }
+
+        function renderHskWords() {
+            studyGrid.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-12";
+
+            hskWords.forEach((word, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col shadow-sm hover:shadow-md transition-shadow";
+                card.innerHTML = `
+                    <div class="w-full flex items-start justify-between gap-2 mb-1">
+                        <span class="text-xs font-semibold text-slate-300">#${index + 1}</span>
+                        <span class="text-[10px] font-semibold text-indigo-500 bg-indigo-50 rounded px-1.5 py-0.5">${escapeHtml(word.pos)}</span>
+                    </div>
+                    <div class="zh-char text-3xl font-medium text-slate-800 text-center">${highlightHskChars(word.w)}</div>
+                    <div class="text-sm font-semibold text-indigo-500 text-center mt-1">${escapeHtml(word.p)}</div>
+                    <div class="text-xs leading-snug text-slate-500 mt-2">${escapeHtml(word.en)}</div>
+                `;
+                studyGrid.appendChild(card);
+            });
+        }
+
+        function renderHskCharacters() {
+            studyGrid.className = "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-3 pb-12";
+
+            hskCharacters.forEach((entry, index) => {
+                const card = document.createElement('div');
+                card.className = `study-card border rounded-xl p-3 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow ${entry.extra ? 'bg-amber-50 border-amber-300' : 'bg-white border-slate-200'}`;
+                const badge = entry.extra
+                    ? `<span class="text-[9px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 border border-amber-200 rounded px-1 py-0.5">${escapeHtml(t().extra)}</span>`
+                    : '';
+                const examples = entry.examples.map(escapeHtml).join(' · ');
+                card.innerHTML = `
+                    <div class="w-full flex items-start justify-between gap-1 mb-1">
+                        <span class="text-[10px] font-semibold text-slate-300">#${index + 1}</span>
+                        ${badge}
+                    </div>
+                    <div class="zh-char text-4xl font-medium text-slate-800">${escapeHtml(entry.c)}</div>
+                    <div class="text-[11px] font-semibold text-indigo-500 text-center mt-1">${escapeHtml(entry.p)}</div>
+                    <div class="text-[10px] leading-snug text-slate-500 text-center mt-1">${examples}</div>
+                `;
+                studyGrid.appendChild(card);
             });
         }
 
