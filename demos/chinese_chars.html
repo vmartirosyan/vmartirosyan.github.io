@@ -75,6 +75,40 @@
             opacity: 0.65;
         }
 
+        .trad-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 15px;
+            height: 15px;
+            border-radius: 9999px;
+            border: 1px solid #cbd5e1;
+            background-color: transparent;
+            color: #64748b;
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 0;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .trad-toggle:hover,
+        .trad-toggle.open {
+            background-color: #eef2ff;
+            border-color: #818cf8;
+            color: #4338ca;
+        }
+
+        .trad-note {
+            margin-top: 4px;
+            font-size: 10px;
+            line-height: 1.35;
+            color: #64748b;
+            text-align: center;
+        }
+
         /* Custom Scrollbar for Study Mode */
         ::-webkit-scrollbar {
             width: 8px;
@@ -184,6 +218,8 @@
                         <!-- Pinyin gets injected here -->
                     </div>
 
+                    <div id="quizTradNote" class="text-xs leading-snug text-slate-500 text-center mb-4 px-2 hidden"></div>
+
                     <!-- Options Grid -->
                     <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                         <!-- Buttons get injected here -->
@@ -228,7 +264,7 @@
             { c: "二", p: "èr", en: ["two"], ru: ["два"], hy: ["երկու"] },
             { c: "亠", p: "tóu", en: ["lid"], ru: ["крышка"], hy: ["կափարիչ"] },
             { c: "人", p: "rén", en: ["person"], ru: ["человек"], hy: ["մարդ"] },
-            { c: "儿", p: "ér", en: ["legs"], ru: ["ноги"], hy: ["ոտքեր"] },
+            { c: "儿", p: "ér", en: ["son","child"], ru: ["сын","ребёнок"], hy: ["որդի","երեխա"], trad: { en: ["legs"], ru: ["ноги"], hy: ["ոտքեր"] } },
             { c: "入", p: "rù", en: ["enter"], ru: ["входить"], hy: ["մտնել"] },
             { c: "八", p: "bā", en: ["eight"], ru: ["восемь"], hy: ["ութ"] },
             { c: "冂", p: "jiōng", en: ["box"], ru: ["рамка"], hy: ["շրջանակ"] },
@@ -245,13 +281,13 @@
             { c: "十", p: "shí", en: ["ten"], ru: ["десять"], hy: ["տասը"] },
             { c: "卜", p: "bǔ", en: ["divination"], ru: ["гадание"], hy: ["գուշակություն"] },
             { c: "卩", p: "jié", en: ["seal"], ru: ["печать"], hy: ["կնիք"] },
-            { c: "厂", p: "chǎng", en: ["factory"], ru: ["завод"], hy: ["գործարան"] },
+            { c: "厂", p: "chǎng", en: ["factory"], ru: ["завод"], hy: ["գործարան"], trad: { p: "hǎn", en: ["cliff"], ru: ["утёс"], hy: ["ժայռ"] } },
             { c: "厶", p: "sī", en: ["private"], ru: ["личный"], hy: ["անձնական"] },
             { c: "又", p: "yòu", en: ["again"], ru: ["снова"], hy: ["կրկին"] },
             { c: "口", p: "kǒu", en: ["mouth"], ru: ["рот"], hy: ["բերան"] },
             { c: "囗", p: "wéi", en: ["enclosure"], ru: ["ограда"], hy: ["շրջափակում"] },
             { c: "土", p: "tǔ", en: ["earth"], ru: ["земля"], hy: ["հող"] },
-            { c: "士", p: "shì", en: ["scholar"], ru: ["учёный"], hy: ["գիտնական"] },
+            { c: "士", p: "shì", en: ["soldier","scholar"], ru: ["воин","учёный"], hy: ["զինվոր","գիտնական"] },
             { c: "夂", p: "zhǐ", en: ["go"], ru: ["идти"], hy: ["գնալ"] },
             { c: "夊", p: "suī", en: ["walk slowly"], ru: ["идти медленно"], hy: ["դանդաղ քայլել"] },
             { c: "夕", p: "xī", en: ["evening"], ru: ["вечер"], hy: ["երեկո"] },
@@ -268,10 +304,10 @@
             { c: "巛", p: "chuān", en: ["river"], ru: ["река"], hy: ["գետ"] },
             { c: "工", p: "gōng", en: ["work"], ru: ["работа"], hy: ["աշխատանք"] },
             { c: "己", p: "jǐ", en: ["oneself"], ru: ["сам"], hy: ["ինքը"] },
-            { c: "巾", p: "jīn", en: ["cloth"], ru: ["ткань"], hy: ["կտոր"] },
-            { c: "干", p: "gān", en: ["dry"], ru: ["сухой"], hy: ["չոր"] },
-            { c: "幺", p: "yāo", en: ["tiny"], ru: ["крошечный"], hy: ["փոքրիկ"] },
-            { c: "广", p: "yǎn", en: ["house"], ru: ["дом"], hy: ["տուն"] },
+            { c: "巾", p: "jīn", en: ["cloth"], ru: ["ткань"], hy: ["կտոր"], trad: { en: ["turban"], ru: ["платок"], hy: ["գլխաշոր"] } },
+            { c: "干", p: "gān / gàn", en: ["dry","do"], ru: ["сухой","делать"], hy: ["չոր","անել"], trad: { char: "乾 / 幹", en: ["dry (乾)","do (幹)"], ru: ["сухой (乾)","делать (幹)"], hy: ["չոր (乾)","անել (幹)"] } },
+            { c: "幺", p: "yāo", en: ["one","tiny"], ru: ["один","крошечный"], hy: ["մեկ","փոքրիկ"], trad: { en: ["short thread"], ru: ["короткая нить"], hy: ["կարճ թել"] } },
+            { c: "广", p: "guǎng", en: ["wide","broad"], ru: ["широкий"], hy: ["լայն"], trad: { p: "yǎn", en: ["house"], ru: ["дом"], hy: ["տուն"] } },
             { c: "廴", p: "yǐn", en: ["stride"], ru: ["шаг"], hy: ["քայլ"] },
             { c: "廾", p: "gǒng", en: ["two hands"], ru: ["две руки"], hy: ["երկու ձեռք"] },
             { c: "弋", p: "yì", en: ["shoot"], ru: ["стрелять"], hy: ["կրակել"] },
@@ -280,13 +316,13 @@
             { c: "彡", p: "shān", en: ["bristle"], ru: ["щетина"], hy: ["կոշտ մազեր"] },
             { c: "彳", p: "chì", en: ["step"], ru: ["шаг"], hy: ["քայլ"] },
             { c: "心", p: "xīn", en: ["heart"], ru: ["сердце"], hy: ["սիրտ"] },
-            { c: "戈", p: "gē", en: ["spear"], ru: ["копьё"], hy: ["նիզակ"] },
-            { c: "户", p: "hù", en: ["door"], ru: ["дверь"], hy: ["դուռ"] },
+            { c: "戈", p: "gē", en: ["dagger-axe","halberd"], ru: ["клевец","алебарда"], hy: ["կեռ նիզակ","հալբերդ"] },
+            { c: "户", p: "hù", en: ["household"], ru: ["домохозяйство"], hy: ["տնտեսություն"], trad: { en: ["door"], ru: ["дверь"], hy: ["դուռ"] } },
             { c: "手", p: "shǒu", en: ["hand"], ru: ["рука"], hy: ["ձեռք"] },
-            { c: "支", p: "zhī", en: ["branch"], ru: ["ветка"], hy: ["ճյուղ"] },
+            { c: "支", p: "zhī", en: ["support","branch"], ru: ["поддержка","ветка"], hy: ["աջակցություն","ճյուղ"] },
             { c: "攴", p: "pū", en: ["strike"], ru: ["удар"], hy: ["հարված"] },
             { c: "文", p: "wén", en: ["writing"], ru: ["письменность"], hy: ["գրություն"] },
-            { c: "斗", p: "dǒu", en: ["dipper"], ru: ["ковш"], hy: ["շերեփ"] },
+            { c: "斗", p: "dǒu", en: ["dipper","measure"], ru: ["ковш","мера"], hy: ["շերեփ","չափ"] },
             { c: "斤", p: "jīn", en: ["axe"], ru: ["топор"], hy: ["կացին"] },
             { c: "方", p: "fāng", en: ["square"], ru: ["квадрат"], hy: ["քառակուսի"] },
             { c: "无", p: "wú", en: ["not"], ru: ["не"], hy: ["ոչ"] },
@@ -294,15 +330,15 @@
             { c: "曰", p: "yuē", en: ["say"], ru: ["говорить"], hy: ["ասել"] },
             { c: "月", p: "yuè", en: ["moon"], ru: ["луна"], hy: ["լուսին"] },
             { c: "木", p: "mù", en: ["tree"], ru: ["дерево"], hy: ["ծառ"] },
-            { c: "欠", p: "qiàn", en: ["lack"], ru: ["нехватка"], hy: ["պակաս"] },
+            { c: "欠", p: "qiàn", en: ["owe","lack"], ru: ["быть должным","нехватка"], hy: ["պարտք լինել","պակաս"], trad: { en: ["yawn"], ru: ["зевать"], hy: ["հորանջել"] } },
             { c: "止", p: "zhǐ", en: ["stop"], ru: ["останавливаться"], hy: ["կանգ առնել"] },
-            { c: "歹", p: "dǎi", en: ["bad"], ru: ["плохой"], hy: ["վատ"] },
+            { c: "歹", p: "dǎi", en: ["bad"], ru: ["плохой"], hy: ["վատ"], trad: { en: ["death"], ru: ["смерть"], hy: ["մահ"] } },
             { c: "殳", p: "shū", en: ["weapon"], ru: ["оружие"], hy: ["զենք"] },
             { c: "毋", p: "wú", en: ["do not"], ru: ["не"], hy: ["մի՛"] },
             { c: "比", p: "bǐ", en: ["compare"], ru: ["сравнивать"], hy: ["համեմատել"] },
             { c: "毛", p: "máo", en: ["hair"], ru: ["волосы"], hy: ["մազեր"] },
-            { c: "氏", p: "shì", en: ["clan"], ru: ["род"], hy: ["տոհմ"] },
-            { c: "气", p: "qì", en: ["air"], ru: ["воздух"], hy: ["օդ"] },
+            { c: "氏", p: "shì", en: ["surname","clan"], ru: ["фамилия","род"], hy: ["ազգանուն","տոհմ"] },
+            { c: "气", p: "qì", en: ["air","gas","breath"], ru: ["воздух","газ","дыхание"], hy: ["օդ","գազ","շունչ"], trad: { en: ["steam"], ru: ["пар"], hy: ["գոլորշի"] } },
             { c: "水", p: "shuǐ", en: ["water"], ru: ["вода"], hy: ["ջուր"] },
             { c: "火", p: "huǒ", en: ["fire"], ru: ["огонь"], hy: ["կրակ"] },
             { c: "爪", p: "zhǎo", en: ["claw"], ru: ["коготь"], hy: ["ճանկ"] },
@@ -310,10 +346,10 @@
             { c: "爻", p: "yáo", en: ["trigrams"], ru: ["триграммы"], hy: ["եռագծեր"] },
             { c: "爿", p: "qiáng", en: ["half tree trunk"], ru: ["половина ствола"], hy: ["կես բնափայտ"] },
             { c: "片", p: "piàn", en: ["slice"], ru: ["ломтик"], hy: ["կտոր"] },
-            { c: "牙", p: "yá", en: ["tooth"], ru: ["зуб"], hy: ["ատամ"] },
+            { c: "牙", p: "yá", en: ["tooth","fang"], ru: ["зуб","клык"], hy: ["ատամ","ժանիք"] },
             { c: "牛", p: "niú", en: ["cow"], ru: ["корова"], hy: ["կով"] },
             { c: "犬", p: "quǎn", en: ["dog"], ru: ["собака"], hy: ["շուն"] },
-            { c: "玄", p: "xuán", en: ["mysterious"], ru: ["таинственный"], hy: ["խորհրդավոր"] },
+            { c: "玄", p: "xuán", en: ["mysterious","profound"], ru: ["таинственный","глубокий"], hy: ["խորհրդավոր","խորը"], trad: { en: ["black","dark"], ru: ["чёрный","тёмный"], hy: ["սև","մութ"] } },
             { c: "玉", p: "yù", en: ["jade"], ru: ["нефрит"], hy: ["նեֆրիտ"] },
             { c: "瓜", p: "guā", en: ["melon"], ru: ["дыня"], hy: ["սեխ"] },
             { c: "瓦", p: "wǎ", en: ["tile"], ru: ["черепица"], hy: ["կղմինդր"] },
@@ -328,43 +364,43 @@
             { c: "皮", p: "pí", en: ["skin"], ru: ["кожа"], hy: ["մաշկ"] },
             { c: "皿", p: "mǐn", en: ["dish"], ru: ["посуда"], hy: ["աման"] },
             { c: "目", p: "mù", en: ["eye"], ru: ["глаз"], hy: ["աչք"] },
-            { c: "矛", p: "máo", en: ["spear"], ru: ["копьё"], hy: ["նիզակ"] },
+            { c: "矛", p: "máo", en: ["spear","lance"], ru: ["копьё","пика"], hy: ["նիզակ","գեղարդ"] },
             { c: "矢", p: "shǐ", en: ["arrow"], ru: ["стрела"], hy: ["նետ"] },
             { c: "石", p: "shí", en: ["stone"], ru: ["камень"], hy: ["քար"] },
-            { c: "示", p: "shì", en: ["show"], ru: ["показывать"], hy: ["ցույց տալ"] },
+            { c: "示", p: "shì", en: ["show","indicate"], ru: ["показывать","указывать"], hy: ["ցույց տալ","նշել"], trad: { en: ["spirit","altar"], ru: ["дух","алтарь"], hy: ["ոգի","զոհասեղան"] } },
             { c: "禸", p: "róu", en: ["trace"], ru: ["след"], hy: ["հետք"] },
             { c: "禾", p: "hé", en: ["grain"], ru: ["зерно"], hy: ["հացահատիկ"] },
             { c: "穴", p: "xué", en: ["cave"], ru: ["пещера"], hy: ["քարանձավ"] },
             { c: "立", p: "lì", en: ["stand"], ru: ["стоять"], hy: ["կանգնել"] },
             { c: "竹", p: "zhú", en: ["bamboo"], ru: ["бамбук"], hy: ["բամբուկ"] },
             { c: "米", p: "mǐ", en: ["rice"], ru: ["рис"], hy: ["բրինձ"] },
-            { c: "纟", p: "sī", en: ["silk"], ru: ["шёлк"], hy: ["մետաքս"] },
+            { c: "纟", p: "sī", en: ["silk"], ru: ["шёлк"], hy: ["մետաքս"], trad: { char: "糸", p: "mì", en: ["fine silk"], ru: ["тонкий шёлк"], hy: ["նուրբ մետաքս"] } },
             { c: "缶", p: "fǒu", en: ["jar"], ru: ["кувшин"], hy: ["սափոր"] },
             { c: "网", p: "wǎng", en: ["net"], ru: ["сеть"], hy: ["ցանց"] },
             { c: "羊", p: "yáng", en: ["sheep"], ru: ["овца"], hy: ["ոչխար"] },
             { c: "羽", p: "yǔ", en: ["feather"], ru: ["перо"], hy: ["փետուր"] },
             { c: "老", p: "lǎo", en: ["old"], ru: ["старый"], hy: ["ծեր"] },
-            { c: "而", p: "ér", en: ["and"], ru: ["и"], hy: ["և"] },
+            { c: "而", p: "ér", en: ["and","but"], ru: ["и","но"], hy: ["և","բայց"] },
             { c: "耒", p: "lěi", en: ["plow"], ru: ["плуг"], hy: ["գութան"] },
             { c: "耳", p: "ěr", en: ["ear"], ru: ["ухо"], hy: ["ականջ"] },
             { c: "聿", p: "yù", en: ["brush"], ru: ["кисть"], hy: ["վրձին"] },
             { c: "肉", p: "ròu", en: ["meat"], ru: ["мясо"], hy: ["միս"] },
-            { c: "臣", p: "chén", en: ["official"], ru: ["чиновник"], hy: ["պաշտոնյա"] },
+            { c: "臣", p: "chén", en: ["minister"], ru: ["министр"], hy: ["նախարար"] },
             { c: "自", p: "zì", en: ["self"], ru: ["сам"], hy: ["ինքը"] },
             { c: "至", p: "zhì", en: ["arrive"], ru: ["достигать"], hy: ["հասնել"] },
             { c: "臼", p: "jiù", en: ["mortar"], ru: ["ступа"], hy: ["սանդ"] },
             { c: "舌", p: "shé", en: ["tongue"], ru: ["язык"], hy: ["լեզու"] },
-            { c: "舛", p: "chuǎn", en: ["error"], ru: ["ошибка"], hy: ["սխալ"] },
+            { c: "舛", p: "chuǎn", en: ["mishap","oppose"], ru: ["неудача","противостоять"], hy: ["ձախողում","հակադրվել"], trad: { en: ["error"], ru: ["ошибка"], hy: ["սխալ"] } },
             { c: "舟", p: "zhōu", en: ["boat"], ru: ["лодка"], hy: ["նավակ"] },
-            { c: "艮", p: "gèn", en: ["stopping"], ru: ["остановка"], hy: ["կանգ"] },
+            { c: "艮", p: "gèn", en: ["stillness"], ru: ["неподвижность"], hy: ["անշարժություն"] },
             { c: "色", p: "sè", en: ["color"], ru: ["цвет"], hy: ["գույն"] },
             { c: "艹", p: "cǎo", en: ["grass"], ru: ["трава"], hy: ["խոտ"] },
             { c: "虍", p: "hū", en: ["tiger"], ru: ["тигр"], hy: ["վագր"] },
             { c: "虫", p: "chóng", en: ["insect"], ru: ["насекомое"], hy: ["միջատ"] },
             { c: "血", p: "xuè", en: ["blood"], ru: ["кровь"], hy: ["արյուն"] },
-            { c: "行", p: "xíng", en: ["walk"], ru: ["идти"], hy: ["քայլել"] },
+            { c: "行", p: "xíng / háng", en: ["walk","okay","row"], ru: ["идти","хорошо","ряд"], hy: ["քայլել","լավ","շարք"] },
             { c: "衣", p: "yī", en: ["clothes"], ru: ["одежда"], hy: ["հագուստ"] },
-            { c: "襾", p: "yà", en: ["cover"], ru: ["покрытие"], hy: ["ծածկույթ"] },
+            { c: "襾", p: "xī", en: ["west"], ru: ["запад"], hy: ["արևմուտք"], trad: { p: "yà", en: ["cover"], ru: ["покрытие"], hy: ["ծածկույթ"] } },
             { c: "见", p: "jiàn", en: ["see"], ru: ["видеть"], hy: ["տեսնել"] },
             { c: "角", p: "jiǎo", en: ["horn"], ru: ["рог"], hy: ["եղջյուր"] },
             { c: "讠", p: "yán", en: ["speech"], ru: ["речь"], hy: ["խոսք"] },
@@ -372,34 +408,34 @@
             { c: "豆", p: "dòu", en: ["bean"], ru: ["боб"], hy: ["բակլա"] },
             { c: "豕", p: "shǐ", en: ["pig"], ru: ["свинья"], hy: ["խոզ"] },
             { c: "豸", p: "zhì", en: ["badger"], ru: ["барсук"], hy: ["փորսուղ"] },
-            { c: "贝", p: "bèi", en: ["shell"], ru: ["раковина"], hy: ["խեցի"] },
+            { c: "贝", p: "bèi", en: ["shell","treasure"], ru: ["раковина","сокровище"], hy: ["խեցի","գանձ"], trad: { en: ["money"], ru: ["деньги"], hy: ["փող"] } },
             { c: "赤", p: "chì", en: ["red"], ru: ["красный"], hy: ["կարմիր"] },
-            { c: "走", p: "zǒu", en: ["walk"], ru: ["идти"], hy: ["քայլել"] },
+            { c: "走", p: "zǒu", en: ["walk","leave"], ru: ["идти","уходить"], hy: ["քայլել","հեռանալ"], trad: { en: ["run"], ru: ["бежать"], hy: ["վազել"] } },
             { c: "足", p: "zú", en: ["foot"], ru: ["нога"], hy: ["ոտք"] },
             { c: "身", p: "shēn", en: ["body"], ru: ["тело"], hy: ["մարմին"] },
             { c: "车", p: "chē", en: ["vehicle"], ru: ["транспортное средство"], hy: ["փոխադրամիջոց"] },
             { c: "辛", p: "xīn", en: ["bitter"], ru: ["горький"], hy: ["դառը"] },
-            { c: "辰", p: "chén", en: ["time"], ru: ["время"], hy: ["ժամանակ"] },
-            { c: "辶", p: "chuò", en: ["walk"], ru: ["идти"], hy: ["քայլել"] },
+            { c: "辰", p: "chén", en: ["time","star"], ru: ["время","звезда"], hy: ["ժամանակ","աստղ"], trad: { en: ["morning","dragon"], ru: ["утро","дракон"], hy: ["առավոտ","վիշապ"] } },
+            { c: "辶", p: "chuò", en: ["movement"], ru: ["движение"], hy: ["շարժում"], trad: { en: ["walk"], ru: ["идти"], hy: ["քայլել"] } },
             { c: "邑", p: "yì", en: ["city"], ru: ["город"], hy: ["քաղաք"] },
             { c: "酉", p: "yǒu", en: ["wine"], ru: ["вино"], hy: ["գինի"] },
-            { c: "采", p: "cǎi", en: ["gather"], ru: ["собирать"], hy: ["հավաքել"] },
+            { c: "采", p: "cǎi", en: ["pick","gather"], ru: ["собирать","рвать"], hy: ["հավաքել","քաղել"] },
             { c: "里", p: "lǐ", en: ["village"], ru: ["деревня"], hy: ["գյուղ"] },
             { c: "钅", p: "jīn", en: ["metal"], ru: ["металл"], hy: ["մետաղ"] },
             { c: "长", p: "cháng", en: ["long"], ru: ["длинный"], hy: ["երկար"] },
-            { c: "门", p: "mén", en: ["door"], ru: ["дверь"], hy: ["դուռ"] },
+            { c: "门", p: "mén", en: ["door","gate"], ru: ["дверь","ворота"], hy: ["դուռ","դարպաս"] },
             { c: "阜", p: "fù", en: ["mound"], ru: ["холм"], hy: ["բլուր"] },
-            { c: "隶", p: "lì", en: ["subordinate"], ru: ["подчинённый"], hy: ["ենթակա"] },
+            { c: "隶", p: "lì", en: ["slave","subordinate"], ru: ["раб","подчинённый"], hy: ["ստրուկ","ենթակա"] },
             { c: "隹", p: "zhuī", en: ["short-tailed bird"], ru: ["короткохвостая птица"], hy: ["կարճապոչ թռչուն"] },
             { c: "雨", p: "yǔ", en: ["rain"], ru: ["дождь"], hy: ["անձրև"] },
-            { c: "青", p: "qīng", en: ["blue"], ru: ["синий"], hy: ["կապույտ"] },
+            { c: "青", p: "qīng", en: ["green","blue"], ru: ["зелёный","синий"], hy: ["կանաչ","կապույտ"] },
             { c: "非", p: "fēi", en: ["wrong"], ru: ["неправильный"], hy: ["սխալ"] },
             { c: "面", p: "miàn", en: ["face"], ru: ["лицо"], hy: ["դեմք"] },
-            { c: "革", p: "gé", en: ["leather"], ru: ["кожа"], hy: ["կաշի"] },
-            { c: "韦", p: "wéi", en: ["leather"], ru: ["кожа"], hy: ["կաշի"] },
+            { c: "革", p: "gé", en: ["leather","reform"], ru: ["кожа","реформа"], hy: ["կաշի","բարեփոխում"], trad: { en: ["hide"], ru: ["шкура"], hy: ["մորթի"] } },
+            { c: "韦", p: "wéi", en: ["soft leather","surname"], ru: ["мягкая кожа","фамилия"], hy: ["փափուկ կաշի","ազգանուն"], trad: { en: ["tanned leather"], ru: ["выделанная кожа"], hy: ["դաբաղված կաշի"] } },
             { c: "韭", p: "jiǔ", en: ["leek"], ru: ["лук-порей"], hy: ["պրաս"] },
             { c: "音", p: "yīn", en: ["sound"], ru: ["звук"], hy: ["ձայն"] },
-            { c: "页", p: "yè", en: ["page"], ru: ["страница"], hy: ["էջ"] },
+            { c: "页", p: "yè", en: ["page"], ru: ["страница"], hy: ["էջ"], trad: { en: ["leaf","head"], ru: ["лист","голова"], hy: ["տերև","գլուխ"] } },
             { c: "风", p: "fēng", en: ["wind"], ru: ["ветер"], hy: ["քամի"] },
             { c: "飞", p: "fēi", en: ["fly"], ru: ["летать"], hy: ["թռչել"] },
             { c: "饣", p: "shí", en: ["food"], ru: ["еда"], hy: ["սնունդ"] },
@@ -408,14 +444,14 @@
             { c: "马", p: "mǎ", en: ["horse"], ru: ["лошадь"], hy: ["ձի"] },
             { c: "骨", p: "gǔ", en: ["bone"], ru: ["кость"], hy: ["ոսկոր"] },
             { c: "高", p: "gāo", en: ["tall"], ru: ["высокий"], hy: ["բարձր"] },
-            { c: "髟", p: "biāo", en: ["hair"], ru: ["волосы"], hy: ["մազեր"] },
-            { c: "斗", p: "dòu", en: ["fight"], ru: ["бороться"], hy: ["կռվել"] },
+            { c: "髟", p: "biāo", en: ["long hair"], ru: ["длинные волосы"], hy: ["երկար մազեր"] },
+            { c: "斗", p: "dòu", en: ["fight"], ru: ["бороться"], hy: ["կռվել"], trad: { char: "鬥", p: "dòu", en: ["fight"], ru: ["бороться"], hy: ["կռվել"] } },
             { c: "鬯", p: "chàng", en: ["sacrificial wine"], ru: ["ритуальное вино"], hy: ["ծիսական գինի"] },
             { c: "鬲", p: "lì", en: ["cauldron"], ru: ["котёл"], hy: ["կաթսա"] },
             { c: "鬼", p: "guǐ", en: ["ghost"], ru: ["призрак"], hy: ["ուրվական"] },
             { c: "鱼", p: "yú", en: ["fish"], ru: ["рыба"], hy: ["ձուկ"] },
             { c: "鸟", p: "niǎo", en: ["bird"], ru: ["птица"], hy: ["թռչուն"] },
-            { c: "卤", p: "lǔ", en: ["brine"], ru: ["рассол"], hy: ["աղաջուր"] },
+            { c: "卤", p: "lǔ", en: ["brine","braise"], ru: ["рассол","тушить"], hy: ["աղաջուր","շոգեխաշել"], trad: { en: ["salt"], ru: ["соль"], hy: ["աղ"] } },
             { c: "鹿", p: "lù", en: ["deer"], ru: ["олень"], hy: ["եղնիկ"] },
             { c: "麦", p: "mài", en: ["wheat"], ru: ["пшеница"], hy: ["ցորեն"] },
             { c: "麻", p: "má", en: ["hemp"], ru: ["конопля"], hy: ["կանեփ"] },
@@ -423,7 +459,7 @@
             { c: "黍", p: "shǔ", en: ["millet"], ru: ["просо"], hy: ["կորեկ"] },
             { c: "黑", p: "hēi", en: ["black"], ru: ["чёрный"], hy: ["սև"] },
             { c: "黹", p: "zhǐ", en: ["embroidery"], ru: ["вышивка"], hy: ["ասեղնագործություն"] },
-            { c: "黾", p: "mǐn", en: ["toad"], ru: ["жаба"], hy: ["դոդոշ"] },
+            { c: "黾", p: "miǎn", en: ["strive","diligent"], ru: ["стремиться","усердный"], hy: ["ձգտել","ջանասեր"], trad: { char: "黽", p: "mǐn", en: ["toad","frog"], ru: ["жаба","лягушка"], hy: ["դոդոշ","գորտ"] } },
             { c: "鼎", p: "dǐng", en: ["tripod"], ru: ["треножник"], hy: ["եռոտանի"] },
             { c: "鼓", p: "gǔ", en: ["drum"], ru: ["барабан"], hy: ["թմբուկ"] },
             { c: "鼠", p: "shǔ", en: ["rat"], ru: ["крыса"], hy: ["առնետ"] },
@@ -448,8 +484,10 @@
                 correct: "Correct! 🎉",
                 incorrect: (meaning) => `Incorrect. It means "${meaning}".`,
                 pinyin: "Pinyin",
+                traditional: "Traditional",
+                showTraditional: "Show traditional meaning",
                 studyHeading: "All 214 Kangxi Radicals",
-                studySubtitle: "Browse and memorize the fundamental building blocks of Chinese characters."
+                studySubtitle: "Browse and memorize the fundamental building blocks of Chinese characters. Tap i for traditional meanings."
             },
             hy: {
                 title: "Կանսիի արմատների յուրացում",
@@ -463,8 +501,10 @@
                 correct: "Ճիշտ է։ 🎉",
                 incorrect: (meaning) => `Սխալ է։ Այն նշանակում է «${meaning}»։`,
                 pinyin: "Փինյին",
+                traditional: "Ավանդական",
+                showTraditional: "Ցույց տալ ավանդական իմաստը",
                 studyHeading: "Բոլոր 214 Կանսիի արմատները",
-                studySubtitle: "Դիտեք և անգիր արեք չինարեն նշանների հիմնարար բաղադրիչները։"
+                studySubtitle: "Դիտեք և անգիր արեք չինարեն նշանների հիմնարար բաղադրիչները։ Սեղմեք i՝ ավանդական իմաստները տեսնելու համար։"
             },
             ru: {
                 title: "Мастерство радикалов Канси",
@@ -478,8 +518,10 @@
                 correct: "Верно! 🎉",
                 incorrect: (meaning) => `Неверно. Он означает «${meaning}».`,
                 pinyin: "Пиньинь",
+                traditional: "Традиционное",
+                showTraditional: "Показать традиционное значение",
                 studyHeading: "Все 214 радикалов Канси",
-                studySubtitle: "Просматривайте и запоминайте фундаментальные строительные блоки китайских иероглифов."
+                studySubtitle: "Просматривайте и запоминайте фундаментальные строительные блоки китайских иероглифов. Нажмите i, чтобы увидеть традиционные значения."
             }
         };
 
@@ -504,6 +546,7 @@
         const questionPrompt = document.getElementById('questionPrompt');
         const characterDisplay = document.getElementById('characterDisplay');
         const pinyinDisplay = document.getElementById('pinyinDisplay');
+        const quizTradNote = document.getElementById('quizTradNote');
         const optionsContainer = document.getElementById('optionsContainer');
         const feedbackArea = document.getElementById('feedbackArea');
         const feedbackText = document.getElementById('feedbackText');
@@ -525,6 +568,16 @@
 
         function meaningText(radical) {
             return radical[currentLang].join('; ');
+        }
+
+        function tradText(radical) {
+            const trad = radical.trad;
+            if (!trad) return '';
+            const meanings = (trad[currentLang] || []).join('; ');
+            let prefix = '';
+            if (trad.char) prefix = trad.char;
+            if (trad.p) prefix += prefix ? ` (${trad.p})` : trad.p;
+            return prefix ? `${t().traditional}: ${prefix} — ${meanings}` : `${t().traditional}: ${meanings}`;
         }
 
         function capitalize(text) {
@@ -643,6 +696,12 @@
         function renderQuizUI() {
             // Set Character
             characterDisplay.textContent = currentQuestion.c;
+            if (currentQuestion.trad && currentQuestion.trad.char) {
+                const tradChar = document.createElement('span');
+                tradChar.className = 'text-2xl sm:text-3xl text-slate-400 font-normal align-middle ml-2';
+                tradChar.textContent = `(${currentQuestion.trad.char})`;
+                characterDisplay.appendChild(tradChar);
+            }
 
             // Clear and render buttons
             optionsContainer.innerHTML = '';
@@ -672,6 +731,14 @@
                 pinyinDisplay.textContent = `${t().pinyin}: ${currentQuestion.p}`;
                 pinyinDisplay.style.opacity = '1';
 
+                if (currentQuestion.trad) {
+                    quizTradNote.textContent = tradText(currentQuestion);
+                    quizTradNote.classList.remove('hidden');
+                } else {
+                    quizTradNote.textContent = '';
+                    quizTradNote.classList.add('hidden');
+                }
+
                 if (feedbackKind === 'correct') {
                     feedbackText.textContent = t().correct;
                     feedbackText.className = "text-xl font-bold text-emerald-600 mb-4 text-center";
@@ -684,6 +751,8 @@
             } else {
                 pinyinDisplay.textContent = '';
                 pinyinDisplay.style.opacity = '0';
+                quizTradNote.textContent = '';
+                quizTradNote.classList.add('hidden');
                 feedbackArea.classList.add('hidden');
             }
         }
@@ -728,7 +797,7 @@
             studyGrid.innerHTML = '';
             radicals.forEach((radical, index) => {
                 const card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow cursor-default group";
+                card.className = "study-card bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow cursor-default group";
                 
                 // Number
                 const numStr = `<div class="w-full text-left text-xs font-semibold text-slate-300 mb-1 group-hover:text-indigo-300 transition-colors">#${index + 1}</div>`;
@@ -739,11 +808,24 @@
                 // Pinyin
                 const pinStr = `<div class="text-sm font-semibold text-indigo-500 mb-1">${radical.p}</div>`;
                 
-                // Meaning
-                const meanStr = `<div class="text-[11px] leading-snug text-slate-500 text-center">${capitalize(meaningText(radical))}</div>`;
+                // Meaning, with a marker when a traditional reading exists
+                const trad = tradText(radical);
+                const markerStr = trad ? `<button type="button" class="trad-toggle" aria-expanded="false" aria-label="${t().showTraditional}" title="${t().showTraditional}">i</button>` : '';
+                const meanStr = `<div class="flex items-center justify-center gap-1 text-[11px] leading-snug text-slate-500 text-center"><span>${capitalize(meaningText(radical))}</span>${markerStr}</div>`;
+                const tradNoteStr = trad ? `<div class="trad-note hidden">${trad}</div>` : '';
                 
-                card.innerHTML = numStr + charStr + pinStr + meanStr;
+                card.innerHTML = numStr + charStr + pinStr + meanStr + tradNoteStr;
                 studyGrid.appendChild(card);
+            });
+
+            studyGrid.querySelectorAll('.trad-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const noteEl = btn.closest('.study-card').querySelector('.trad-note');
+                    if (!noteEl) return;
+                    const isHidden = noteEl.classList.toggle('hidden');
+                    btn.setAttribute('aria-expanded', String(!isHidden));
+                    btn.classList.toggle('open', !isHidden);
+                });
             });
         }
 
