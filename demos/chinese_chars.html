@@ -64,8 +64,11 @@
         }
 
         .lang-btn .flag {
-            font-size: 15px;
-            line-height: 1;
+            display: block;
+            width: 18px;
+            height: 12px;
+            border-radius: 2px;
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.12);
         }
 
         .lang-btn:not(.active) .flag {
@@ -110,13 +113,39 @@
                 </div>
                 <div id="langSwitch" class="flex bg-slate-100 p-1 rounded-lg" role="group" aria-label="Language">
                     <button class="lang-btn active" data-lang="en" aria-label="English" aria-pressed="true" title="English">
-                        <span class="flag">🇺🇸</span><span>EN</span>
+                        <svg class="flag" viewBox="0 0 24 16" aria-hidden="true" focusable="false">
+                            <rect width="24" height="16" fill="#ffffff"/>
+                            <g fill="#b22234">
+                                <rect width="24" height="1.231"/>
+                                <rect y="2.462" width="24" height="1.231"/>
+                                <rect y="4.923" width="24" height="1.231"/>
+                                <rect y="7.385" width="24" height="1.231"/>
+                                <rect y="9.846" width="24" height="1.231"/>
+                                <rect y="12.308" width="24" height="1.231"/>
+                                <rect y="14.769" width="24" height="1.231"/>
+                            </g>
+                            <rect width="9.6" height="8.615" fill="#3c3b6e"/>
+                            <g fill="#ffffff">
+                                <circle cx="1.2" cy="1.4" r="0.32"/><circle cx="2.9" cy="1.4" r="0.32"/><circle cx="4.6" cy="1.4" r="0.32"/><circle cx="6.3" cy="1.4" r="0.32"/><circle cx="8" cy="1.4" r="0.32"/>
+                                <circle cx="2.05" cy="3.2" r="0.32"/><circle cx="3.75" cy="3.2" r="0.32"/><circle cx="5.45" cy="3.2" r="0.32"/><circle cx="7.15" cy="3.2" r="0.32"/>
+                                <circle cx="1.2" cy="5" r="0.32"/><circle cx="2.9" cy="5" r="0.32"/><circle cx="4.6" cy="5" r="0.32"/><circle cx="6.3" cy="5" r="0.32"/><circle cx="8" cy="5" r="0.32"/>
+                                <circle cx="2.05" cy="6.8" r="0.32"/><circle cx="3.75" cy="6.8" r="0.32"/><circle cx="5.45" cy="6.8" r="0.32"/><circle cx="7.15" cy="6.8" r="0.32"/>
+                            </g>
+                        </svg><span>EN</span>
                     </button>
                     <button class="lang-btn" data-lang="hy" aria-label="Հայերեն" aria-pressed="false" title="Հայերեն">
-                        <span class="flag">🇦🇲</span><span>HY</span>
+                        <svg class="flag" viewBox="0 0 24 16" aria-hidden="true" focusable="false">
+                            <rect width="24" height="5.333" fill="#d90012"/>
+                            <rect y="5.333" width="24" height="5.333" fill="#0033a0"/>
+                            <rect y="10.667" width="24" height="5.333" fill="#f2a800"/>
+                        </svg><span>HY</span>
                     </button>
                     <button class="lang-btn" data-lang="ru" aria-label="Русский" aria-pressed="false" title="Русский">
-                        <span class="flag">🇷🇺</span><span>RU</span>
+                        <svg class="flag" viewBox="0 0 24 16" aria-hidden="true" focusable="false">
+                            <rect width="24" height="5.333" fill="#ffffff"/>
+                            <rect y="5.333" width="24" height="5.333" fill="#0039a6"/>
+                            <rect y="10.667" width="24" height="5.333" fill="#d52b1e"/>
+                        </svg><span>RU</span>
                     </button>
                 </div>
             </div>
