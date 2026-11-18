@@ -144,6 +144,9 @@
                     <button id="secHskBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700" onclick="switchSection('hsk')">
                         HSK 3.0 Level 1
                     </button>
+                    <button id="secPrimitiveBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700" onclick="switchSection('primitives')">
+                        Modern Primitives
+                    </button>
                 </div>
                 <div class="flex bg-slate-100 p-1 rounded-lg" role="tablist">
                     <button id="navQuizBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchTab('quiz')">
@@ -1087,6 +1090,214 @@
             "昨": ["yesterday", "вчера", "երեկ"],
         };
 
+        const primitives = [
+            { n: "0001", c: "一", p: "yī", en: "one", ru: "один", hy: "մեկ" },
+            { n: "0002", c: "乙", p: "yǐ", en: "second (heavenly stem)", ru: "второй", hy: "երկրորդ" },
+            { n: "0003", c: "二", p: "èr", en: "two", ru: "два", hy: "երկու" },
+            { n: "0004", c: "十", p: "shí", en: "ten", ru: "десять", hy: "տասը" },
+            { n: "0005", c: "丁", p: "dīng", en: "fourth; man; cube", ru: "четвёртый; мужчина; кубик", hy: "չորրորդ; տղամարդ; խորանարդիկ" },
+            { n: "0006", c: "厂", p: "chǎng", en: "factory; plant", ru: "завод; фабрика", hy: "գործարան" },
+            { n: "0007", c: "七", p: "qī", en: "seven", ru: "семь", hy: "յոթ" },
+            { n: "0008", c: "卜", p: "bǔ", en: "divine; foretell", ru: "гадать", hy: "գուշակել" },
+            { n: "0009", c: "八", p: "bā", en: "eight", ru: "восемь", hy: "ութ" },
+            { n: "0010", c: "人", p: "rén", en: "person; people", ru: "человек; люди", hy: "մարդ" },
+            { n: "0011", c: "入", p: "rù", en: "enter", ru: "входить", hy: "մտնել" },
+            { n: "0012", c: "儿", p: "ér", en: "son; child", ru: "сын; ребёнок", hy: "որդի; երեխա" },
+            { n: "0013", c: "匕", p: "bǐ", en: "spoon; dagger", ru: "ложка; кинжал", hy: "գդալ; դաշույն" },
+            { n: "0014", c: "几", p: "jǐ / jī", en: "how many; small table", ru: "сколько; столик", hy: "քանի; փոքր սեղան" },
+            { n: "0015", c: "九", p: "jiǔ", en: "nine", ru: "девять", hy: "ինը" },
+            { n: "0016", c: "刁", p: "diāo", en: "crafty; sly", ru: "хитрый; коварный", hy: "խորամանկ" },
+            { n: "0017", c: "了", p: "le / liǎo", en: "(aspect particle); finish", ru: "(частица); закончить", hy: "(մասնիկ); ավարտել" },
+            { n: "0018", c: "刀", p: "dāo", en: "knife; sword", ru: "нож", hy: "դանակ" },
+            { n: "0019", c: "力", p: "lì", en: "power; strength", ru: "сила", hy: "ուժ" },
+            { n: "0020", c: "乃", p: "nǎi", en: "be; thus; so", ru: "быть; таким образом", hy: "լինել; այսպիսով" },
+            { n: "0021", c: "又", p: "yòu", en: "again; also", ru: "снова; также", hy: "կրկին" },
+            { n: "0022", c: "三", p: "sān", en: "three", ru: "три", hy: "երեք" },
+            { n: "0023", c: "干", p: "gān / gàn", en: "dry; do; work", ru: "сухой; делать", hy: "չոր; անել" },
+            { n: "0024", c: "于", p: "yú", en: "in; at; to; from", ru: "в; на; к; от", hy: "մեջ; վրա; դեպի" },
+            { n: "0026", c: "工", p: "gōng", en: "work; labor", ru: "работа; труд", hy: "աշխատանք" },
+            { n: "0027", c: "土", p: "tǔ", en: "earth; soil", ru: "земля; почва", hy: "հող" },
+            { n: "0028", c: "士", p: "shì", en: "soldier; scholar", ru: "воин; учёный", hy: "զինվոր; գիտնական" },
+            { n: "0029", c: "才", p: "cái", en: "talent; just now; only then", ru: "талант; только что; лишь тогда", hy: "տաղանդ; հենց նոր; միայն այն ժամանակ" },
+            { n: "0030", c: "下", p: "xià", en: "down; below; next", ru: "вниз; под; следующий", hy: "ներքև; տակ; հաջորդ" },
+            { n: "0031", c: "寸", p: "cùn", en: "inch; cun (unit of length)", ru: "цунь (мера длины); дюйм", hy: "ցուն (չափի միավոր)" },
+            { n: "0032", c: "大", p: "dà", en: "big; great", ru: "большой", hy: "մեծ" },
+            { n: "0033", c: "丈", p: "zhàng", en: "ten chi (unit); husband", ru: "чжан (мера длины); муж", hy: "չժան (չափի միավոր); ամուսին" },
+            { n: "0034", c: "与", p: "yǔ", en: "and; with; give", ru: "и; с; давать", hy: "և; հետ; տալ" },
+            { n: "0035", c: "万", p: "wàn", en: "ten thousand", ru: "десять тысяч", hy: "տասը հազար" },
+            { n: "0036", c: "上", p: "shàng", en: "up; above; previous", ru: "вверх; над; прошлый", hy: "վերև; վրա; անցյալ" },
+            { n: "0037", c: "小", p: "xiǎo", en: "small; little", ru: "маленький", hy: "փոքր" },
+            { n: "0038", c: "口", p: "kǒu", en: "mouth; opening", ru: "рот; отверстие", hy: "բերան; անցք" },
+            { n: "0039", c: "山", p: "shān", en: "mountain; hill", ru: "гора", hy: "լեռ" },
+            { n: "0040", c: "巾", p: "jīn", en: "towel; cloth", ru: "полотенце; ткань", hy: "սրբիչ; կտոր" },
+            { n: "0041", c: "千", p: "qiān", en: "thousand", ru: "тысяча", hy: "հազար" },
+            { n: "0043", c: "川", p: "chuān", en: "river; stream", ru: "река", hy: "գետ" },
+            { n: "0045", c: "个", p: "gè", en: "(general measure word); individual", ru: "(счётное слово); отдельный", hy: "(հաշվիչ բառ); առանձին" },
+            { n: "0046", c: "夕", p: "xī", en: "evening; sunset", ru: "вечер; закат", hy: "երեկո; մայրամուտ" },
+            { n: "0047", c: "久", p: "jiǔ", en: "long time", ru: "долго", hy: "երկար ժամանակ" },
+            { n: "0048", c: "么", p: "me / yāo", en: "(interrogative/suffix); one", ru: "(вопросительный суффикс); один", hy: "(հարցական վերջածանց); մեկ" },
+            { n: "0050", c: "凡", p: "fán", en: "every; all; ordinary", ru: "всякий; обычный", hy: "ամեն մի; սովորական" },
+            { n: "0051", c: "丸", p: "wán", en: "pill; pellet; ball", ru: "пилюля; шарик", hy: "հաբ; գնդիկ" },
+            { n: "0052", c: "及", p: "jí", en: "and; reach", ru: "и; достигать", hy: "և; հասնել" },
+            { n: "0053", c: "广", p: "guǎng", en: "wide; broad", ru: "широкий", hy: "լայն" },
+            { n: "0054", c: "亡", p: "wáng", en: "die; perish; flee", ru: "умирать; погибать; бежать", hy: "մեռնել; կործանվել; փախչել" },
+            { n: "0055", c: "门", p: "mén", en: "door; gate", ru: "дверь; ворота", hy: "դուռ; դարպաս" },
+            { n: "0056", c: "丫", p: "yā", en: "fork; girl", ru: "развилка; девочка", hy: "ճյուղավորում; աղջիկ" },
+            { n: "0057", c: "义", p: "yì", en: "justice; righteousness; meaning", ru: "справедливость; значение", hy: "արդարություն; իմաստ" },
+            { n: "0058", c: "之", p: "zhī", en: "(literary possessive particle); it", ru: "(притяжательная частица); его/её", hy: "(ստացական մասնիկ); նրան" },
+            { n: "0059", c: "尸", p: "shī", en: "corpse", ru: "труп", hy: "դիակ" },
+            { n: "0060", c: "已", p: "yǐ", en: "already", ru: "уже", hy: "արդեն" },
+            { n: "0061", c: "巳", p: "sì", en: "6th earthly branch", ru: "шестой земной ствол", hy: "վեցերորդ երկրային ճյուղ" },
+            { n: "0062", c: "己", p: "jǐ", en: "oneself; self", ru: "сам; себя", hy: "ինքը" },
+            { n: "0063", c: "弓", p: "gōng", en: "bow", ru: "лук (оружие)", hy: "աղեղ" },
+            { n: "0064", c: "子", p: "zǐ", en: "child; son; seed", ru: "ребёнок; сын; семя", hy: "երեխա; որդի; սերմ" },
+            { n: "0065", c: "卫", p: "wèi", en: "guard; defend", ru: "охранять; защищать", hy: "պահպանել; պաշտպանել" },
+            { n: "0066", c: "也", p: "yě", en: "also; too", ru: "тоже; также", hy: "նույնպես" },
+            { n: "0067", c: "女", p: "nǚ", en: "woman; female", ru: "женщина; женский", hy: "կին; իգական" },
+            { n: "0068", c: "刃", p: "rèn", en: "blade; edge", ru: "лезвие", hy: "շեղբ" },
+            { n: "0069", c: "飞", p: "fēi", en: "fly", ru: "летать", hy: "թռչել" },
+            { n: "0070", c: "习", p: "xí", en: "practice; habit", ru: "практиковать; привычка", hy: "վարժվել; սովորություն" },
+            { n: "0071", c: "叉", p: "chā", en: "fork; cross", ru: "вилка; скрещивать", hy: "պատառաքաղ; խաչել" },
+            { n: "0072", c: "马", p: "mǎ", en: "horse", ru: "лошадь", hy: "ձի" },
+            { n: "0073", c: "乡", p: "xiāng", en: "countryside; hometown", ru: "деревня; родной край", hy: "գյուղ; հայրենի եզերք" },
+            { n: "0074", c: "丰", p: "fēng", en: "abundant; rich", ru: "обильный; богатый", hy: "առատ; հարուստ" },
+            { n: "0075", c: "王", p: "wáng", en: "king", ru: "король; царь", hy: "թագավոր" },
+            { n: "0076", c: "开", p: "kāi", en: "open; start; drive", ru: "открывать; начинать; водить", hy: "բացել; սկսել; վարել" },
+            { n: "0077", c: "井", p: "jǐng", en: "well (water)", ru: "колодец", hy: "ջրհոր" },
+            { n: "0078", c: "天", p: "tiān", en: "sky; day; heaven", ru: "небо; день", hy: "երկինք; օր" },
+            { n: "0079", c: "夫", p: "fū", en: "husband; man", ru: "муж; мужчина", hy: "ամուսին; տղամարդ" },
+            { n: "0081", c: "无", p: "wú", en: "not have; without", ru: "не иметь; без", hy: "չունենալ; առանց" },
+            { n: "0082", c: "云", p: "yún", en: "cloud; say", ru: "облако; говорить", hy: "ամպ; ասել" },
+            { n: "0083", c: "专", p: "zhuān", en: "special; concentrated", ru: "специальный; сосредоточенный", hy: "հատուկ; կենտրոնացած" },
+            { n: "0084", c: "丐", p: "gài", en: "beggar", ru: "нищий", hy: "մուրացկան" },
+            { n: "0087", c: "木", p: "mù", en: "tree; wood", ru: "дерево; древесина", hy: "ծառ; փայտ" },
+            { n: "0088", c: "五", p: "wǔ", en: "five", ru: "пять", hy: "հինգ" },
+            { n: "0091", c: "不", p: "bù", en: "not; no", ru: "не; нет", hy: "ոչ; չ-" },
+            { n: "0092", c: "犬", p: "quǎn", en: "dog", ru: "собака", hy: "շուն" },
+            { n: "0093", c: "太", p: "tài", en: "too; extremely", ru: "слишком", hy: "չափազանց" },
+            { n: "0096", c: "歹", p: "dǎi", en: "bad; evil", ru: "плохой; злой", hy: "վատ; չար" },
+            { n: "0098", c: "尤", p: "yóu", en: "particularly; especially", ru: "особенно", hy: "հատկապես" },
+            { n: "0100", c: "车", p: "chē", en: "vehicle; car", ru: "машина; повозка", hy: "մեքենա; սայլ" },
+            { n: "0101", c: "巨", p: "jù", en: "huge; gigantic", ru: "огромный", hy: "հսկայական" },
+            { n: "0102", c: "牙", p: "yá", en: "tooth", ru: "зуб", hy: "ատամ" },
+            { n: "0103", c: "屯", p: "tún", en: "store up; station (troops)", ru: "накапливать; расквартировывать", hy: "կուտակել; տեղակայել" },
+            { n: "0104", c: "戈", p: "gē", en: "dagger-axe; halberd", ru: "клевец; алебарда", hy: "կեռ նիզակ" },
+            { n: "0106", c: "互", p: "hù", en: "mutual; each other", ru: "взаимный; друг друга", hy: "փոխադարձ; իրար" },
+            { n: "0108", c: "瓦", p: "wǎ", en: "tile; watt", ru: "черепица; ватт", hy: "կղմինդր; վատտ" },
+            { n: "0109", c: "止", p: "zhǐ", en: "stop", ru: "останавливаться", hy: "կանգ առնել" },
+            { n: "0110", c: "少", p: "shǎo / shào", en: "few; little; young", ru: "мало; молодой", hy: "քիչ; երիտասարդ" },
+            { n: "0111", c: "曰", p: "yuē", en: "say; speak", ru: "говорить", hy: "ասել" },
+            { n: "0112", c: "日", p: "rì", en: "sun; day", ru: "солнце; день", hy: "արև; օր" },
+            { n: "0113", c: "中", p: "zhōng", en: "middle; center; China", ru: "середина; центр; Китай", hy: "մեջտեղ; կենտրոն; Չինաստան" },
+            { n: "0114", c: "贝", p: "bèi", en: "shell; shellfish", ru: "раковина; моллюск", hy: "խեցի" },
+            { n: "0116", c: "内", p: "nèi", en: "inside; inner", ru: "внутри; внутренний", hy: "ներսում; ներքին" },
+            { n: "0117", c: "水", p: "shuǐ", en: "water", ru: "вода", hy: "ջուր" },
+            { n: "0118", c: "见", p: "jiàn", en: "see; meet", ru: "видеть; встречаться", hy: "տեսնել; հանդիպել" },
+            { n: "0119", c: "午", p: "wǔ", en: "noon", ru: "полдень", hy: "կեսօր" },
+            { n: "0120", c: "牛", p: "niú", en: "cow; ox", ru: "корова; бык", hy: "կով; եզ" },
+            { n: "0121", c: "手", p: "shǒu", en: "hand", ru: "рука", hy: "ձեռք" },
+            { n: "0122", c: "气", p: "qì", en: "air; gas; anger", ru: "воздух; газ; злость", hy: "օդ; գազ; զայրույթ" },
+            { n: "0123", c: "毛", p: "máo", en: "hair; fur; feather", ru: "волосы; шерсть; перо", hy: "մազեր; բուրդ; փետուր" },
+            { n: "0124", c: "壬", p: "rén", en: "9th heavenly stem", ru: "девятый небесный ствол", hy: "իններորդ երկնային ցողուն" },
+            { n: "0125", c: "升", p: "shēng", en: "rise; ascend; liter", ru: "подниматься; литр", hy: "բարձրանալ; լիտր" },
+            { n: "0126", c: "夭", p: "yāo", en: "die young", ru: "умереть молодым", hy: "վաղաժամ մահանալ" },
+            { n: "0127", c: "长", p: "cháng / zhǎng", en: "long; grow; chief", ru: "длинный; расти; старший", hy: "երկար; աճել; ավագ" },
+            { n: "0130", c: "片", p: "piàn", en: "slice; piece; card", ru: "ломтик; кусок; карточка", hy: "կտոր; շերտ; քարտ" },
+            { n: "0137", c: "斤", p: "jīn", en: "jin (500g unit); axe", ru: "цзинь (500 г); топор", hy: "ցզին (500 գ); կացին" },
+            { n: "0138", c: "爪", p: "zhǎo / zhuǎ", en: "claw; talon; paw", ru: "коготь; лапа", hy: "ճանկ; թաթ" },
+            { n: "0141", c: "父", p: "fù", en: "father", ru: "отец", hy: "հայր" },
+            { n: "0150", c: "月", p: "yuè", en: "moon; month", ru: "луна; месяц", hy: "լուսին; ամիս" },
+            { n: "0151", c: "氏", p: "shì", en: "surname; clan", ru: "фамилия; род", hy: "ազգանուն; տոհմ" },
+            { n: "0152", c: "勿", p: "wù", en: "do not", ru: "не (запрет)", hy: "մի՛" },
+            { n: "0155", c: "丹", p: "dān", en: "cinnabar; red; pill", ru: "киноварь; красный; пилюля", hy: "կարմիր; հաբ" },
+            { n: "0157", c: "乌", p: "wū", en: "crow; black", ru: "ворон; чёрный", hy: "ագռավ; սև" },
+            { n: "0160", c: "六", p: "liù", en: "six", ru: "шесть", hy: "վեց" },
+            { n: "0161", c: "文", p: "wén", en: "writing; culture; language", ru: "письменность; культура; язык", hy: "գրություն; մշակույթ; լեզու" },
+            { n: "0163", c: "方", p: "fāng", en: "square; direction; method", ru: "квадрат; направление; способ", hy: "քառակուսի; ուղղություն; եղանակ" },
+            { n: "0164", c: "火", p: "huǒ", en: "fire", ru: "огонь", hy: "կրակ" },
+            { n: "0165", c: "为", p: "wèi / wéi", en: "for; because; act as", ru: "для; из-за; быть", hy: "համար; պատճառով; լինել" },
+            { n: "0166", c: "斗", p: "dòu / dǒu", en: "fight; dipper", ru: "бороться; ковш", hy: "կռվել; շերեփ" },
+            { n: "0170", c: "户", p: "hù", en: "household; door", ru: "двор; хозяйство; дверь", hy: "տնտեսություն; դուռ" },
+            { n: "0174", c: "心", p: "xīn", en: "heart; mind", ru: "сердце; душа", hy: "սիրտ; հոգի" },
+            { n: "0175", c: "尺", p: "chǐ", en: "ruler; chi (unit of length)", ru: "линейка; чи (мера длины)", hy: "քանոն; չի (չափի միավոր)" },
+            { n: "0177", c: "丑", p: "chǒu", en: "ugly; clown", ru: "уродливый; клоун", hy: "տգեղ; ծաղրածու" },
+            { n: "0178", c: "巴", p: "bā", en: "hope; cling to; palm", ru: "надеяться; прилипать; ладонь", hy: "հուսալ; կպչել; ափ" },
+            { n: "0181", c: "办", p: "bàn", en: "do; handle; manage", ru: "делать; улаживать", hy: "անել; կարգավորել" },
+            { n: "0184", c: "予", p: "yǔ", en: "give; bestow", ru: "давать; даровать", hy: "տալ; շնորհել" },
+            { n: "0188", c: "书", p: "shū", en: "book; write", ru: "книга; писать", hy: "գիրք; գրել" },
+            { n: "0190", c: "玉", p: "yù", en: "jade", ru: "нефрит; яшма", hy: "նեֆրիտ" },
+            { n: "0192", c: "未", p: "wèi", en: "not yet; future", ru: "ещё не; будущее", hy: "դեռ ոչ; ապագա" },
+            { n: "0193", c: "末", p: "mò", en: "end; tip; powder", ru: "конец; кончик; порошок", hy: "վերջ; ծայր; փոշի" },
+            { n: "0195", c: "击", p: "jī", en: "hit; strike; attack", ru: "бить; ударять", hy: "հարվածել" },
+            { n: "0198", c: "正", p: "zhèng / zhēng", en: "straight; upright; right; 1st lunar month", ru: "прямой; правильный; первый месяц", hy: "ուղիղ; ճիշտ; առաջին ամիս" },
+            { n: "0205", c: "甘", p: "gān", en: "sweet; willing", ru: "сладкий; охотно", hy: "քաղցր; հոժարակամ" },
+            { n: "0206", c: "世", p: "shì", en: "world; generation; lifetime", ru: "мир; поколение; жизнь", hy: "աշխարհ; սերունդ; կյանք" },
+            { n: "0210", c: "本", p: "běn", en: "root; origin; (measure word for books)", ru: "корень; основа; (счётное слово)", hy: "արմատ; հիմք; (հաշվիչ բառ)" },
+            { n: "0211", c: "术", p: "shù", en: "art; technique; method", ru: "искусство; техника; метод", hy: "արվեստ; տեխնիկա; մեթոդ" },
+            { n: "0213", c: "丙", p: "bǐng", en: "third (heavenly stem)", ru: "третий", hy: "երրորդ" },
+            { n: "0216", c: "石", p: "shí", en: "stone; rock", ru: "камень", hy: "քար" },
+            { n: "0220", c: "戊", p: "wù", en: "fifth (heavenly stem)", ru: "пятый", hy: "հինգերորդ" },
+            { n: "0221", c: "龙", p: "lóng", en: "dragon", ru: "дракон", hy: "վիշապ" },
+            { n: "0222", c: "平", p: "píng", en: "flat; level; calm; equal", ru: "плоский; ровный; спокойный", hy: "հարթ; հավասար; հանգիստ" },
+            { n: "0225", c: "东", p: "dōng", en: "east", ru: "восток", hy: "արևելք" },
+            { n: "0226", c: "卡", p: "kǎ / qiǎ", en: "card; block; get stuck", ru: "карта; застревать", hy: "քարտ; խցանվել" },
+            { n: "0229", c: "凸", p: "tū", en: "convex; protruding", ru: "выпуклый; выступающий", hy: "ուռուցիկ; դուրս ցցված" },
+            { n: "0231", c: "业", p: "yè", en: "business; profession; industry", ru: "дело; профессия; промышленность", hy: "գործ; մասնագիտություն; արդյունաբերություն" },
+            { n: "0236", c: "目", p: "mù", en: "eye; item", ru: "глаз; пункт", hy: "աչք; կետ" },
+            { n: "0237", c: "且", p: "qiě", en: "moreover; for the time being", ru: "к тому же; пока", hy: "բացի այդ; առայժմ" },
+            { n: "0239", c: "甲", p: "jiǎ", en: "first; armor; nail", ru: "первый; панцирь; ноготь", hy: "առաջին; զրահ; եղունգ" },
+            { n: "0240", c: "申", p: "shēn", en: "state; explain; 9th earthly branch", ru: "заявлять; объяснять", hy: "հայտարարել; բացատրել" },
+            { n: "0242", c: "电", p: "diàn", en: "electricity; lightning", ru: "электричество; молния", hy: "էլեկտրականություն; կայծակ" },
+            { n: "0244", c: "田", p: "tián", en: "field; farmland", ru: "поле; пашня", hy: "դաշտ; վարելահող" },
+            { n: "0245", c: "由", p: "yóu", en: "from; by; reason", ru: "от; из-за; причина", hy: "-ից; պատճառով; պատճառ" },
+            { n: "0248", c: "史", p: "shǐ", en: "history", ru: "история", hy: "պատմություն" },
+            { n: "0249", c: "央", p: "yāng", en: "center; entreat", ru: "центр; умолять", hy: "կենտրոն; աղաչել" },
+            { n: "0258", c: "冉", p: "rǎn", en: "gradually; (surname)", ru: "постепенно; (фамилия)", hy: "աստիճանաբար; (ազգանուն)" },
+            { n: "0259", c: "皿", p: "mǐn", en: "dish; vessel", ru: "посуда; сосуд", hy: "աման; սպասք" },
+            { n: "0260", c: "凹", p: "āo", en: "concave; sunken", ru: "вогнутый; впалый", hy: "գոգավոր; փոս ընկած" },
+            { n: "0262", c: "四", p: "sì", en: "four", ru: "четыре", hy: "չորս" },
+            { n: "0263", c: "生", p: "shēng", en: "life; birth; raw; student", ru: "жизнь; рождаться; сырой; ученик", hy: "կյանք; ծնվել; հում; աշակերտ" },
+            { n: "0264", c: "矢", p: "shǐ", en: "arrow; vow", ru: "стрела; клясться", hy: "նետ; երդվել" },
+            { n: "0265", c: "失", p: "shī", en: "lose; miss", ru: "терять; упускать", hy: "կորցնել; բաց թողնել" },
+            { n: "0266", c: "乍", p: "zhà", en: "at first; suddenly", ru: "впервые; внезапно", hy: "առաջին անգամ; հանկարծ" },
+            { n: "0267", c: "禾", p: "hé", en: "grain; standing crop", ru: "зерно; злаки", hy: "հացահատիկ; հասկ" },
+            { n: "0268", c: "丘", p: "qiū", en: "mound; hill", ru: "холм", hy: "բլուր" },
+            { n: "0275", c: "白", p: "bái", en: "white; blank", ru: "белый; пустой", hy: "սպիտակ; դատարկ" },
+            { n: "0278", c: "斥", p: "chì", en: "reprimand; denounce", ru: "порицать; отвергать", hy: "հանդիմանել; մերժել" },
+            { n: "0279", c: "瓜", p: "guā", en: "melon; gourd", ru: "дыня; тыква", hy: "սեխ; դդում" },
+            { n: "0280", c: "乎", p: "hū", en: "(classical question/exclamation particle)", ru: "(вопросительная частица)", hy: "(հարցական մասնիկ)" },
+            { n: "0283", c: "用", p: "yòng", en: "use", ru: "использовать", hy: "օգտագործել" },
+            { n: "0284", c: "甩", p: "shuǎi", en: "fling; swing; dump", ru: "швырять; махать; бросать", hy: "շպրտել; թափահարել; լքել" },
+            { n: "0287", c: "乐", p: "lè / yuè", en: "happy; laugh; music", ru: "весёлый; смеяться; музыка", hy: "ուրախ; ծիծաղել; երաժշտություն" },
+            { n: "0289", c: "匆", p: "cōng", en: "hurried; hasty", ru: "торопливый; поспешный", hy: "շտապ; հապճեպ" },
+            { n: "0290", c: "册", p: "cè", en: "booklet; volume", ru: "книжка; том", hy: "գրքույկ; հատոր" },
+            { n: "0296", c: "鸟", p: "niǎo", en: "bird", ru: "птица", hy: "թռչուն" },
+            { n: "0300", c: "主", p: "zhǔ", en: "master; host; main", ru: "хозяин; главный", hy: "տեր; գլխավոր" },
+            { n: "0302", c: "立", p: "lì", en: "stand; establish", ru: "стоять; основывать", hy: "կանգնել; հիմնել" },
+            { n: "0307", c: "半", p: "bàn", en: "half", ru: "половина", hy: "կես" },
+            { n: "0310", c: "头", p: "tóu", en: "head; first", ru: "голова; первый", hy: "գլուխ; առաջին" },
+            { n: "0321", c: "必", p: "bì", en: "must; certainly", ru: "обязательно; непременно", hy: "անպայման; անշուշտ" },
+            { n: "0324", c: "永", p: "yǒng", en: "forever; eternal", ru: "вечно; навсегда", hy: "հավերժ; ընդմիշտ" },
+            { n: "0327", c: "民", p: "mín", en: "people; citizen", ru: "народ; гражданин", hy: "ժողովուրդ; քաղաքացի" },
+            { n: "0328", c: "弗", p: "fú", en: "not", ru: "не", hy: "ոչ" },
+            { n: "0330", c: "出", p: "chū", en: "go out; exit; produce", ru: "выходить; производить", hy: "դուրս գալ; արտադրել" },
+            { n: "0343", c: "矛", p: "máo", en: "spear; lance", ru: "копьё", hy: "նիզակ" },
+            { n: "0345", c: "母", p: "mǔ", en: "mother; female", ru: "мать; самка", hy: "մայր; էգ" },
+            { n: "0369", c: "耳", p: "ěr", en: "ear", ru: "ухо", hy: "ականջ" },
+            { n: "0373", c: "亚", p: "yà", en: "Asia; inferior; second", ru: "Азия; второй", hy: "Ասիա; երկրորդական" },
+            { n: "0380", c: "臣", p: "chén", en: "minister; official", ru: "министр; подданный", hy: "նախարար; հպատակ" },
+            { n: "0381", c: "吏", p: "lì", en: "minor official", ru: "чиновник", hy: "պաշտոնյա" },
+            { n: "0382", c: "再", p: "zài", en: "again", ru: "снова; опять", hy: "կրկին; նորից" },
+            { n: "0384", c: "西", p: "xī", en: "west", ru: "запад", hy: "արևմուտք" },
+            { n: "0389", c: "百", p: "bǎi", en: "hundred", ru: "сто", hy: "հարյուր" },
+            { n: "0392", c: "而", p: "ér", en: "and; yet; but", ru: "и; но; а", hy: "և; բայց; սակայն" },
+            { n: "0393", c: "页", p: "yè", en: "page", ru: "страница", hy: "էջ" },
+            { n: "0402", c: "夹", p: "jiā / jiá", en: "clamp; clip; lined", ru: "зажимать; прищепка", hy: "սեղմել; ամրակ" },
+            { n: "0403", c: "夷", p: "yí", en: "smooth; flatten; ancient tribes", ru: "ровный; сглаживать", hy: "հարթ; հարթեցնել" },
+            { n: "0423", c: "虫", p: "chóng", en: "insect; worm", ru: "насекомое; червь", hy: "միջատ; որդ" },
+            { n: "0424", c: "曲", p: "qū / qǔ", en: "curved; bend; song", ru: "кривой; изгиб; мелодия", hy: "կոր; ծուռ; մեղեդի" },
+        ];
+
         const I18N = {
             en: {
                 title: "Kangxi Radicals Mastery",
@@ -1116,6 +1327,13 @@
                 hskCharsSubtitle: "All 248 unique characters from the 300 words. 店 and 饺 are marked as extra beyond the official 246-character list.",
                 extra: "extra",
                 partOfSpeech: "Part of speech",
+                primitiveTitle: "Modern Chinese Primitives Practice",
+                primitiveHeader: "Modern Primitives",
+                sectionPrimitive: "Modern Primitives",
+                primitiveQuestion: "What does this primitive mean?",
+                primitiveNext: "Next Primitive →",
+                primitiveStudyHeading: "All 205 Modern Chinese Primitive Characters",
+                primitiveStudySubtitle: "Browse and memorize 205 indecomposable modern Chinese characters with pinyin and translations.",
                 studyHeading: "All 214 Kangxi Radicals",
                 studySubtitle: "Browse and memorize the fundamental building blocks of Chinese characters. Tap i for traditional meanings."
             },
@@ -1147,6 +1365,13 @@
                 hskCharsSubtitle: "300 բառերից ստացված բոլոր 248 եզակի նշանները։ 店-ը և 饺-ը նշված են որպես լրացուցիչ՝ պաշտոնական 246 նշանների ցանկից դուրս։",
                 extra: "լրացուցիչ",
                 partOfSpeech: "Խոսքի մաս",
+                primitiveTitle: "Ժամանակակից չինարեն բաղադրիչների պարապմունք",
+                primitiveHeader: "Ժամանակակից բաղադրիչներ",
+                sectionPrimitive: "Ժամ. բաղադրիչներ",
+                primitiveQuestion: "Ի՞նչ է նշանակում այս բաղադրիչը։",
+                primitiveNext: "Հաջորդ բաղադրիչը →",
+                primitiveStudyHeading: "Բոլոր 205 ժամանակակից չինարեն բաղադրիչները",
+                primitiveStudySubtitle: "Դիտեք և անգիր արեք 205 անբաժանելի ժամանակակից չինարեն նշաններ՝ փինյինով և թարգմանություններով։",
                 studyHeading: "Բոլոր 214 Կանսիի արմատները",
                 studySubtitle: "Դիտեք և անգիր արեք չինարեն նշանների հիմնարար բաղադրիչները։ Սեղմեք i՝ ավանդական իմաստները տեսնելու համար։"
             },
@@ -1178,6 +1403,13 @@
                 hskCharsSubtitle: "Все 248 уникальных иероглифов из 300 слов. 店 и 饺 отмечены как дополнительные сверх официального списка из 246 иероглифов.",
                 extra: "доп.",
                 partOfSpeech: "Часть речи",
+                primitiveTitle: "Практика современных китайских примитивов",
+                primitiveHeader: "Современные примитивы",
+                sectionPrimitive: "Совр. примитивы",
+                primitiveQuestion: "Что означает этот примитив?",
+                primitiveNext: "Следующий примитив →",
+                primitiveStudyHeading: "Все 205 современных китайских примитива",
+                primitiveStudySubtitle: "Просматривайте и запоминайте 205 неделимых современных китайских иероглифа с пиньинем и переводами.",
                 studyHeading: "Все 214 радикалов Канси",
                 studySubtitle: "Просматривайте и запоминайте фундаментальные строительные блоки китайских иероглифов. Нажмите i, чтобы увидеть традиционные значения."
             }
@@ -1197,7 +1429,7 @@
         let selectedIndex = null;
         let hasAnswered = false;
         let feedbackKind = null;
-        const savedQuizStates = { kangxi: null, hsk: null };
+        const savedQuizStates = { kangxi: null, hsk: null, primitives: null };
 
         // DOM Elements
         const scoreDisplay = document.getElementById('scoreDisplay');
@@ -1223,6 +1455,7 @@
         const navStudyBtn = document.getElementById('navStudyBtn');
         const secKangxiBtn = document.getElementById('secKangxiBtn');
         const secHskBtn = document.getElementById('secHskBtn');
+        const secPrimitiveBtn = document.getElementById('secPrimitiveBtn');
         const hskViewToggle = document.getElementById('hskViewToggle');
         const hskWordsBtn = document.getElementById('hskWordsBtn');
         const hskCharsBtn = document.getElementById('hskCharsBtn');
@@ -1237,11 +1470,17 @@
             return currentSection === 'hsk';
         }
 
+        function isPrimitive() {
+            return currentSection === 'primitives';
+        }
+
         function activeData() {
+            if (isPrimitive()) return primitives;
             return isHsk() ? hskWords : radicals;
         }
 
         function meaningText(item) {
+            if (isPrimitive()) return item[currentLang];
             if (isHsk()) return item.en;
             return item[currentLang].join('; ');
         }
@@ -1281,6 +1520,7 @@
         }
 
         function sharesMeaning(a, b) {
+            if (isPrimitive()) return a[currentLang] === b[currentLang];
             if (isHsk()) return a.en === b.en;
             return a[currentLang].some(meaning => b[currentLang].includes(meaning));
         }
@@ -1302,8 +1542,10 @@
             const inactive = "px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700";
             secKangxiBtn.className = currentSection === 'kangxi' ? active : inactive;
             secHskBtn.className = currentSection === 'hsk' ? active : inactive;
+            secPrimitiveBtn.className = currentSection === 'primitives' ? active : inactive;
             secKangxiBtn.setAttribute('aria-selected', String(currentSection === 'kangxi'));
             secHskBtn.setAttribute('aria-selected', String(currentSection === 'hsk'));
+            secPrimitiveBtn.setAttribute('aria-selected', String(currentSection === 'primitives'));
         }
 
         function updateHskViewStyles() {
@@ -1315,19 +1557,23 @@
 
         function updateTexts() {
             document.documentElement.lang = currentLang;
-            document.title = isHsk() ? t().hskTitle : t().title;
+            document.title = isPrimitive() ? t().primitiveTitle : isHsk() ? t().hskTitle : t().title;
 
-            headerTitle.textContent = isHsk() ? t().hskHeader : t().header;
+            headerTitle.textContent = isPrimitive() ? t().primitiveHeader : isHsk() ? t().hskHeader : t().header;
             secKangxiBtn.textContent = t().sectionKangxi;
             secHskBtn.textContent = t().sectionHsk;
+            secPrimitiveBtn.textContent = t().sectionPrimitive;
             navQuizBtn.textContent = t().quizTab;
             navStudyBtn.textContent = t().studyTab;
             scoreLabel.textContent = t().score;
             streakLabel.textContent = t().streak;
-            questionPrompt.textContent = isHsk() ? t().hskQuestion : t().question;
-            nextBtn.textContent = isHsk() ? t().hskNext : t().next;
+            questionPrompt.textContent = isPrimitive() ? t().primitiveQuestion : isHsk() ? t().hskQuestion : t().question;
+            nextBtn.textContent = isPrimitive() ? t().primitiveNext : isHsk() ? t().hskNext : t().next;
 
-            if (!isHsk()) {
+            if (isPrimitive()) {
+                studyTitle.textContent = t().primitiveStudyHeading;
+                studySubtitle.textContent = t().primitiveStudySubtitle;
+            } else if (!isHsk()) {
                 studyTitle.textContent = t().studyHeading;
                 studySubtitle.textContent = t().studySubtitle;
             } else if (hskStudyView === 'words') {
@@ -1403,7 +1649,7 @@
         }
 
         function switchSection(section) {
-            if (section !== 'kangxi' && section !== 'hsk') return;
+            if (section !== 'kangxi' && section !== 'hsk' && section !== 'primitives') return;
             if (section === currentSection) return;
 
             saveQuizState();
@@ -1621,6 +1867,11 @@
         function renderStudyGrid() {
             studyGrid.innerHTML = '';
 
+            if (isPrimitive()) {
+                renderPrimitiveGrid();
+                return;
+            }
+
             if (isHsk()) {
                 if (hskStudyView === 'words') {
                     renderHskWords();
@@ -1710,6 +1961,22 @@
                     <div class="text-[11px] font-semibold text-indigo-500 text-center mt-1">${escapeHtml(entry.p)}</div>
                     <div class="text-[11px] leading-snug text-slate-600 text-center mt-1">${escapeHtml(meaning)}</div>
                     <div class="text-[10px] leading-snug text-slate-400 text-center mt-1">${examples}</div>
+                `;
+                studyGrid.appendChild(card);
+            });
+        }
+
+        function renderPrimitiveGrid() {
+            studyGrid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12";
+
+            primitives.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow";
+                card.innerHTML = `
+                    <div class="w-full text-left text-xs font-semibold text-slate-300 mb-1">#${item.n}</div>
+                    <div class="zh-char text-4xl font-medium text-slate-800 mb-2">${escapeHtml(item.c)}</div>
+                    <div class="text-sm font-semibold text-indigo-500 mb-1">${escapeHtml(item.p)}</div>
+                    <div class="text-[11px] leading-snug text-slate-500 text-center">${escapeHtml(capitalize(item[currentLang]))}</div>
                 `;
                 studyGrid.appendChild(card);
             });
