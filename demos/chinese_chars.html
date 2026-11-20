@@ -343,6 +343,216 @@
             white-space: nowrap;
         }
 
+        #hskViewToggle {
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        #hskViewToggle::-webkit-scrollbar {
+            display: none;
+        }
+
+        #hskViewToggle button {
+            flex-shrink: 0;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding-bottom: 3rem;
+        }
+
+        .story-card {
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            background: #ffffff;
+            box-shadow: 0 4px 14px -10px rgba(15, 23, 42, 0.25);
+        }
+
+        .story-card__header {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 1rem 1.1rem 0.75rem;
+        }
+
+        .story-character {
+            display: flex;
+            width: 4.5rem;
+            height: 4.5rem;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            background: #eef2ff;
+            color: #312e81;
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .story-card__meta {
+            min-width: 0;
+        }
+
+        .story-card__pinyin {
+            color: #4f46e5;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .story-card__meaning {
+            margin-top: 0.15rem;
+            color: #64748b;
+            font-size: 0.82rem;
+            line-height: 1.35;
+        }
+
+        .story-equation {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            padding: 0.75rem 0.9rem;
+            border-block: 1px solid #f1f5f9;
+            background: #f8fafc;
+        }
+
+        .story-part {
+            position: relative;
+            display: flex;
+            min-width: 4rem;
+            min-height: 4rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.4rem 0.55rem;
+            border: 1px solid;
+            border-radius: 0.85rem;
+        }
+
+        .story-part__char {
+            font-size: 1.8rem;
+            line-height: 1.1;
+        }
+
+        .story-part__label {
+            margin-top: 0.2rem;
+            font-size: 0.62rem;
+            font-weight: 600;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .story-part--0 {
+            border-color: #c7d2fe;
+            background: #eef2ff;
+            color: #3730a3;
+        }
+
+        .story-part--1 {
+            border-color: #fde68a;
+            background: #fffbeb;
+            color: #92400e;
+        }
+
+        .story-part--2 {
+            border-color: #a7f3d0;
+            background: #ecfdf5;
+            color: #065f46;
+        }
+
+        .story-part--3 {
+            border-color: #fecdd3;
+            background: #fff1f2;
+            color: #9f1239;
+        }
+
+        .story-part--4 {
+            border-color: #bae6fd;
+            background: #f0f9ff;
+            color: #075985;
+        }
+
+        .story-plus {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .story-sound {
+            position: absolute;
+            top: -0.35rem;
+            right: -0.3rem;
+            display: flex;
+            width: 1.15rem;
+            height: 1.15rem;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffff;
+            border-radius: 9999px;
+            background: #4f46e5;
+            color: #ffffff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            box-shadow: 0 2px 5px rgba(30, 41, 59, 0.2);
+        }
+
+        .story-copy {
+            padding: 0.85rem 1.1rem 1.05rem;
+        }
+
+        .story-copy__label {
+            display: inline-block;
+            margin-bottom: 0.35rem;
+            color: #6366f1;
+            font-size: 0.63rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .story-copy__text {
+            color: #475569;
+            font-size: 0.8rem;
+            line-height: 1.55;
+        }
+
+        @media (min-width: 900px) {
+            .story-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 520px) {
+            .story-card__header {
+                padding-inline: 0.9rem;
+            }
+
+            .story-character {
+                width: 3.8rem;
+                height: 3.8rem;
+                font-size: 2.35rem;
+            }
+
+            .story-part {
+                min-width: 3.35rem;
+                min-height: 3.45rem;
+                padding-inline: 0.4rem;
+            }
+
+            .story-part__char {
+                font-size: 1.5rem;
+            }
+
+            .story-copy {
+                padding-inline: 0.9rem;
+            }
+        }
+
         @keyframes feedbackIn {
             from { opacity: 0; transform: translate(-50%, 0.5rem); }
             to { opacity: 1; transform: translate(-50%, 0); }
@@ -470,7 +680,7 @@
                         Kangxi Radicals
                     </button>
                     <button id="secHskBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700" onclick="switchSection('hsk')">
-                        HSK 3.0 Level 1
+                        HSK Level 1
                     </button>
                     <button id="secPrimitiveBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700" onclick="switchSection('primitives')">
                         Modern Primitives
@@ -595,6 +805,9 @@
                         </button>
                         <button id="hskCharsBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchHskView('chars')">
                             Characters (248)
+                        </button>
+                        <button id="hskStoriesBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchHskView('stories')">
+                            Stories
                         </button>
                     </div>
                 </div>
@@ -1719,7 +1932,7 @@
             "同": ["same", "одинаковый", "նույն"],
             "外": ["outside", "снаружи", "դրսում"],
             "晚": ["late; evening", "поздно; вечер", "ուշ; երեկո"],
-            "喂": ["hello (phone)", "алло", "ալլո"],
+            "喂": ["hello (phone)", "алло", "ալո"],
             "题": ["question; topic", "вопрос; тема", "հարց; թեմա"],
             "我": ["I", "я", "ես"],
             "五": ["five", "пять", "հինգ"],
@@ -1769,6 +1982,1183 @@
             "坐": ["sit", "сидеть", "նստել"],
             "昨": ["yesterday", "вчера", "երեկ"],
         };
+
+        const componentMeanings = {
+            "爫": ["hand", "рука", "ձեռք"],
+            "冖": ["cover", "укрытие", "ծածկ"],
+            "友": ["friend", "друг", "ընկեր"],
+            "巴": ["sound bā", "звук bā", "հնչյուն bā"],
+            "父": ["father", "отец", "հայր"],
+            "乞": ["ask", "просить", "խնդրել"],
+            "穴": ["opening; cave", "отверстие; пещера", "անցք; քարանձավ"],
+            "牙": ["tooth", "зуб", "ատամ"],
+            "弟": ["younger brother", "младший брат", "կրտսեր եղբայր"],
+            "一": ["one", "один", "մեկ"],
+            "大": ["big", "большой", "մեծ"],
+            "木": ["wood", "дерево", "փայտ"],
+            "不": ["not", "не", "ոչ"],
+            "辶": ["movement; path", "движение; путь", "շարժում; ուղի"],
+            "力": ["strength", "сила", "ուժ"],
+            "疒": ["illness", "болезнь", "հիվանդություն"],
+            "丙": ["sound bǐng", "звук bǐng", "հնչյուն bǐng"],
+            "宀": ["roof", "крыша", "տանիք"],
+            "各": ["each", "каждый", "յուրաքանչյուր"],
+            "艹": ["grass; plant", "трава; растение", "խոտ; բույս"],
+            "采": ["pick; gather", "собирать", "հավաքել"],
+            "朩": ["tree", "дерево", "ծառ"],
+            "昌": ["sound chāng", "звук chāng", "հնչյուն chāng"],
+            "走": ["walk; run", "идти; бежать", "քայլել; վազել"],
+            "召": ["sound zhào", "звук zhào", "հնչյուն zhào"],
+            "扌": ["hand", "рука", "ձեռք"],
+            "亻": ["person", "человек", "մարդ"],
+            "忄": ["heart", "сердце", "սիրտ"],
+            "丁": ["sound dīng", "звук dīng", "հնչյուն dīng"],
+            "讠": ["speech; words", "речь; слова", "խոսք; բառեր"],
+            "舌": ["tongue", "язык", "լեզու"],
+            "豕": ["pig", "свинья", "խոզ"],
+            "⺍": ["small strokes", "маленькие штрихи", "փոքր գծիկներ"],
+            "至": ["arrive", "достигать", "հասնել"],
+            "刂": ["knife", "нож", "դանակ"],
+            "白": ["white", "белый", "սպիտակ"],
+            "勺": ["spoon", "ложка", "գդալ"],
+            "竹": ["bamboo", "бамбук", "բամբուկ"],
+            "占": ["occupy", "занимать", "զբաղեցնել"],
+            "灬": ["fire", "огонь", "կրակ"],
+            "广": ["building", "здание", "շենք"],
+            "月": ["flesh; body", "плоть; тело", "մարմին"],
+            "亠": ["top mark", "верхний знак", "վերին նշան"],
+            "凶": ["head shape", "форма головы", "գլխի ձև"],
+            "礻": ["ritual; spirit", "обряд; дух", "ծես; ոգի"],
+            "见": ["see", "видеть", "տեսնել"],
+            "景": ["scene", "пейзаж", "տեսարան"],
+            "彡": ["light rays", "лучи света", "լույսի շողեր"],
+            "阝": ["place", "место", "վայր"],
+            "完": ["complete", "завершённый", "ավարտված"],
+            "者": ["person", "человек", "մարդ"],
+            "卖": ["sell", "продавать", "վաճառել"],
+            "又": ["hand", "рука", "ձեռք"],
+            "寸": ["measure", "мера", "չափ"],
+            "己": ["self", "себя", "ինքը"],
+            "饣": ["food", "еда", "ուտելիք"],
+            "反": ["sound fǎn", "звук fǎn", "հնչյուն fǎn"],
+            "户": ["door; household", "дверь; дом", "դուռ; տուն"],
+            "方": ["sound fāng", "звук fāng", "հնչյուն fāng"],
+            "门": ["gate", "ворота", "դարպաս"],
+            "日": ["sun", "солнце", "արև"],
+            "天": ["sky", "небо", "երկինք"],
+            "几": ["sound jī", "звук jī", "հնչյուն jī"],
+            "八": ["eight; divide", "восемь; разделять", "ութ; բաժանել"],
+            "刀": ["knife", "нож", "դանակ"],
+            "钅": ["metal", "металл", "մետաղ"],
+            "中": ["middle", "середина", "մեջտեղ"],
+            "哥": ["rhythm; elder", "ритм; старший", "ռիթմ; ավագ"],
+            "欠": ["breath; voice", "дыхание; голос", "շունչ; ձայն"],
+            "可": ["can", "мочь", "կարողանալ"],
+            "纟": ["silk; thread", "шёлк; нить", "մետաքս; թել"],
+            "合": ["join", "соединять", "միացնել"],
+            "厶": ["private", "частный", "անձնական"],
+            "犭": ["animal", "зверь", "կենդանի"],
+            "句": ["sound gōu", "звук gōu", "հնչյուն gōu"],
+            "囗": ["enclosure", "ограда", "ցանկապատ"],
+            "玉": ["jade", "нефрит", "ջադ"],
+            "亥": ["sound hài", "звук hài", "հնչյուն hài"],
+            "吾": ["sound wú", "звук wú", "հնչյուն wú"],
+            "丂": ["sound kǎo", "звук kǎo", "հնչյուն kǎo"],
+            "女": ["woman", "женщина", "կին"],
+            "子": ["child", "ребёнок", "երեխա"],
+            "龵": ["hand", "рука", "ձեռք"],
+            "目": ["eye", "глаз", "աչք"],
+            "王": ["jade", "нефрит", "ջադ"],
+            "元": ["sound yuán", "звук yuán", "հնչյուն yuán"],
+            "禾": ["grain", "зерно", "հացահատիկ"],
+            "口": ["mouth", "рот", "բերան"],
+            "曷": ["sound hé", "звук hé", "հնչյուն hé"],
+            "彳": ["steps", "шаги", "քայլեր"],
+            "艮": ["firm", "твёрдый", "կայուն"],
+            "人": ["person", "человек", "մարդ"],
+            "你": ["you", "ты", "դու"],
+            "云": ["cloud", "облако", "ամպ"],
+            "鸟": ["bird", "птица", "թռչուն"],
+            "疋": ["shell", "оболочка", "կեղև"],
+            "虫": ["insect", "насекомое", "միջատ"],
+            "牛": ["cow; goods", "корова; товар", "կով; ապրանք"],
+            "丩": ["sound jiū", "звук jiū", "հնչյուն jiū"],
+            "交": ["sound jiāo", "звук jiāo", "հնչյուն jiāo"],
+            "且": ["sound qiě", "звук qiě", "հնչյուն qiě"],
+            "㝵": ["obtain", "получать", "ստանալ"],
+            "果": ["fruit", "плод", "պտուղ"],
+            "土": ["earth", "земля", "երկիր"],
+            "夬": ["sound kuài", "звук kuài", "հնչյուն kuài"],
+            "冫": ["ice", "лёд", "սառույց"],
+            "令": ["sound lìng", "звук lìng", "հնչյուն lìng"],
+            "雨": ["rain", "дождь", "անձրև"],
+            "马": ["sound mǎ", "звук mǎ", "հնչյուն mǎ"],
+            "亡": ["gone", "исчезнувший", "անհետացած"],
+            "苗": ["sound miáo", "звук miáo", "հնչյուն miáo"],
+            "氵": ["water", "вода", "ջուր"],
+            "殳": ["hand at work", "рука в работе", "աշխատող ձեռք"],
+            "丷": ["two marks", "две черты", "երկու գծիկ"],
+            "糸": ["silk thread", "шёлковая нить", "մետաքսե թել"],
+            "未": ["sound wèi", "звук wèi", "հնչյուն wèi"],
+            "们": ["plural people", "люди во мн. ч.", "մարդիկ (հոգնակի)"],
+            "此": ["this", "этот", "այս"],
+            "二": ["two", "два", "երկու"],
+            "也": ["also", "тоже", "նույնպես"],
+            "尼": ["sound ní", "звук ní", "հնչյուն ní"],
+            "心": ["heart", "сердце", "սիրտ"],
+            "乃": ["sound nǎi", "звук nǎi", "հնչյուն nǎi"],
+            "更": ["change", "менять", "փոխել"],
+            "票": ["sound piào", "звук piào", "հնչյուն piào"],
+            "平": ["sound píng", "звук píng", "հնչյուն píng"],
+            "戋": ["sound jiān", "звук jiān", "հնչյուն jiān"],
+            "青": ["sound qīng", "звук qīng", "հնչյուն qīng"],
+            "执": ["hold", "держать", "պահել"],
+            "只": ["sound zhī", "звук zhī", "հնչյուն zhī"],
+            "十": ["ten", "десять", "տասը"],
+            "侯": ["sound hòu", "звук hòu", "հնչյուն hòu"],
+            "垂": ["droop", "опускаться", "կախվել"],
+            "兑": ["exchange", "обмен", "փոխանակում"],
+            "山": ["mountain", "гора", "լեռ"],
+            "夕": ["evening", "вечер", "երեկո"],
+            "丶": ["dot", "точка", "կետ"],
+            "冂": ["frame", "рамка", "շրջանակ"],
+            "卜": ["omen", "знамение", "նշան"],
+            "免": ["sound miǎn", "звук miǎn", "հնչյուն miǎn"],
+            "畏": ["sound wèi", "звук wèi", "հնչյուն wèi"],
+            "是": ["is; correct", "есть; верный", "է; ճիշտ"],
+            "页": ["page", "страница", "էջ"],
+            "壴": ["drum", "барабан", "թմբուկ"],
+            "相": ["image", "образ", "պատկեր"],
+            "射": ["sound shè", "звук shè", "հնչյուն shè"],
+            "亲": ["close; fresh", "близкий; свежий", "մոտիկ; թարմ"],
+            "斤": ["axe", "топор", "կացին"],
+            "生": ["life; grow", "жизнь; расти", "կյանք; աճել"],
+            "其": ["sound qí", "звук qí", "հնչյուն qí"],
+            "自": ["self", "себя", "ինքը"],
+            "彐": ["hand", "рука", "ձեռք"],
+            "匚": ["box", "коробка", "արկղ"],
+            "矢": ["arrow", "стрела", "նետ"],
+            "奇": ["sound qí", "звук qí", "հնչյուն qí"],
+            "与": ["give; with", "давать; с", "տալ; հետ"],
+            "冉": ["slowly", "медленно", "դանդաղ"],
+            "乍": ["sound zhà", "звук zhà", "հնչյուն zhà"],
+            "羊": ["sound yáng", "звук yáng", "հնչյուն yáng"],
+            "戈": ["weapon", "оружие", "զենք"],
+            "文": ["pattern; writing", "узор; письмо", "նախշ; գրություն"],
+            "正": ["correct", "правильный", "ճիշտ"],
+            "那": ["that", "тот", "այն"],
+            "田": ["field", "поле", "դաշտ"],
+            "首": ["head", "голова", "գլուխ"],
+            "主": ["sound zhù", "звук zhù", "հնչյուն zhù"],
+            "故": ["reason; old", "причина; старый", "պատճառ; հին"],
+            "从": ["two people", "два человека", "երկու մարդ"],
+            "丿": ["stroke", "штрих", "գիծ"],
+            "买": ["buy", "покупать", "գնել"],
+            "勹": ["wrap", "обёртка", "փաթաթել"],
+            "巳": ["curled shape", "свёрнутая форма", "ոլորված ձև"],
+            "覀": ["west", "запад", "արևմուտք"],
+            "巾": ["cloth", "ткань", "կտոր"],
+            "弓": ["bow", "лук", "աղեղ"],
+            "尚": ["esteem", "почитать", "հարգել"],
+            "冋": ["window frame", "оконная рама", "պատուհանի շրջանակ"],
+            "𠃍": ["hook", "крюк", "կեռ"],
+            "贝": ["shell", "раковина", "խխունջի խեցի"],
+            "厂": ["shelter", "навес", "ապաստան"],
+            "㇇": ["short stroke", "короткий штрих", "կարճ գիծ"],
+            "耂": ["old", "старый", "ծեր"],
+            "匕": ["spoon; cane", "ложка; посох", "գդալ; ձեռնափայտ"],
+            "帀": ["banner", "знамя", "դրոշ"],
+            "夂": ["walking foot", "шагающая нога", "քայլող ոտք"],
+            "尔": ["you", "ты", "դու"],
+            "隹": ["short-tailed bird", "короткохвостая птица", "կարճապոչ թռչուն"],
+            "𠂇": ["hand", "рука", "ձեռք"],
+            "𠬝": ["hand", "рука", "ձեռք"],
+            "具": ["tool; implement", "инструмент", "գործիք"],
+            "冏": ["window", "окно", "պատուհան"],
+            "䒑": ["grass top", "травяной верх", "խոտի վերին մաս"],
+            "亅": ["hook", "крюк", "կեռ"],
+            "𧘇": ["garment strokes", "штрихи одежды", "հագուստի գծեր"],
+            "杲": ["bright tree", "светлое дерево", "պայծառ ծառ"],
+            "⺊": ["top mark", "верхний знак", "վերին նշան"],
+            "乚": ["turn", "поворот", "շրջադարձ"],
+            "丨": ["vertical line", "вертикальная линия", "ուղղահայաց գիծ"],
+            "三": ["three lines", "три линии", "երեք գիծ"],
+            "乛": ["hook", "крюк", "կեռ"],
+            "头": ["head", "голова", "գլուխ"],
+            "丆": ["cover line", "линия-покрытие", "ծածկող գիծ"],
+            "囬": ["face-shaped enclosure", "ограда в форме лица", "դեմքի ձև ունեցող շրջանակ"]
+        };
+
+        const hskCharacterStories = {
+            "爱": { parts: ["爫", "冖", "友"], story: [
+                "A hand reaches beneath a cover toward a friend. Love is the care we offer even when it is not easy to see.",
+                "Рука тянется под укрытием к другу. Любовь — это забота, которую мы дарим, даже когда её не сразу видно.",
+                "Ձեռքը ծածկի տակից մեկնում է ընկերոջը։ Սերը հոգատարությունն է, որ տալիս ենք, նույնիսկ երբ այն անմիջապես չի երևում։"
+            ] },
+            "吧": { parts: ["口", "巴"], sound: [1], story: [
+                "A mouth adds a gentle suggestion, while 巴 bā points the ear toward the sound.",
+                "Рот добавляет мягкое предложение, а 巴 bā подсказывает произношение.",
+                "Բերանը մեղմ առաջարկ է ավելացնում, իսկ 巴 bā-ն հուշում է հնչյունը։"
+            ] },
+            "爸": { parts: ["父", "巴"], sound: [1], story: [
+                "Father 父 sits above 巴, which carries the sound bā: bà ba.",
+                "Отец 父 стоит над 巴 — звуковой подсказкой bā: bà ba.",
+                "Հայր 父-ը գտնվում է 巴-ի վերևում, որն էլ հուշում է bā հնչյունը՝ bà ba։"
+            ] },
+            "天": { parts: ["一", "大"], story: [
+                "One mark above a person with arms stretched wide becomes the vast sky.",
+                "Одна черта над человеком с раскинутыми руками становится огромным небом.",
+                "Մեկ գիծը՝ լայն բացված ձեռքերով մարդու վերևում, դառնում է անհուն երկինք։"
+            ] },
+            "杯": { parts: ["木", "不"], story: [
+                "A cup was once a wooden vessel. 木 wood plus 不 gives a simple shape to remember.",
+                "Когда-то чаша была деревянной. 木 «дерево» и 不 создают простой образ для запоминания.",
+                "Բաժակը ժամանակին փայտե անոթ էր։ 木 «փայտ»-ը և 不-ն միասին հեշտ հիշվող պատկեր են ստեղծում։"
+            ] },
+            "边": { parts: ["辶", "力"], story: [
+                "A path 辶 running alongside effort 力 helps you picture a border or edge.",
+                "Дорожка 辶 рядом с силой 力 помогает представить границу или край.",
+                "Ուղին 辶-ը՝ ուժի 力 կողքին, օգնում է պատկերացնել սահման կամ եզր։"
+            ] },
+            "病": { parts: ["疒", "丙"], sound: [1], story: [
+                "The sickness frame 疒 holds 丙, a sound cue connected with bìng.",
+                "Рамка болезни 疒 содержит 丙 — звуковую подсказку к bìng.",
+                "Հիվանդության 疒 շրջանակը պարունակում է 丙 հնչյունային ակնարկը՝ bìng-ի համար։"
+            ] },
+            "客": { parts: ["宀", "各"], story: [
+                "Every 各 traveler finds shelter beneath a roof 宀: a guest.",
+                "Каждый 各 путник находит приют под крышей 宀 — это гость.",
+                "Ամեն 各 ճամփորդ ապաստան է գտնում տանիքի 宀 տակ․ այդպես է ծնվում հյուր բառը։"
+            ] },
+            "菜": { parts: ["艹", "采"], story: [
+                "Plants 艹 that people pick 采 become vegetables and a dish.",
+                "Растения 艹, которые собирают 采, становятся овощами и блюдом.",
+                "Բույսերը 艹, որ մարդիկ հավաքում են 采, դառնում են բանջարեղեն և ուտեստ։"
+            ] },
+            "茶": { parts: ["艹", "人", "朩"], story: [
+                "A person 人 gathers leaves and twigs beneath plants 艹 to make tea.",
+                "Человек 人 собирает листья и веточки под растениями 艹, чтобы приготовить чай.",
+                "Մարդ 人-ը բույսերի 艹 տակից տերև ու ճյուղ է հավաքում թեյ պատրաստելու համար։"
+            ] },
+            "唱": { parts: ["口", "昌"], sound: [1], story: [
+                "A mouth 口 raises a bright sound; 昌 chāng echoes the sound of singing.",
+                "Рот 口 издаёт яркий звук, а 昌 chāng подсказывает звучание слова.",
+                "Բերան 口-ը պայծառ ձայն է արձակում, իսկ 昌 chāng-ը հուշում է երգել բառի հնչյունը։"
+            ] },
+            "超": { parts: ["走", "召"], sound: [1], story: [
+                "To go beyond is to walk 走 past the point you were called 召 toward.",
+                "Превзойти — значит пройти 走 дальше точки, к которой тебя призывали 召.",
+                "Անցնել սահմանը նշանակում է քայլել 走 այն կետից այն կողմ, ուր քեզ կանչում էին 召։"
+            ] },
+            "吃": { parts: ["口", "乞"], sound: [1], story: [
+                "A mouth 口 asks for food; 乞 qǐ adds a sound cue to eating.",
+                "Рот 口 просит еды, а 乞 qǐ добавляет подсказку произношения.",
+                "Բերան 口-ը սնունդ է խնդրում, իսկ 乞 qǐ-ն հնչյունային ակնարկ է ավելացնում։"
+            ] },
+            "租": { parts: ["禾", "且"], story: [
+                "Grain 禾 from a harvest can be handed over as payment; this gives the image of rent.",
+                "Зерно 禾 из урожая можно отдать в качестве платы — так возникает образ аренды.",
+                "Բերքի հատիկը 禾 կարելի է տալ որպես վարձավճար․ այստեղից էլ վարձելու պատկերը։"
+            ] },
+            "穿": { parts: ["穴", "牙"], story: [
+                "A tooth 牙 passes through an opening 穴: to pierce, and then to put clothing through the body.",
+                "Зуб 牙 проходит через отверстие 穴: пронзать, а затем надевать одежду.",
+                "Ատամը 牙 անցնում է անցքով 穴․ սա հիշեցնում է թափանցելու և հագուստ հագնելու գործողությունը։"
+            ] },
+            "打": { parts: ["扌", "丁"], sound: [1], story: [
+                "A hand 扌 makes a sharp strike; 丁 dīng points to the sound of hitting.",
+                "Рука 扌 наносит резкий удар, а 丁 dīng подсказывает звук.",
+                "Ձեռքը 扌 կտրուկ հարված է հասցնում, իսկ 丁 dīng-ը հուշում է հարվածի հնչյունը։"
+            ] },
+            "话": { parts: ["讠", "舌"], story: [
+                "Words 讠 shaped by the tongue 舌 become speech.",
+                "Слова 讠, произнесённые языком 舌, становятся речью.",
+                "Խոսքը 讠, ձևավորված լեզվով 舌, դառնում է խոսակցություն։"
+            ] },
+            "家": { parts: ["宀", "豕"], story: [
+                "A roof 宀 over a pig 豕 recalls an old household where livestock meant security and home.",
+                "Крыша 宀 над свиньёй 豕 напоминает о старом доме, где скот означал достаток и защиту.",
+                "Տանիքը 宀 խոզի 豕 վրա հիշեցնում է հին տնտեսություն, որտեղ անասունը նշանակում էր բարեկեցություն և տուն։"
+            ] },
+            "学": { parts: ["⺍", "冖", "子"], story: [
+                "A child 子 under a roof 冖, surrounded by small strokes ⺍, is busy learning.",
+                "Ребёнок 子 под крышей 冖, окружённый штрихами ⺍, занят учёбой.",
+                "Երեխան 子 տանիքի 冖 տակ՝ շրջապատված փոքր գծիկներով ⺍, սովորում է։"
+            ] },
+            "到": { parts: ["至", "刂"], story: [
+                "To arrive 至 is to reach the exact cutting point 刂 of a journey.",
+                "Прибыть 至 — значит дойти до точной точки 刂 пути.",
+                "Հասնել 至 նշանակում է ճանապարհի ճշգրիտ կտրվածքի 刂 կետին հասնել։"
+            ] },
+            "的": { parts: ["白", "勺"], sound: [1], story: [
+                "A white 白 spoon 勺 marks the thing you mean; 勺 also carries a sound from older forms.",
+                "Белая 白 ложка 勺 указывает на нужный предмет; 勺 также даёт звуковую подсказку.",
+                "Սպիտակ 白 գդալը 勺 ցույց է տալիս նշված առարկան, իսկ 勺-ը հնչյունային ակնարկ է տալիս։"
+            ] },
+            "第": { parts: ["竹", "弟"], sound: [1], story: [
+                "Bamboo 竹 slips were placed in order; 弟 dì gives the sound to the ordinal marker.",
+                "Бамбуковые 竹 таблички раскладывали по порядку; 弟 dì даёт звук порядковому показателю.",
+                "Բամբուկե 竹 թերթիկները դասավորում էին հերթով․ 弟 dì-ն հնչյունային ակնարկ է տալիս կարգային նշանի համար։"
+            ] },
+            "点": { parts: ["占", "灬"], story: [
+                "Fire 灬 makes small marks 占 when it drops sparks: dots and points.",
+                "Огонь 灬 оставляет маленькие отметины 占, когда рассыпает искры: точки и пятнышки.",
+                "Կրակը 灬 փոքր նշաններ 占 է թողնում կայծեր ցանելիս՝ կետեր և բծեր։"
+            ] },
+            "店": { parts: ["广", "占"], sound: [1], story: [
+                "A shop occupies 占 a building 广 that opens onto the street.",
+                "Магазин занимает 占 здание 广, открытое к улице.",
+                "Խանութը զբաղեցնում 占 է շենքի 广 մի հատվածը՝ բացված դեպի փողոց։"
+            ] },
+            "脑": { parts: ["月", "亠", "凶"], story: [
+                "Flesh 月 and a head-like chamber 亠 + 凶 combine to picture the brain inside the body.",
+                "Плоть 月 и chamber 亠 + 凶 напоминают голову и мозг внутри тела.",
+                "Մարմինը 月 և գլխի նման խորշը 亠 + 凶 միասին պատկերում են գլխի ներսում գտնվող ուղեղը։"
+            ] },
+            "视": { parts: ["礻", "见"], story: [
+                "To see 见 with attention and ritual 礻 becomes observation or vision.",
+                "Видеть 见 внимательно, как во время обряда 礻, значит наблюдать.",
+                "Տեսնել 见-ը ուշադիր՝ ինչպես ծիսական 礻 հայացքը, դառնում է դիտել։"
+            ] },
+            "影": { parts: ["景", "彡"], story: [
+                "A scene 景 with light rays 彡 gives us a shadow or an image.",
+                "Пейзаж 景 с лучами 彡 создаёт тень или образ.",
+                "Տեսարանը 景 լույսի շողերով 彡 ստեղծում է ստվեր կամ պատկեր։"
+            ] },
+            "院": { parts: ["阝", "完"], story: [
+                "A complete 完 place 阝 becomes a courtyard or enclosed institution.",
+                "Завершённое 完 место 阝 становится двором или закрытым учреждением.",
+                "Ավարտված 完 տարածքը 阝 դառնում է բակ կամ փակ հաստատություն։"
+            ] },
+            "都": { parts: ["者", "阝"], story: [
+                "People 者 gather at a place 阝, and together they form a city — or all of them.",
+                "Люди 者 собираются в месте 阝 и вместе образуют город — или «всех».",
+                "Մարդիկ 者 հավաքվում են վայրում 阝 և միասին կազմում քաղաք կամ «բոլորին»։"
+            ] },
+            "读": { parts: ["讠", "卖"], story: [
+                "The speech 讠 of a text is released as you read it aloud; the right side adds a visual cue.",
+                "Речь 讠 текста оживает, когда вы читаете вслух; правая часть добавляет зрительную подсказку.",
+                "Տեքստի խոսքը 讠 կենդանանում է բարձրաձայն կարդալիս, իսկ աջ մասը տեսողական ակնարկ է ավելացնում։"
+            ] },
+            "对": { parts: ["又", "寸"], story: [
+                "A hand 又 measuring 寸 gives the feeling of matching two sides correctly.",
+                "Рука 又, отмеряющая 寸, помогает почувствовать совпадение двух сторон.",
+                "Ձեռքը 又, չափելով 寸, օգնում է զգալ երկու կողմերի ճիշտ համապատասխանությունը։"
+            ] },
+            "起": { parts: ["走", "己"], story: [
+                "To rise is to set your own self 己 in motion 走.",
+                "Подняться — значит привести самого себя 己 в движение 走.",
+                "Վեր կենալ նշանակում է ինքդ քեզ 己 շարժման 走 մեջ դնել։"
+            ] },
+            "饭": { parts: ["饣", "反"], sound: [1], story: [
+                "Food 饣 plus the sound 反 fǎn gives cooked rice and a meal.",
+                "Еда 饣 и звук 反 fǎn дают варёный рис и приём пищи.",
+                "Ուտելիքը 饣 և 反 fǎn հնչյունը միասին տալիս են եփած բրինձ և ճաշ։"
+            ] },
+            "房": { parts: ["户", "方"], sound: [1], story: [
+                "A household 户 with its own side 方 makes a room or house.",
+                "Домохозяйство 户 со своей стороной 方 образует комнату или дом.",
+                "Տնտեսությունը 户 իր կողմով 方 կազմում է սենյակ կամ տուն։"
+            ] },
+            "间": { parts: ["门", "日"], story: [
+                "Sunlight 日 seen through a gate 门 reveals the space between: a room.",
+                "Солнечный свет 日 в воротах 门 открывает пространство между ними — комнату.",
+                "Դարպասով 门 երևացող արևը 日 բացահայտում է դրանց միջև ընկած տարածությունը՝ սենյակը։"
+            ] },
+            "机": { parts: ["木", "几"], sound: [1], story: [
+                "Wood 木 and a small frame 几 picture an early machine; 几 jī gives the sound.",
+                "Дерево 木 и небольшая рама 几 создают образ ранней машины; 几 jī даёт звук.",
+                "Փայտը 木 և փոքր շրջանակը 几 պատկերում են վաղ մեքենա, իսկ 几 jī-ն հնչյունային ակնարկ է։"
+            ] },
+            "分": { parts: ["八", "刀"], story: [
+                "A knife 刀 divides something into pieces 八.",
+                "Нож 刀 делит предмет на части 八.",
+                "Դանակը 刀 առարկան բաժանում է մասերի 八։"
+            ] },
+            "钟": { parts: ["钅", "中"], sound: [1], story: [
+                "Metal 钅 at the center 中 rings out as a bell or clock; 中 also hints at zhōng.",
+                "Металл 钅 в середине 中 звучит как колокол или часы; 中 подсказывает zhōng.",
+                "Մետաղը 钅 կենտրոնում 中 հնչում է որպես զանգ կամ ժամացույց, իսկ 中-ը հուշում է zhōng հնչյունը։"
+            ] },
+            "歌": { parts: ["哥", "欠"], story: [
+                "A steady beat 哥 plus an open breath 欠 becomes a song.",
+                "Ровный ритм 哥 и открытое дыхание 欠 превращаются в песню.",
+                "Կայուն ռիթմը 哥 և բաց շունչը 欠 միասին դառնում են երգ։"
+            ] },
+            "哥": { parts: ["可", "可"], story: [
+                "One capable 可 person above another creates the image of an elder brother.",
+                "Один способный 可 человек над другим создаёт образ старшего брата.",
+                "Մեկ կարող 可 մարդը մյուսի վերևում ստեղծում է ավագ եղբոր պատկերը։"
+            ] },
+            "给": { parts: ["纟", "合"], story: [
+                "A thread 纟 joins 合 two sides: giving brings them together.",
+                "Нить 纟 соединяет 合 две стороны: дарение их связывает.",
+                "Թելը 纟 միացնում 合 է երկու կողմերին․ տալը նրանց իրար է կապում։"
+            ] },
+            "公": { parts: ["八", "厶"], story: [
+                "What reaches beyond private 厶 in every direction 八 becomes public.",
+                "То, что выходит за пределы частного 厶 во все стороны 八, становится общим.",
+                "Այն, ինչ անցնում է անձնական 厶 սահմաններից ամեն ուղղությամբ 八, դառնում է հանրային։"
+            ] },
+            "狗": { parts: ["犭", "句"], sound: [1], story: [
+                "The animal 犭 beside 句 gets its name from the sound gǒu.",
+                "Животное 犭 рядом с 句 получает название по звуку gǒu.",
+                "Կենդանին 犭 句-ի կողքին ստանում է իր անունը gǒu հնչյունից։"
+            ] },
+            "国": { parts: ["囗", "玉"], story: [
+                "A jade 玉 protected inside a boundary 囗 becomes a country.",
+                "Нефрит 玉, защищённый границей 囗, становится страной.",
+                "Սահմանով 囗 պաշտպանված ջադը 玉 դառնում է երկիր։"
+            ] },
+            "还": { parts: ["辶", "不"], story: [
+                "A path 辶 paired with “not yet” 不 gives the idea of returning or still being on the way.",
+                "Путь 辶 вместе с «ещё не» 不 даёт идею возвращения или продолжения пути.",
+                "Ուղին 辶 «դեռ ոչ» 不 իմաստի հետ տալիս է վերադառնալու կամ դեռ ճանապարհին լինելու գաղափարը։"
+            ] },
+            "孩": { parts: ["子", "亥"], sound: [1], story: [
+                "A child 子 with the sound 亥 hài gives the word for a child.",
+                "Ребёнок 子 со звуком 亥 hài образует слово «ребёнок».",
+                "Երեխան 子 և 亥 hài հնչյունը միասին կազմում են «երեխա» բառը։"
+            ] },
+            "语": { parts: ["讠", "吾"], sound: [1], story: [
+                "Speech 讠 spoken by “me” 吾 becomes language; 吾 wú also hints at the sound.",
+                "Речь 讠, произнесённая «мной» 吾, становится языком; 吾 wú подсказывает звук.",
+                "Խոսքը 讠, ասված «ես» 吾-ի կողմից, դառնում է լեզու, իսկ 吾 wú-ն հուշում է հնչյունը։"
+            ] },
+            "字": { parts: ["宀", "子"], story: [
+                "A child 子 under a roof 宀 learns to form written characters.",
+                "Ребёнок 子 под крышей 宀 учится складывать иероглифы.",
+                "Երեխան 子 տանիքի 宀 տակ սովորում է կազմել գրավոր նշաններ։"
+            ] },
+            "号": { parts: ["口", "丂"], sound: [1], story: [
+                "A mouth 口 calls out a number or name; 丂 adds a sound cue to 号.",
+                "Рот 口 выкрикивает число или имя; 丂 добавляет звуковую подсказку.",
+                "Բերանը 口 արտասանում է թիվ կամ անուն, իսկ 丂-ն հնչյունային ակնարկ է ավելացնում։"
+            ] },
+            "好": { parts: ["女", "子"], story: [
+                "A woman 女 and child 子 together form the familiar image of good.",
+                "Женщина 女 и ребёнок 子 вместе создают знакомый образ добра.",
+                "Կինը 女 և երեխան 子 միասին կազմում են բարու ծանոթ պատկերը։"
+            ] },
+            "看": { parts: ["龵", "目"], story: [
+                "A hand 龵 shaded over the eye 目 is the classic gesture of looking into the distance.",
+                "Рука 龵 над глазом 目 — классический жест, когда всматриваются вдаль.",
+                "Ձեռքը 龵 աչքի 目 վերևում հայտնի շարժում է, երբ հեռուն ես նայում։"
+            ] },
+            "玩": { parts: ["王", "元"], sound: [1], story: [
+                "A piece of jade 王 is a toy to enjoy; 元 yuán gives the sound.",
+                "Нефрит 王 становится игрушкой для радости; 元 yuán даёт звук.",
+                "Հադեսի կտորը 王 դառնում է խաղալիք վայելելու համար, իսկ 元 yuán-ը հնչյունային ակնարկ է։"
+            ] },
+            "和": { parts: ["禾", "口"], story: [
+                "Grain 禾 reaching the mouth 口 suggests enough food and a peaceful harmony.",
+                "Зерно 禾, доходящее до рта 口, напоминает о достатке и мирной гармонии.",
+                "Հացահատիկը 禾, հասնելով բերանին 口, հիշեցնում է առատություն և խաղաղ ներդաշնակություն։"
+            ] },
+            "喝": { parts: ["口", "曷"], sound: [1], story: [
+                "A mouth 口 drinks, while 曷 hé supplies the sound behind hē.",
+                "Рот 口 пьёт, а 曷 hé подсказывает звук hē.",
+                "Բերանը 口 խմում է, իսկ 曷 hé-ն հուշում է hē հնչյունը։"
+            ] },
+            "很": { parts: ["彳", "艮"], sound: [1], story: [
+                "A long walk 彳 with a firm 艮 stride makes an impression that is very strong.",
+                "Долгий путь 彳 твёрдым шагом 艮 производит очень сильное впечатление.",
+                "Երկար քայլքը 彳 ամուր 艮 քայլվածքով շատ ուժեղ տպավորություն է թողնում։"
+            ] },
+            "会": { parts: ["人", "云"], story: [
+                "People 人 gather like clouds 云: a meeting, and the ability to come together.",
+                "Люди 人 собираются, словно облака 云: встреча и способность быть вместе.",
+                "Մարդիկ 人 հավաքվում են ամպերի 云 նման․ սա հանդիպում է և միասին լինելու կարողություն։"
+            ] },
+            "回": { parts: ["囗", "口"], story: [
+                "A small mouth 口 inside an enclosure 囗 creates a circular turn: return.",
+                "Маленький рот 口 внутри ограды 囗 образует круг: возвращение.",
+                "Փոքր բերանը 口 ցանկապատի 囗 ներսում կազմում է շրջան՝ վերադարձ։"
+            ] },
+            "鸡": { parts: ["又", "鸟"], story: [
+                "A hand 又 near a bird 鸟 gives the image of catching or tending a chicken.",
+                "Рука 又 рядом с птицей 鸟 создаёт образ ловли или ухода за курицей.",
+                "Ձեռքը 又 թռչնի 鸟 կողքին ստեղծում է հավ բռնելու կամ խնամելու պատկերը։"
+            ] },
+            "蛋": { parts: ["疋", "虫"], story: [
+                "A small creature 虫 wrapped in a shell 疋 becomes an egg.",
+                "Маленькое существо 虫, укрытое оболочкой 疋, становится яйцом.",
+                "Փոքր արարածը 虫 կեղևի 疋 մեջ դառնում է ձու։"
+            ] },
+            "件": { parts: ["亻", "牛"], story: [
+                "A person 亻 counting livestock 牛 turns one animal into one counted item.",
+                "Человек 亻 считает скот 牛 и превращает одно животное в один предмет.",
+                "Մարդը 亻 հաշվում է անասուն 牛 և մեկ կենդանին դարձնում մեկ հաշվվող առարկա։"
+            ] },
+            "叫": { parts: ["口", "丩"], sound: [1], story: [
+                "A mouth 口 calls out; 丩 jiū adds a sound cue to calling or naming.",
+                "Рот 口 окликает; 丩 jiū добавляет звуковую подсказку к «звать».",
+                "Բերանը 口 կանչում է, իսկ 丩 jiū-ն հնչյունային ակնարկ է ավելացնում «կանչել» իմաստին։"
+            ] },
+            "饺": { parts: ["饣", "交"], sound: [1], story: [
+                "Food 饣 folded so its edges meet 交 becomes a dumpling; 交 gives the sound jiāo.",
+                "Еда 饣, сложенная так, что края соединяются 交, становится пельменем; 交 даёт звук jiāo.",
+                "Ուտելիքը 饣, որը ծալվում է, որ ծայրերը միանան 交, դառնում է պելմենի, իսկ 交-ը հուշում է jiāo հնչյունը։"
+            ] },
+            "姐": { parts: ["女", "且"], sound: [1], story: [
+                "A woman 女 with 且 as a sound cue names an elder sister.",
+                "Женщина 女 и звуковая подсказка 且 образуют слово «старшая сестра».",
+                "Կինը 女 և 且 հնչյունային ակնարկը միասին կազմում են «ավագ քույր» բառը։"
+            ] },
+            "觉": { parts: ["⺍", "冖", "见"], story: [
+                "Small strokes ⺍ under a cover 冖 open into seeing 见: waking up or becoming aware.",
+                "Малые штрихи ⺍ под укрытием 冖 раскрываются в зрение 见: пробуждение и осознание.",
+                "Փոքր գծիկները ⺍ ծածկի 冖 տակ բացվում են տեսողության 见 մեջ․ արթնանալ կամ գիտակցել։"
+            ] },
+            "得": { parts: ["彳", "㝵"], story: [
+                "Steps 彳 that reach what is obtainable 㝵 turn effort into getting.",
+                "Шаги 彳, достигающие доступного 㝵, превращают усилие в получение.",
+                "Քայլերը 彳, հասնելով հասանելիին 㝵, ջանքը վերածում են ստանալու։"
+            ] },
+            "课": { parts: ["讠", "果"], sound: [1], story: [
+                "Words 讠 of a lesson bear fruit 果; 果 guǒ also points to the sound.",
+                "Слова 讠 урока приносят плоды 果; 果 guǒ подсказывает звук.",
+                "Դասի 讠 խոսքերը պտուղ 果 են տալիս, իսկ 果 guǒ-ն հուշում է հնչյունը։"
+            ] },
+            "块": { parts: ["土", "夬"], sound: [1], story: [
+                "A lump of earth 土 with 夬 as a sound cue becomes a piece or block.",
+                "Комок земли 土 со звуком 夬 становится куском или блоком.",
+                "Հողի կտորը 土 夬 հնչյունային ակնարկով դառնում է կտոր կամ բլոկ։"
+            ] },
+            "冷": { parts: ["冫", "令"], sound: [1], story: [
+                "Ice 冫 takes over when winter gives its command 令: cold.",
+                "Лёд 冫 берёт верх, когда зима отдаёт приказ 令: холод.",
+                "Սառույցը 冫 իշխում է, երբ ձմեռը հրամայում 令 է․ ցուրտ։"
+            ] },
+            "零": { parts: ["雨", "令"], sound: [1], story: [
+                "Rain 雨 plus the sound cue 令 gives a tiny drop, then the numeral zero.",
+                "Дождь 雨 и звуковая подсказка 令 дают маленькую каплю, а затем цифру ноль.",
+                "Անձրևը 雨 և 令 հնչյունային ակնարկը տալիս են փոքր կաթիլ, ապա՝ զրո թիվը։"
+            ] },
+            "吗": { parts: ["口", "马"], sound: [1], story: [
+                "A mouth 口 turns a statement into a question; 马 mǎ gives the sound ma.",
+                "Рот 口 превращает утверждение в вопрос; 马 mǎ даёт звук ma.",
+                "Բերանը 口 պնդումը դարձնում է հարց, իսկ 马 mǎ-ն հուշում է ma հնչյունը։"
+            ] },
+            "妈": { parts: ["女", "马"], sound: [1], story: [
+                "A woman 女 with the sound 马 mǎ becomes māma, mother.",
+                "Женщина 女 со звуком 马 mǎ становится māma — мамой.",
+                "Կինը 女 马 mǎ հնչյունով դառնում է māma՝ մայրիկ։"
+            ] },
+            "忙": { parts: ["忄", "亡"], story: [
+                "The heart 忄 has “gone” 亡 into tasks: busy, with no time to rest.",
+                "Сердце 忄 «ушло» 亡 в дела: занятость и отсутствие времени.",
+                "Սիրտը 忄 «գնացել» 亡 է գործերի մեջ․ զբաղվածություն և հանգստի բացակայություն։"
+            ] },
+            "猫": { parts: ["犭", "苗"], sound: [1], story: [
+                "The animal 犭 with the sound 苗 miáo becomes a cat.",
+                "Животное 犭 со звуком 苗 miáo становится кошкой.",
+                "Կենդանին 犭 苗 miáo հնչյունով դառնում է կատու։"
+            ] },
+            "没": { parts: ["氵", "殳"], story: [
+                "Water 氵 slips through a working hand 殳 and disappears; nothing is left.",
+                "Вода 氵 уходит сквозь руку 殳 и исчезает; ничего не остаётся.",
+                "Ջուրը 氵 անցնում է աշխատող ձեռքից 殳 և անհետանում․ ոչինչ չի մնում։"
+            ] },
+            "关": { parts: ["丷", "天"], story: [
+                "Two marks close over the sky 天 like a latch: shut, connect, or concern.",
+                "Две черты закрываются над небом 天, словно защёлка: закрывать, связывать.",
+                "Երկու գծիկ փակում են երկինքը 天 կողպեքի նման․ փակել, կապել, վերաբերել։"
+            ] },
+            "系": { parts: ["糸", "丿"], story: [
+                "A silk thread 糸 pulled through a stroke 丿 connects a system or relationship.",
+                "Шёлковая нить 糸, протянутая через штрих 丿, связывает систему или отношение.",
+                "Մետաքսե թելը 糸, անցնելով 丿 գծիկով, միացնում է համակարգ կամ կապ։"
+            ] },
+            "妹": { parts: ["女", "未"], sound: [1], story: [
+                "A woman 女 with 未 as the sound cue becomes a younger sister.",
+                "Женщина 女 со звуковой подсказкой 未 становится младшей сестрой.",
+                "Կինը 女 և 未 հնչյունային ակնարկը միասին դառնում են կրտսեր քույր։"
+            ] },
+            "们": { parts: ["亻", "门"], sound: [1], story: [
+                "A person 亻 passing through a gate 门 marks a group; 门 mén also hints at the sound.",
+                "Человек 亻, проходящий через ворота 门, обозначает группу; 门 mén подсказывает звук.",
+                "Մարդը 亻 դարպասով 门 անցնելիս ցույց է տալիս խումբ, իսկ 门 mén-ը հուշում է հնչյունը։"
+            ] },
+            "明": { parts: ["日", "月"], story: [
+                "Sun 日 and moon 月 shine side by side: brightness and clear understanding.",
+                "Солнце 日 и луна 月 сияют рядом: свет и ясное понимание.",
+                "Արևը 日 և լուսինը 月 միասին փայլում են․ լույս և հստակ ըմբռնում։"
+            ] },
+            "名": { parts: ["夕", "口"], story: [
+                "In the evening 夕 a mouth 口 calls out a name so people can be recognized.",
+                "Вечером 夕 рот 口 называет имя, чтобы узнавать людей.",
+                "Երեկոյան 夕 բերանը 口 անուն է կանչում, որպեսզի մարդկանց ճանաչեն։"
+            ] },
+            "哪": { parts: ["口", "那"], sound: [1], story: [
+                "A question enters the mouth 口; 那 supplies a sound cue for “which?”",
+                "Вопрос появляется у рта 口; 那 даёт звуковую подсказку к «какой?».",
+                "Հարցը ծնվում է բերանի 口 մոտ, իսկ 那-ն հնչյունային ակնարկ է տալիս «ո՞րը» հարցին։"
+            ] },
+            "些": { parts: ["此", "二"], story: [
+                "This 此 and a few more marks 二 create a small, unspecified group: some.",
+                "Это 此 и ещё несколько отметок 二 создают небольшую неопределённую группу: «несколько».",
+                "Այս 此 և ևս մի քանի նշաններ 二 ստեղծում են փոքր, չճշտված խումբ՝ «մի քանի»։"
+            ] },
+            "男": { parts: ["田", "力"], story: [
+                "Strength 力 in the field 田 paints the old image of a man working the land.",
+                "Сила 力 в поле 田 создаёт старый образ мужчины, работающего на земле.",
+                "Ուժը 力 դաշտում 田 ստեղծում է հողում աշխատող տղամարդու հին պատկերը։"
+            ] },
+            "朋": { parts: ["月", "月"], story: [
+                "Two 月-like forms stand side by side: companions sharing the same path.",
+                "Две формы, похожие на 月, стоят рядом: спутники на одном пути.",
+                "Երկու 月-ի նման ձևեր կանգնած են կողք կողքի․ ուղեկիցներ նույն ճանապարհին։"
+            ] },
+            "呢": { parts: ["口", "尼"], sound: [1], story: [
+                "A mouth 口 turns attention back with a follow-up question; 尼 ní gives the sound ne.",
+                "Рот 口 возвращает внимание встречным вопросом; 尼 ní даёт звук ne.",
+                "Բերանը 口 հարցով վերադարձնում է ուշադրությունը, իսկ 尼 ní-ն հուշում է ne հնչյունը։"
+            ] },
+            "您": { parts: ["你", "心"], story: [
+                "The word you 你 placed above the heart 心 creates a respectful “you”.",
+                "Слово «ты» 你 над сердцем 心 создаёт вежливое обращение «вы».",
+                "«Դու» 你 բառը սրտի 心 վերևում ստեղծում է հարգալից «դուք»։"
+            ] },
+            "奶": { parts: ["女", "乃"], sound: [1], story: [
+                "A woman 女 with the sound 乃 nǎi gives milk and the image of a nursing mother.",
+                "Женщина 女 со звуком 乃 nǎi даёт молоко и образ кормящей матери.",
+                "Կինը 女 乃 nǎi հնչյունով տալիս է կաթ և կերակրող մոր պատկերը։"
+            ] },
+            "便": { parts: ["亻", "更"], story: [
+                "A person 亻 who can change 更 to fit the moment makes things convenient.",
+                "Человек 亻, который меняется 更 под обстоятельства, делает жизнь удобной.",
+                "Մարդը 亻, որը փոխվում 更 է հանգամանքներին համապատասխան, հարմարավետություն է ստեղծում։"
+            ] },
+            "宜": { parts: ["宀", "且"], story: [
+                "Under a roof 宀, the conditions are just right 且: suitable and proper.",
+                "Под крышей 宀 условия подходят 且: уместно и правильно.",
+                "Տանիքի 宀 տակ պայմանները ճիշտ են 且․ հարմար և պատշաճ։"
+            ] },
+            "漂": { parts: ["氵", "票"], sound: [1], story: [
+                "Water 氵 lets something float; 票 piào contributes the sound to 漂.",
+                "Вода 氵 позволяет чему-то плыть, а 票 piào добавляет звук.",
+                "Ջուրը 氵 թույլ է տալիս ինչ-որ բան լողալ, իսկ 票 piào-ն հնչյունային ակնարկ է ավելացնում։"
+            ] },
+            "亮": { parts: ["亠", "口", "冖", "几"], story: [
+                "A little lamp under a roof 亠 + 口 + 冖 + 几 fills the room with light.",
+                "Маленькая лампа под крышей 亠 + 口 + 冖 + 几 наполняет комнату светом.",
+                "Փոքր լամպը տանիքի 亠 + 口 + 冖 + 几 տակ լցնում է սենյակը լույսով։"
+            ] },
+            "苹": { parts: ["艹", "平"], sound: [1], story: [
+                "A plant 艹 with 平 píng as the sound cue names an apple.",
+                "Растение 艹 со звуком 平 píng называет яблоко.",
+                "Բույսը 艹 平 píng հնչյունային ակնարկով անվանում է խնձոր։"
+            ] },
+            "床": { parts: ["广", "木"], story: [
+                "A wooden 木 frame inside a room 广 becomes a bed.",
+                "Деревянная 木 рама в комнате 广 становится кроватью.",
+                "Փայտե 木 շրջանակը սենյակի 广 ներսում դառնում է մահճակալ։"
+            ] },
+            "钱": { parts: ["钅", "戋"], sound: [1], story: [
+                "Metal 钅 coins with the sound cue 戋 become money.",
+                "Металлические 钅 монеты со звуковой подсказкой 戋 становятся деньгами.",
+                "Մետաղական 钅 մետաղադրամները 戋 հնչյունային ակնարկով դառնում են փող։"
+            ] },
+            "请": { parts: ["讠", "青"], sound: [1], story: [
+                "Polite words 讠 with the sound 青 qīng become an invitation or a request.",
+                "Вежливые слова 讠 со звуком 青 qīng становятся приглашением или просьбой.",
+                "Քաղաքավարի խոսքը 讠 青 qīng հնչյունով դառնում է հրավեր կամ խնդրանք։"
+            ] },
+            "问": { parts: ["门", "口"], story: [
+                "A mouth 口 at a gate 门 asks for news, directions, or permission.",
+                "Рот 口 у ворот 门 спрашивает новости, дорогу или разрешение.",
+                "Բերանը 口 դարպասի 门 մոտ հարցնում է նորություն, ճանապարհ կամ թույլտվություն։"
+            ] },
+            "热": { parts: ["执", "灬"], story: [
+                "Heat 灬 is something you can almost hold 执 in your hands.",
+                "Жар 灬 — это то, что почти можно удержать 执 в руках.",
+                "Շոգը 灬 գրեթե կարելի է ձեռքերում պահել 执։"
+            ] },
+            "认": { parts: ["讠", "人"], story: [
+                "Words 讠 help a person 人 recognize and acknowledge someone.",
+                "Слова 讠 помогают человеку 人 узнать и признать кого-то.",
+                "Խոսքը 讠 օգնում է մարդուն 人 ճանաչել և ընդունել ինչ-որ մեկին։"
+            ] },
+            "识": { parts: ["讠", "只"], sound: [1], story: [
+                "Speech 讠 plus the sound 只 zhī gives the ability to know or recognize.",
+                "Речь 讠 и звук 只 zhī дают способность знать и узнавать.",
+                "Խոսքը 讠 և 只 zhī հնչյունը տալիս են իմանալու և ճանաչելու կարողություն։"
+            ] },
+            "班": { parts: ["王", "刂", "王"], story: [
+                "Jade 王 pieces are separated 刂 and arranged 王 into ordered rows: a class or group.",
+                "Куски нефрита 王 разделяют 刂 и выстраивают 王 в ряды: класс или группа.",
+                "Հադեսի 王 կտորները բաժանվում են 刂 և դասավորվում 王 շարքերով․ դասարան կամ խումբ։"
+            ] },
+            "什": { parts: ["亻", "十"], sound: [1], story: [
+                "A person 亻 and ten 十 combine as a visual and sound cue for “what?”",
+                "Человек 亻 и десять 十 дают зрительную и звуковую подсказку к слову «что?».",
+                "Մարդը 亻 և տասը 十 միասին տեսողական ու հնչյունային ակնարկ են տալիս «ի՞նչ» հարցին։"
+            ] },
+            "是": { parts: ["日", "正"], story: [
+                "The sun 日 shows what is correct 正: it is true, it is so.",
+                "Солнце 日 показывает правильное 正: это истинно, это так.",
+                "Արևը 日 ցույց է տալիս ճիշտը 正․ դա ճշմարիտ է, դա այդպես է։"
+            ] },
+            "时": { parts: ["日", "寸"], story: [
+                "The sun 日 moves across measured 寸 intervals: time.",
+                "Солнце 日 проходит отмеренные 寸 промежутки: время.",
+                "Արևը 日 անցնում է չափված 寸 միջակայքերով․ ժամանակ։"
+            ] },
+            "候": { parts: ["亻", "侯"], sound: [1], story: [
+                "A person 亻 waits through a period of time; 侯 hòu gives the sound.",
+                "Человек 亻 ждёт в течение времени; 侯 hòu даёт звук.",
+                "Մարդը 亻 սպասում է որոշ ժամանակ, իսկ 侯 hòu-ն հնչյունային ակնարկ է։"
+            ] },
+            "睡": { parts: ["目", "垂"], story: [
+                "The eye 目 droops 垂 as sleep arrives.",
+                "Глаз 目 опускается 垂, когда приходит сон.",
+                "Աչքը 目 կախվում է 垂, երբ քունն է գալիս։"
+            ] },
+            "说": { parts: ["讠", "兑"], story: [
+                "Speech 讠 is exchanged 兑 when people speak and respond.",
+                "Речь 讠 обменивается 兑, когда люди говорят и отвечают.",
+                "Խոսքը 讠 փոխանակվում 兑 է, երբ մարդիկ խոսում և պատասխանում են։"
+            ] },
+            "岁": { parts: ["山", "夕"], story: [
+                "Many evenings 夕 pass over the mountains 山, and another year of age is complete.",
+                "Много вечеров 夕 проходит над горами 山, и ещё один год возраста завершён.",
+                "Շատ երեկոներ 夕 անցնում են լեռների 山 վրայով, և տարիքին ևս մեկ տարի է ավելանում։"
+            ] },
+            "他": { parts: ["亻", "也"], sound: [1], story: [
+                "The person 亻 shape distinguishes “he”; 也 provides a sound cue in the series.",
+                "Форма человека 亻 отличает «его», а 也 даёт звуковую подсказку в ряду похожих знаков.",
+                "Մարդ 亻 ձևը տարբերում է «նա»-ին, իսկ 也-ն հնչյունային ակնարկ է տալիս նույն շարքի նշաններում։"
+            ] },
+            "她": { parts: ["女", "也"], sound: [1], story: [
+                "The woman 女 shape marks “she”; 也 ties it to the same sound family as 他.",
+                "Форма женщины 女 обозначает «она», а 也 связывает знак со звуковым семейством 他.",
+                "Կին 女 ձևը նշում է «նա» (իգական), իսկ 也-ն կապում է նույն հնչյունային ընտանիքին։"
+            ] },
+            "太": { parts: ["大", "丶"], story: [
+                "A dot 丶 pushes big 大 even further: too much, or the greatest.",
+                "Точка 丶 усиливает большое 大: слишком, или самое великое.",
+                "Կետը 丶 առավել է ուժեղացնում մեծ 大-ը․ չափազանց կամ ամենամեծը։"
+            ] },
+            "同": { parts: ["冂", "一", "口"], story: [
+                "One 一 voice 口 inside the same frame 冂 makes “same”.",
+                "Один 一 голос 口 в одной рамке 冂 создаёт «одинаковый».",
+                "Մեկ 一 ձայն 口 նույն շրջանակի 冂 մեջ ստեղծում է «նույնը»։"
+            ] },
+            "外": { parts: ["夕", "卜"], story: [
+                "Evening 夕 beyond the familiar signs 卜 feels like the outside.",
+                "Вечер 夕 за пределами знакомых знаков 卜 ощущается как внешний мир.",
+                "Երեկոն 夕 ծանոթ նշանների 卜 սահմանից այն կողմ զգացվում է որպես դրսի աշխարհ։"
+            ] },
+            "晚": { parts: ["日", "免"], sound: [1], story: [
+                "The sun 日 is released 免 from the sky as evening comes; 免 miǎn hints at the sound.",
+                "Солнце 日 освобождает 免 небо, когда наступает вечер; 免 miǎn подсказывает звук.",
+                "Արևը 日 ազատվում 免 է երկնքից, երբ երեկոն գալիս է, իսկ 免 miǎn-ը հնչյունային ակնարկ է։"
+            ] },
+            "喂": { parts: ["口", "畏"], sound: [1], story: [
+                "A mouth 口 calls “hello” over the phone; 畏 wèi carries the sound.",
+                "Рот 口 говорит «алло» по телефону; 畏 wèi передаёт звук.",
+                "Բերանը 口 հեռախոսով «ալո» է ասում, իսկ 畏 wèi-ն փոխանցում է հնչյունը։"
+            ] },
+            "题": { parts: ["是", "页"], story: [
+                "What is 是 written on a page 页 becomes a question, exercise, or topic.",
+                "То, что есть 是 на странице 页, становится вопросом, заданием или темой.",
+                "Այն, ինչ կա 是 էջի 页 վրա, դառնում է հարց, վարժություն կամ թեմա։"
+            ] },
+            "喜": { parts: ["壴", "口"], story: [
+                "A drum 壴 and a laughing mouth 口 together create celebration and joy.",
+                "Барабан 壴 и смеющийся рот 口 вместе создают праздник и радость.",
+                "Թմբուկը 壴 և ծիծաղող բերանը 口 միասին ստեղծում են տոն և ուրախություն։"
+            ] },
+            "欢": { parts: ["又", "欠"], story: [
+                "Hands 又 and an open voice 欠 express cheerful celebration.",
+                "Руки 又 и открытый голос 欠 выражают радостное торжество.",
+                "Ձեռքերը 又 և բաց ձայնը 欠 արտահայտում են ուրախ տոնակատարություն։"
+            ] },
+            "现": { parts: ["王", "见"], story: [
+                "Jade 王 becomes visible 见: what was hidden now appears.",
+                "Нефрит 王 становится видимым 见: скрытое теперь появляется.",
+                "Հադեսը 王 տեսանելի 见 է դառնում․ թաքնվածն այժմ հայտնվում է։"
+            ] },
+            "想": { parts: ["相", "心"], story: [
+                "When an image 相 reaches the heart 心, thought and longing begin.",
+                "Когда образ 相 доходит до сердца 心, начинаются мысль и желание.",
+                "Երբ պատկերը 相 հասնում է սրտին 心, սկսվում են միտքն ու փափագը։"
+            ] },
+            "写": { parts: ["冖", "与"], story: [
+                "A cover 冖 over a flowing shape 与 suggests writing filling a page.",
+                "Укрытие 冖 над плавной формой 与 напоминает письмо, заполняющее страницу.",
+                "Ծածկը 冖 հոսուն ձևի 与 վրա հիշեցնում է էջը լցնող գրությունը։"
+            ] },
+            "谢": { parts: ["讠", "射"], sound: [1], story: [
+                "Words 讠 are offered with thanks; 射 supplies a sound cue linked to 谢.",
+                "Слова 讠 произносят с благодарностью; 射 даёт звуковую подсказку к 谢.",
+                "Խոսքը 讠 արտասանվում է շնորհակալությամբ, իսկ 射-ն հնչյունային ակնարկ է տալիս 谢-ի համար։"
+            ] },
+            "新": { parts: ["亲", "斤"], story: [
+                "Close 亲 to freshly cut 斤 wood: what has just been cut is new.",
+                "Близко 亲 к только что срубленному 斤 дереву: недавно срезанное — новое.",
+                "Մոտ 亲 նոր կտրված 斤 փայտին․ նոր կտրվածը նոր է։"
+            ] },
+            "星": { parts: ["日", "生"], story: [
+                "A little sun 日 is born 生 in the night sky: a star.",
+                "Маленькое солнце 日 рождается 生 в ночном небе: звезда.",
+                "Փոքր արև 日 է ծնվում 生 գիշերային երկնքում․ աստղ։"
+            ] },
+            "期": { parts: ["其", "月"], sound: [1], story: [
+                "A month 月 marks a period of time; 其 qí gives the sound to 期.",
+                "Месяц 月 отмечает период времени, а 其 qí даёт звук.",
+                "Ամիսը 月 նշում է ժամանակաշրջան, իսկ 其 qí-ն հնչյունային ակնարկ է տալիս։"
+            ] },
+            "休": { parts: ["亻", "木"], story: [
+                "A person 亻 beside a tree 木 rests in its shade.",
+                "Человек 亻 рядом с деревом 木 отдыхает в тени.",
+                "Մարդը 亻 ծառի 木 կողքին հանգստանում է նրա ստվերում։"
+            ] },
+            "息": { parts: ["自", "心"], story: [
+                "The self 自 returns to the heart 心 through rest and quiet breathing.",
+                "Сам 自 возвращается к сердцу 心 через отдых и спокойное дыхание.",
+                "Ինքը 自 վերադառնում է սրտին 心 հանգստի և հանգիստ շնչառության միջոցով։"
+            ] },
+            "雪": { parts: ["雨", "彐"], story: [
+                "Rain 雨 held in a hand-like shape 彐 becomes frozen snow.",
+                "Дождь 雨, удержанный формой руки 彐, превращается в снег.",
+                "Անձրևը 雨, ձեռքի նման ձևի 彐 մեջ պահվելով, վերածվում է ձյունի։"
+            ] },
+            "校": { parts: ["木", "交"], sound: [1], story: [
+                "Wood 木 and the sound 交 jiāo build a place of learning: a school.",
+                "Дерево 木 и звук 交 jiāo создают место учёбы: школу.",
+                "Փայտը 木 և 交 jiāo հնչյունը կառուցում են ուսման վայր՝ դպրոց։"
+            ] },
+            "医": { parts: ["匚", "矢"], story: [
+                "An arrow 矢 kept in a box 匚 pictures an old medical kit or a treated wound.",
+                "Стрела 矢 в коробке 匚 напоминает старую медицинскую сумку или обработанную рану.",
+                "Արկղի 匚 մեջ պահված նետը 矢 հիշեցնում է հին բժշկական պայուսակ կամ բուժված վերք։"
+            ] },
+            "椅": { parts: ["木", "奇"], sound: [1], story: [
+                "A wooden 木 piece with the sound 奇 qí becomes a chair.",
+                "Деревянная 木 деталь со звуком 奇 qí становится стулом.",
+                "Փայտե 木 մասը 奇 qí հնչյունով դառնում է աթոռ։"
+            ] },
+            "再": { parts: ["一", "冉"], story: [
+                "One 一 more slow round 冉 means “again.”",
+                "Ещё один 一 медленный круг 冉 означает «снова».",
+                "Եվս մեկ 一 դանդաղ շրջան 冉 նշանակում է «նորից»։"
+            ] },
+            "早": { parts: ["日", "十"], story: [
+                "The sun 日 above the morning mark 十 shows an early hour.",
+                "Солнце 日 над утренней отметкой 十 показывает ранний час.",
+                "Արևը 日 առավոտյան 十 նշանի վրա ցույց է տալիս վաղ ժամը։"
+            ] },
+            "怎": { parts: ["乍", "心"], sound: [1], story: [
+                "The heart 心 asks, “How?”; 乍 zhà gives the sound cue.",
+                "Сердце 心 спрашивает: «Как?»; 乍 zhà даёт звуковую подсказку.",
+                "Սիրտը 心 հարցնում է՝ «Ինչպե՞ս», իսկ 乍 zhà-ն հնչյունային ակնարկ է տալիս։"
+            ] },
+            "样": { parts: ["木", "羊"], sound: [1], story: [
+                "A wooden 木 model plus the sound 羊 yáng gives us a shape, kind, or appearance.",
+                "Деревянная 木 модель и звук 羊 yáng дают форму, вид или образец.",
+                "Փայտե 木 մոդելը և 羊 yáng հնչյունը տալիս են ձև, տեսակ կամ տեսք։"
+            ] },
+            "找": { parts: ["扌", "戈"], story: [
+                "A hand 扌 reaches with a tool 戈 to search for something.",
+                "Рука 扌 тянется инструментом 戈, чтобы что-то найти.",
+                "Ձեռքը 扌 գործիքով 戈 մեկնվում է ինչ-որ բան փնտրելու։"
+            ] },
+            "这": { parts: ["辶", "文"], sound: [1], story: [
+                "A path 辶 leads to the thing right here; 文 wén hints at the sound of 这.",
+                "Путь 辶 ведёт к предмету прямо здесь; 文 wén подсказывает звук 这.",
+                "Ուղին 辶 տանում է հենց այստեղ գտնվող առարկային, իսկ 文 wén-ը հնչյունային ակնարկ է տալիս։"
+            ] },
+            "知": { parts: ["矢", "口"], story: [
+                "An arrow 矢 of understanding reaches the mouth 口: you know and can say it.",
+                "Стрела 矢 понимания достигает рта 口: ты знаешь и можешь сказать.",
+                "Հասկացության նետը 矢 հասնում է բերանին 口․ դու գիտես և կարող ես ասել։"
+            ] },
+            "道": { parts: ["辶", "首"], story: [
+                "A path 辶 with a head 首 choosing its direction becomes a way or a guiding principle.",
+                "Путь 辶 с головой 首, выбирающей направление, становится дорогой или принципом.",
+                "Ուղին 辶 գլխով 首, որն ընտրում է ուղղությունը, դառնում է ճանապարհ կամ սկզբունք։"
+            ] },
+            "住": { parts: ["亻", "主"], sound: [1], story: [
+                "A person 亻 makes a place their main 主 stop: to live or stay.",
+                "Человек 亻 делает место своим главным 主 пристанищем: жить или остановиться.",
+                "Մարդը 亻 տեղը դարձնում է իր հիմնական 主 կանգառը․ ապրել կամ մնալ։"
+            ] },
+            "做": { parts: ["亻", "故"], story: [
+                "A person 亻 follows a reason or established method 故 in order to do something.",
+                "Человек 亻 следует причине или установленному способу 故, чтобы что-то сделать.",
+                "Մարդը 亻 հետևում է պատճառին կամ սահմանված եղանակին 故, որպեսզի ինչ-որ բան անի։"
+            ] },
+            "坐": { parts: ["从", "土"], story: [
+                "Two people 从 settle onto the earth 土: they sit down.",
+                "Два человека 从 опускаются на землю 土: они садятся.",
+                "Երկու մարդ 从 իջնում են հողի 土 վրա․ նստում են։"
+            ] },
+            "昨": { parts: ["日", "乍"], sound: [1], story: [
+                "The sun 日 has suddenly 乍 completed another day: yesterday.",
+                "Солнце 日 внезапно 乍 завершило ещё один день: вчера.",
+                "Արևը 日 հանկարծ 乍 ավարտել է ևս մեկ օր․ երեկ։"
+            ] },
+            "卖": { parts: ["十", "买"], story: [
+                "Buying 买 is topped with an extra mark 十: goods change hands and are sold.",
+                "Над покупкой 买 появляется знак 十: товар переходит в другие руки и продаётся.",
+                "Գնումը 买 ստանում է լրացուցիչ 十 նշան․ ապրանքը փոխում է ձեռք և վաճառվում։"
+            ] }
+        };
+
+        Object.assign(hskCharacterStories, {
+            "包": { parts: ["勹", "巳"], story: [
+                "A curled shape 巳 is folded inside a wrapper 勹: to wrap or bundle.",
+                "Свёрнутая форма 巳 сложена внутри обёртки 勹: заворачивать или собирать.",
+                "Ոլորված 巳 ձևը ծալվում է փաթաթանի 勹 մեջ․ փաթաթել կամ կապոց անել։"
+            ] },
+            "要": { parts: ["覀", "女"], story: [
+                "The top 覀 acts as a lid over a woman 女: what matters most is kept close—need or want.",
+                "Верхняя часть 覀 закрывает женщину 女, как крышка: самое важное держат рядом — нужда или желание.",
+                "Վերին 覀 մասը կափարիչի պես փակում է կնոջը 女․ ամենակարևորը մոտ են պահում՝ կարիք կամ ցանկություն։"
+            ] },
+            "市": { parts: ["亠", "巾"], story: [
+                "A cloth 巾 hanging beneath a top mark 亠 marks a market stall.",
+                "Ткань 巾 под верхним знаком 亠 обозначает рыночный прилавок.",
+                "Վերին 亠 նշանի տակ կախված կտորը 巾 նշում է շուկայի կրպակը։"
+            ] },
+            "弟": { parts: ["丷", "弓"], story: [
+                "Two marks 丷 above a bowing 弓 shape suggest the younger sibling following behind.",
+                "Две черты 丷 над согнутой 弓 формой напоминают младшего брата, идущего следом.",
+                "Երկու գծիկը 丷 կռացած 弓 ձևի վերևում հիշեցնում են հետևից ընթացող կրտսեր եղբորը։"
+            ] },
+            "多": { parts: ["夕", "夕"], story: [
+                "One evening 夕 stacked above another 夕 creates “many”.",
+                "Один вечер 夕 над другим 夕 создаёт значение «много».",
+                "Մեկ երեկո 夕 մյուսի 夕 վրա ստեղծում է «շատ» իմաստը։"
+            ] },
+            "常": { parts: ["尚", "巾"], story: [
+                "Cloth 巾 that is valued 尚 is worn often, so it becomes ordinary and constant.",
+                "Ткань 巾, которую ценят 尚, носят часто, поэтому она становится обычной и постоянной.",
+                "Գնահատված 尚 կտորը 巾 հաճախ են կրում, ուստի այն դառնում է սովորական և մշտական։"
+            ] },
+            "高": { parts: ["亠", "口", "冋"], story: [
+                "A roof 亠, a window 口, and a tall frame 冋 picture a high tower.",
+                "Крыша 亠, окно 口 и высокая рама 冋 рисуют высокую башню.",
+                "Տանիքը 亠, պատուհանը 口 և բարձր շրջանակը 冋 պատկերում են բարձր աշտարակ։"
+            ] },
+            "兴": { parts: ["⺍", "一", "八"], story: [
+                "Hands ⺍ lift a tray 一 above spreading feet 八: excitement and celebration rise.",
+                "Руки ⺍ поднимают поднос 一 над расставленными ногами 八: подъём и радость.",
+                "Ձեռքերը ⺍ բարձրացնում են սկուտեղը 一 բացված ոտքերի 八 վրա․ ոգևորություն և տոն։"
+            ] },
+            "司": { parts: ["𠃍", "口"], story: [
+                "A controlling hook 𠃍 above a speaking mouth 口 suggests an office that directs.",
+                "Управляющий крюк 𠃍 над говорящим ртом 口 напоминает учреждение, которое руководит.",
+                "Վերահսկող կեռը 𠃍 խոսող բերանի 口 վրա հիշեցնում է ղեկավարող հիմնարկ։"
+            ] },
+            "作": { parts: ["亻", "乍"], sound: [1], story: [
+                "A person 亻 begins something suddenly 乍: to make or do.",
+                "Человек 亻 внезапно 乍 начинает дело: создавать или делать.",
+                "Մարդը 亻 հանկարծ 乍 սկսում է գործը․ ստեղծել կամ անել։"
+            ] },
+            "贵": { parts: ["中", "一", "贝"], story: [
+                "A shell 贝 placed at the center 中 as one 一 treasure becomes precious and expensive.",
+                "Раковина 贝 в центре 中 как одно 一 сокровище становится драгоценной.",
+                "Խեցին 贝, դրված կենտրոնում 中 որպես մեկ 一 գանձ, դառնում է թանկարժեք։"
+            ] },
+            "汉": { parts: ["氵", "又"], story: [
+                "Water 氵 and a hand 又 recall a river people; together they name the Han.",
+                "Вода 氵 и рука 又 напоминают народ реки; вместе они называют ханьцев.",
+                "Ջուրը 氵 և ձեռքը 又 հիշեցնում են գետի ժողովրդին և միասին անվանում են հաներին։"
+            ] },
+            "听": { parts: ["口", "斤"], story: [
+                "A mouth 口 and a cutting axe 斤 create a sharp image: listening cuts through noise.",
+                "Рот 口 и острый топор 斤 создают образ: слушание пробивается сквозь шум.",
+                "Բերանը 口 և սուր կացինը 斤 ստեղծում են պատկեր․ լսելը ճեղքում է աղմուկը։"
+            ] },
+            "后": { parts: ["厂", "口"], story: [
+                "A mouth 口 sheltered beneath a roof 厂 speaks after the one in front: behind, after.",
+                "Рот 口 под навесом 厂 говорит после того, кто впереди: позади, после.",
+                "Բերանը 口 ապաստանի 厂 տակ խոսում է առջևի մարդուց հետո․ ետևում, հետո։"
+            ] },
+            "今": { parts: ["人", "㇇"], story: [
+                "A person 人 stopped by a short mark ㇇ is held in the present moment: now.",
+                "Человек 人, остановленный короткой чертой ㇇, удерживается в настоящем: сейчас.",
+                "Մարդը 人, կանգնեցված կարճ ㇇ գծիկով, պահվում է ներկա պահին․ հիմա։"
+            ] },
+            "年": { parts: ["丿", "一", "十"], story: [
+                "Ten 十 harvest marks crossed by a line 一 and a stroke 丿 complete one year.",
+                "Десять 十 отметок урожая, пересечённых линией 一 и штрихом 丿, завершают год.",
+                "Տասը 十 բերքահավաքի նշան, հատված 一 գծով և 丿 գծիկով, ավարտում են մեկ տարի։"
+            ] },
+            "可": { parts: ["丁", "口"], story: [
+                "A mouth 口 beside a firm nail 丁 asks, “Can this be done?”",
+                "Рот 口 рядом с прочным гвоздём 丁 спрашивает: «Можно это сделать?»",
+                "Բերանը 口 ամուր մեխի 丁 կողքին հարցնում է՝ «Կարելի՞ է անել»։"
+            ] },
+            "以": { parts: ["人", "乚"], story: [
+                "A person 人 turned along a curve 乚 uses that position as a reference: by means of.",
+                "Человек 人, повёрнутый по дуге 乚, берёт это положение за основу: посредством.",
+                "Մարդը 人, շրջված 乚 ոլորանի երկայնքով, այդ դիրքը վերցնում է որպես հիմք․ միջոցով։"
+            ] },
+            "来": { parts: ["一", "米"], story: [
+                "A line 一 above grain 米 pictures the harvest arriving at home.",
+                "Линия 一 над зерном 米 показывает урожай, прибывающий домой.",
+                "Գիծը 一 հացահատիկի 米 վրա պատկերում է տուն հասնող բերքը։"
+            ] },
+            "老": { parts: ["耂", "匕"], story: [
+                "An old 耂 person leaning on a cane 匕 gives the image of old age.",
+                "Старый 耂 человек, опирающийся на посох 匕, создаёт образ старости.",
+                "Ծեր 耂 մարդը, հենված ձեռնափայտին 匕, ստեղծում է ծերության պատկերը։"
+            ] },
+            "师": { parts: ["丨", "帀"], story: [
+                "A straight standard 丨 beneath a banner 帀 marks a teacher or master.",
+                "Прямой ориентир 丨 под знаменем 帀 обозначает учителя или мастера.",
+                "Ուղիղ չափանիշը 丨 դրոշի 帀 տակ նշում է ուսուցիչ կամ վարպետ։"
+            ] },
+            "里": { parts: ["田", "土"], story: [
+                "A field 田 joined to earth 土 shows the land inside a village.",
+                "Поле 田, соединённое с землёй 土, показывает землю внутри селения.",
+                "Դաշտը 田, միացած հողին 土, ցույց է տալիս գյուղի ներսի տարածքը։"
+            ] },
+            "两": { parts: ["一", "冂", "从"], story: [
+                "Two people 从 balanced under one frame 冂 make the pair “two”.",
+                "Два человека 从 под одной рамкой 冂 образуют пару «два».",
+                "Երկու մարդ 从 մեկ 冂 շրջանակի տակ կազմում են «երկու» զույգը։"
+            ] },
+            "买": { parts: ["乛", "头"], story: [
+                "A reaching hook 乛 above a head 头 pictures a shopper choosing goods.",
+                "Захватывающий крюк 乛 над головой 头 изображает покупателя, выбирающего товар.",
+                "Բռնող կեռը 乛 գլխի 头 վրա պատկերում է ապրանք ընտրող գնորդին։"
+            ] },
+            "事": { parts: ["一", "口", "亅"], story: [
+                "A line 一, mouth 口, and hook 亅 hold a matter together: something to handle.",
+                "Линия 一, рот 口 и крюк 亅 удерживают дело вместе: то, чем нужно заняться.",
+                "Գիծը 一, բերանը 口 և կեռը 亅 միասին պահում են գործը․ այն, ինչ պետք է լուծել։"
+            ] },
+            "有": { parts: ["𠂇", "月"], story: [
+                "A hand 𠂇 holding flesh 月 shows possession: to have.",
+                "Рука 𠂇, держащая плоть 月, показывает обладание: иметь.",
+                "Ձեռքը 𠂇, բռնած մարմինը 月, ցույց է տալիս տիրապետելը․ ունենալ։"
+            ] },
+            "米": { parts: ["十", "八"], story: [
+                "A cross 十 surrounded by eight 八 grains becomes rice.",
+                "Крест 十, окружённый восемью 八 зёрнами, становится рисом.",
+                "Խաչը 十, շրջապատված ութ 八 հատիկով, դառնում է բրինձ։"
+            ] },
+            "面": { parts: ["丆", "囬"], story: [
+                "A covering line 丆 over a face-shaped enclosure 囬 gives the face or surface.",
+                "Линия 丆 над оградой в форме лица 囬 даёт лицо или поверхность.",
+                "Ծածկող 丆 գիծը դեմքի ձև ունեցող 囬 շրջանակի վրա տալիս է դեմք կամ մակերես։"
+            ] },
+            "条": { parts: ["夂", "朩"], story: [
+                "A walking foot 夂 beside wood 朩 shows a long strip cut from a branch.",
+                "Шагающая нога 夂 рядом с деревом 朩 показывает длинную полосу, отрезанную от ветки.",
+                "Քայլող ոտքը 夂 փայտի 朩 կողքին ցույց է տալիս ճյուղից կտրված երկար շերտ։"
+            ] },
+            "那": { parts: ["刀", "二", "阝"], story: [
+                "A knife 刀 beyond two 二 boundaries points to “that place over there.”",
+                "Нож 刀 за двумя 二 границами указывает на «то место вдали».",
+                "Դանակը 刀 երկու 二 սահմաններից այն կողմ ցույց է տալիս «այն տեղը»։"
+            ] },
+            "友": { parts: ["𠂇", "又"], story: [
+                "One hand 𠂇 clasping another hand 又 becomes a friend.",
+                "Одна рука 𠂇 пожимает другую руку 又: друг.",
+                "Մեկ ձեռքը 𠂇 բռնում է մյուս ձեռքը 又․ ընկեր։"
+            ] },
+            "能": { parts: ["厶", "月", "匕"], story: [
+                "Private energy 厶 in a body 月 guided by a skilled hand 匕 becomes ability.",
+                "Личная энергия 厶 в теле 月, направляемая умелой рукой 匕, становится способностью.",
+                "Անձնական էներգիան 厶 մարմնում 月՝ հմուտ ձեռքի 匕 առաջնորդությամբ, դառնում է կարողություն։"
+            ] },
+            "你": { parts: ["亻", "尔"], story: [
+                "A person 亻 singled out before you 尔 becomes “you.”",
+                "Человек 亻, выделенный перед тобой 尔, становится «ты».",
+                "Մարդը 亻, առանձնացված քո 尔 առջև, դառնում է «դու»։"
+            ] },
+            "果": { parts: ["日", "木"], story: [
+                "A sun 日 resting in a tree 木 ripens into fruit.",
+                "Солнце 日 в дереве 木 созревает в плод.",
+                "Արևը 日 ծառի 木 մեջ հասունանում է պտղի։"
+            ] },
+            "前": { parts: ["丷", "一", "月", "刂"], story: [
+                "Marks, a line, the moon 月, and a sharp edge 刂 together point forward.",
+                "Черты, линия, луна 月 и остриё 刂 вместе указывают вперёд.",
+                "Գծիկները, գիծը, լուսինը 月 և սուրը 刂 միասին ուղղված են առաջ։"
+            ] },
+            "去": { parts: ["土", "厶"], story: [
+                "A private spot 厶 on the earth 土 becomes the point you leave: to go away.",
+                "Личное место 厶 на земле 土 становится точкой, которую покидают: уходить.",
+                "Անձնական տեղը 厶 հողի 土 վրա դառնում է այն կետը, որը լքում ես․ գնալ։"
+            ] },
+            "商": { parts: ["亠", "丷", "冏"], story: [
+                "A roof 亠 and bright window 冏 over marks of goods 丷 picture commerce.",
+                "Крыша 亠 и светлое окно 冏 над знаками товара 丷 создают образ торговли.",
+                "Տանիքը 亠 և պայծառ պատուհանը 冏 ապրանքի 丷 նշանների վրա պատկերում են առևտուր։"
+            ] },
+            "谁": { parts: ["讠", "隹"], story: [
+                "Speech 讠 follows a short-tailed bird 隹, asking, “Who?”",
+                "Речь 讠 следует за короткохвостой птицей 隹 и спрашивает: «Кто?»",
+                "Խոսքը 讠 հետևում է կարճապոչ թռչունին 隹 և հարցնում՝ «Ո՞վ»։"
+            ] },
+            "它": { parts: ["宀", "匕"], story: [
+                "A roof 宀 over a small shape 匕 points to the non-human “it.”",
+                "Крыша 宀 над небольшой формой 匕 указывает на неодушевлённое «оно».",
+                "Տանիքը 宀 փոքր 匕 ձևի վրա ցույց է տալիս ոչ մարդկային «այն»։"
+            ] },
+            "我": { parts: ["手", "戈"], story: [
+                "A hand 手 holding a weapon 戈 pictures a self that can protect itself: I.",
+                "Рука 手 с оружием 戈 изображает «я», способное защитить себя.",
+                "Ձեռքը 手 զենքով 戈 պատկերում է «ես»-ը, որը կարող է պաշտպանել իրեն։"
+            ] },
+            "雨": { parts: ["一", "冂", "丶"], story: [
+                "A sky line 一, a cloud frame 冂, and falling drops 丶 picture rain.",
+                "Линия неба 一, облачная рамка 冂 и падающие капли 丶 создают дождь.",
+                "Երկնքի 一 գիծը, ամպի 冂 շրջանակը և թափվող կաթիլները 丶 պատկերում են անձրև։"
+            ] },
+            "先": { parts: ["牛", "儿"], story: [
+                "A cow 牛 with legs 儿 moving ahead becomes “first.”",
+                "Корова 牛 с ногами 儿, идущая впереди, становится «первым».",
+                "Կովը 牛 ոտքերով 儿, առաջ ընթանալով, դառնում է «առաջին»։"
+            ] },
+            "在": { parts: ["𠂇", "土"], story: [
+                "A hand 𠂇 touching the earth 土 marks a location: to be at.",
+                "Рука 𠂇, касающаяся земли 土, отмечает место: находиться.",
+                "Ձեռքը 𠂇, դիպչելով հողին 土, նշում է տեղը․ գտնվել։"
+            ] },
+            "衣": { parts: ["亠", "𧘇"], story: [
+                "A collar 亠 above flowing garment strokes 𧘇 forms clothing.",
+                "Воротник 亠 над плавными штрихами одежды 𧘇 образует одежду.",
+                "Օձիքը 亠 հագուստի հոսուն 𧘇 գծերի վրա կազմում է հագուստ։"
+            ] },
+            "服": { parts: ["月", "𠬝"], story: [
+                "A body 月 fitted by a guiding hand 𠬝 wears clothing.",
+                "Тело 月, к которому подгоняет рука 𠬝, надевает одежду.",
+                "Մարմինը 月, հարմարեցված ուղղորդող ձեռքով 𠬝, հագնում է հագուստ։"
+            ] },
+            "元": { parts: ["二", "儿"], story: [
+                "Two 二 above walking legs 儿 mark the beginning or first unit.",
+                "Два 二 над идущими ногами 儿 отмечают начало или первую единицу.",
+                "Երկուսը 二 քայլող ոտքերի 儿 վրա նշում են սկիզբ կամ առաջին միավոր։"
+            ] },
+            "真": { parts: ["十", "具"], story: [
+                "Ten 十 checks of a tool 具 test whether something is truly real.",
+                "Десять 十 проверок инструмента 具 устанавливают, действительно ли это реально.",
+                "Գործիքի 具 տասը 十 ստուգումները պարզում են՝ ինչ-որ բան իրոք ճի՞շտ է։"
+            ] },
+            "只": { parts: ["口", "八"], story: [
+                "A mouth 口 with eight 八 directions speaks of one small unit: only.",
+                "Рот 口 с восемью 八 направлениями говорит об одной малой единице: только.",
+                "Բերանը 口 ութ 八 ուղղություններով խոսում է մեկ փոքր միավորի մասին․ միայն։"
+            ] },
+            "桌": { parts: ["⺊", "杲"], story: [
+                "A top mark ⺊ above a bright wooden 杲 frame pictures a raised table.",
+                "Верхний знак ⺊ над светлой деревянной 杲 рамой изображает поднятый стол.",
+                "Վերին նշանը ⺊ պայծառ փայտե 杲 շրջանակի վրա պատկերում է բարձր սեղան։"
+            ] },
+            "非": { parts: ["三", "丨", "三", "丨"], story: [
+                "Three lines 三 and an upright 丨 on each side create two mirrored wings: not one way, but two opposing sides.",
+                "Три линии 三 и вертикаль 丨 с каждой стороны создают два зеркальных крыла: не одна сторона, а две противоположные.",
+                "Երեք գիծ 三 և ուղղահայաց 丨 յուրաքանչյուր կողմում ստեղծում են երկու հայելային թևեր․ ոչ թե մեկ, այլ երկու հակադիր կողմ։"
+            ] }
+        });
 
         const primitives = [
             { n: "0001", c: "一", p: "yī", en: "one", ru: "один", hy: "մեկ" },
@@ -1993,18 +3383,23 @@
                 pinyin: "Pinyin",
                 traditional: "Traditional",
                 showTraditional: "Show traditional meaning",
-                hskTitle: "HSK 3.0 Level 1 Practice",
-                hskHeader: "HSK 3.0 Level 1",
+                hskTitle: "HSK Level 1 Practice",
+                hskHeader: "HSK Level 1",
                 sectionKangxi: "Kangxi Radicals",
-                sectionHsk: "HSK 3.0 Level 1",
+                sectionHsk: "HSK Level 1",
                 hskQuestion: "What does this word mean?",
                 hskNext: "Next Word →",
                 words: "Words",
                 characters: "Characters",
-                hskWordsHeading: "All 300 HSK 3.0 Level 1 Words",
-                hskWordsSubtitle: "All 300 words from the HSK 3.0 Level 1 list, with pinyin, part of speech, and English definitions.",
-                hskCharsHeading: "All 248 HSK 3.0 Level 1 Characters",
+                stories: "Stories",
+                hskWordsHeading: "All 300 HSK Level 1 Words",
+                hskWordsSubtitle: "All 300 words from the HSK Level 1 list, with pinyin, part of speech, and English definitions.",
+                hskCharsHeading: "All 248 HSK Level 1 Characters",
                 hskCharsSubtitle: "All 248 unique characters from the 300 words. 店 and 饺 are marked as extra beyond the official 246-character list.",
+                hskStoriesHeading: "HSK 1 Compound Character Stories",
+                hskStoriesSubtitle: "Explore compound characters through colored components and memory stories. ♪ marks pronunciation cues; stories are learning aids, not definitive etymology.",
+                memoryStory: "Memory story",
+                soundCue: "Sound cue",
                 extra: "extra",
                 partOfSpeech: "Part of speech",
                 primitiveTitle: "Modern Chinese Primitives Practice",
@@ -2031,18 +3426,23 @@
                 pinyin: "Փինյին",
                 traditional: "Ավանդական",
                 showTraditional: "Ցույց տալ ավանդական իմաստը",
-                hskTitle: "HSK 3.0 1-ին մակարդակի պարապմունք",
-                hskHeader: "HSK 3.0, 1-ին մակարդակ",
+                hskTitle: "HSK 1-ին մակարդակի պարապմունք",
+                hskHeader: "HSK 1-ին մակարդակ",
                 sectionKangxi: "Կանսիի արմատներ",
-                sectionHsk: "HSK 3.0, 1-ին մակարդակ",
+                sectionHsk: "HSK 1-ին մակարդակ",
                 hskQuestion: "Ի՞նչ է նշանակում այս բառը։",
                 hskNext: "Հաջորդ բառը →",
                 words: "Բառեր",
                 characters: "Նշաններ",
-                hskWordsHeading: "HSK 3.0 1-ին մակարդակի բոլոր 300 բառերը",
-                hskWordsSubtitle: "HSK 3.0 1-ին մակարդակի ցանկի բոլոր 300 բառերը՝ փինյինով, խոսքի մասով և հայերեն թարգմանություններով։",
-                hskCharsHeading: "HSK 3.0 1-ին մակարդակի բոլոր 248 նշանները",
+                stories: "Պատմություններ",
+                hskWordsHeading: "HSK 1-ին մակարդակի բոլոր 300 բառերը",
+                hskWordsSubtitle: "HSK 1-ին մակարդակի ցանկի բոլոր 300 բառերը՝ փինյինով, խոսքի մասով և հայերեն թարգմանություններով։",
+                hskCharsHeading: "HSK 1-ին մակարդակի բոլոր 248 նշանները",
                 hskCharsSubtitle: "300 բառերից ստացված բոլոր 248 եզակի նշանները։ 店-ը և 饺-ը նշված են որպես լրացուցիչ՝ պաշտոնական 246 նշանների ցանկից դուրս։",
+                hskStoriesHeading: "HSK 1-ի բաղադրյալ նշանների պատմություններ",
+                hskStoriesSubtitle: "Ծանոթացեք բաղադրյալ նշաններին գունավոր բաղադրիչների և հիշելու պատմությունների միջոցով։ ♪ նշանը ցույց է տալիս հնչյունային ակնարկը։ Պատմությունները ուսումնական մնեմոնիկաներ են, ոչ պատմական ստուգաբանություն։",
+                memoryStory: "Հիշելու պատմություն",
+                soundCue: "Հնչյունային ակնարկ",
                 extra: "լրացուցիչ",
                 partOfSpeech: "Խոսքի մաս",
                 primitiveTitle: "Ժամանակակից չինարեն բաղադրիչների պարապմունք",
@@ -2069,18 +3469,23 @@
                 pinyin: "Пиньинь",
                 traditional: "Традиционное",
                 showTraditional: "Показать традиционное значение",
-                hskTitle: "Практика HSK 3.0 уровня 1",
-                hskHeader: "HSK 3.0, уровень 1",
+                hskTitle: "Практика HSK уровня 1",
+                hskHeader: "HSK, уровень 1",
                 sectionKangxi: "Радикалы Канси",
-                sectionHsk: "HSK 3.0, уровень 1",
+                sectionHsk: "HSK, уровень 1",
                 hskQuestion: "Что означает это слово?",
                 hskNext: "Следующее слово →",
                 words: "Слова",
                 characters: "Иероглифы",
-                hskWordsHeading: "Все 300 слов HSK 3.0 уровня 1",
-                hskWordsSubtitle: "Все 300 слов из списка HSK 3.0 уровня 1 с пиньинем, частью речи и русскими переводами.",
-                hskCharsHeading: "Все 248 иероглифов HSK 3.0 уровня 1",
+                stories: "Истории",
+                hskWordsHeading: "Все 300 слов HSK уровня 1",
+                hskWordsSubtitle: "Все 300 слов из списка HSK уровня 1 с пиньинем, частью речи и русскими переводами.",
+                hskCharsHeading: "Все 248 иероглифов HSK уровня 1",
                 hskCharsSubtitle: "Все 248 уникальных иероглифов из 300 слов. 店 и 饺 отмечены как дополнительные сверх официального списка из 246 иероглифов.",
+                hskStoriesHeading: "Истории составных иероглифов HSK 1",
+                hskStoriesSubtitle: "Изучайте составные иероглифы через цветные компоненты и истории для запоминания. Знак ♪ отмечает подсказки произношения; это учебные мнемоники, а не окончательная этимология.",
+                memoryStory: "История для запоминания",
+                soundCue: "Подсказка произношения",
                 extra: "доп.",
                 partOfSpeech: "Часть речи",
                 primitiveTitle: "Практика современных китайских примитивов",
@@ -2139,6 +3544,7 @@
         const hskViewToggle = document.getElementById('hskViewToggle');
         const hskWordsBtn = document.getElementById('hskWordsBtn');
         const hskCharsBtn = document.getElementById('hskCharsBtn');
+        const hskStoriesBtn = document.getElementById('hskStoriesBtn');
         const langSwitch = document.getElementById('langSwitch');
         const studyGrid = document.getElementById('studyGrid');
 
@@ -2150,6 +3556,15 @@
             if (currentLang === 'en') return pos;
             const labels = posAbbreviations[currentLang] || {};
             return pos.split('/').map(part => labels[part] || part).join('/');
+        }
+
+        function componentLabel(component) {
+            const langIndex = { en: 0, ru: 1, hy: 2 }[currentLang];
+            const supplemental = componentMeanings[component];
+            if (supplemental) return supplemental[langIndex];
+            const characterMeaning = hskCharMeanings[component];
+            if (characterMeaning) return characterMeaning[langIndex].split(';')[0].trim();
+            return component;
         }
 
         function isHsk() {
@@ -2239,6 +3654,7 @@
             const inactive = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
             hskWordsBtn.className = hskStudyView === 'words' ? active : inactive;
             hskCharsBtn.className = hskStudyView === 'chars' ? active : inactive;
+            hskStoriesBtn.className = hskStudyView === 'stories' ? active : inactive;
         }
 
         function updateTexts() {
@@ -2265,14 +3681,18 @@
             } else if (hskStudyView === 'words') {
                 studyTitle.textContent = t().hskWordsHeading;
                 studySubtitle.textContent = t().hskWordsSubtitle;
-            } else {
+            } else if (hskStudyView === 'chars') {
                 studyTitle.textContent = t().hskCharsHeading;
                 studySubtitle.textContent = t().hskCharsSubtitle;
+            } else {
+                studyTitle.textContent = t().hskStoriesHeading;
+                studySubtitle.textContent = t().hskStoriesSubtitle;
             }
 
             hskViewToggle.classList.toggle('hidden', !isHsk());
             hskWordsBtn.textContent = `${t().words} (${hskWords.length})`;
             hskCharsBtn.textContent = `${t().characters} (${hskCharacters.length})`;
+            hskStoriesBtn.textContent = `${t().stories} (${Object.keys(hskCharacterStories).length})`;
 
             langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
                 const isActive = btn.dataset.lang === currentLang;
@@ -2352,7 +3772,7 @@
         }
 
         function switchHskView(view) {
-            if (view !== 'words' && view !== 'chars') return;
+            if (view !== 'words' && view !== 'chars' && view !== 'stories') return;
             hskStudyView = view;
             updateTexts();
             renderStudyGrid();
@@ -2566,8 +3986,10 @@
             if (isHsk()) {
                 if (hskStudyView === 'words') {
                     renderHskWords();
-                } else {
+                } else if (hskStudyView === 'chars') {
                     renderHskCharacters();
+                } else {
+                    renderHskStories();
                 }
                 return;
             }
@@ -2652,6 +4074,52 @@
                     <div class="text-[11px] font-semibold text-indigo-500 text-center mt-1">${escapeHtml(entry.p)}</div>
                     <div class="text-[11px] leading-snug text-slate-600 text-center mt-1">${escapeHtml(meaning)}</div>
                     <div class="text-[10px] leading-snug text-slate-400 text-center mt-1">${examples}</div>
+                `;
+                studyGrid.appendChild(card);
+            });
+        }
+
+        function renderHskStories() {
+            studyGrid.className = "story-grid";
+            const langIndex = { en: 0, ru: 1, hy: 2 }[currentLang];
+
+            Object.entries(hskCharacterStories).forEach(([character, entry]) => {
+                const card = document.createElement('article');
+                const characterInfo = hskCharacters.find(item => item.c === character);
+                const meaning = hskCharMeanings[character]?.[langIndex] || '';
+                const soundParts = new Set(entry.sound || []);
+
+                const partsHtml = entry.parts.map((part, index) => {
+                    const isSoundPart = soundParts.has(index);
+                    const soundBadge = isSoundPart
+                        ? `<span class="story-sound" title="${escapeHtml(t().soundCue)}" aria-label="${escapeHtml(t().soundCue)}">♪</span>`
+                        : '';
+                    const separator = index > 0 ? '<span class="story-plus" aria-hidden="true">+</span>' : '';
+
+                    return `${separator}
+                        <div class="story-part story-part--${index % 5}">
+                            ${soundBadge}
+                            <span class="story-part__char zh-char">${escapeHtml(part)}</span>
+                            <span class="story-part__label">${escapeHtml(componentLabel(part))}</span>
+                        </div>`;
+                }).join('');
+
+                card.className = "story-card";
+                card.innerHTML = `
+                    <div class="story-card__header">
+                        <div class="story-character zh-char">${escapeHtml(character)}</div>
+                        <div class="story-card__meta">
+                            <div class="story-card__pinyin">${escapeHtml(characterInfo?.p || '')}</div>
+                            <div class="story-card__meaning">${escapeHtml(meaning)}</div>
+                        </div>
+                    </div>
+                    <div class="story-equation" aria-label="${escapeHtml(entry.parts.join(' + '))}">
+                        ${partsHtml}
+                    </div>
+                    <div class="story-copy">
+                        <span class="story-copy__label">${escapeHtml(t().memoryStory)}</span>
+                        <p class="story-copy__text">${escapeHtml(entry.story[langIndex])}</p>
+                    </div>
                 `;
                 studyGrid.appendChild(card);
             });
