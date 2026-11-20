@@ -13,6 +13,11 @@
             background-color: #f8fafc;
         }
 
+        .app-viewport {
+            height: 100vh;
+            height: 100dvh;
+        }
+
         /* Better font rendering for Chinese Characters */
         .zh-char {
             font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
@@ -29,6 +34,15 @@
 
         .option-btn:not(:disabled):active {
             transform: translateY(0);
+        }
+
+        .option-btn:focus-visible,
+        .quiz-next-btn:focus-visible,
+        .lang-btn:focus-visible,
+        #sectionTabs button:focus-visible,
+        #modeTabs button:focus-visible {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
         }
 
         .fade-in {
@@ -123,21 +137,335 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8; 
         }
+
+        .app-header__inner {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem 0.75rem;
+            padding: 0.55rem 1rem;
+        }
+
+        .app-brand {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        .app-brand__logo {
+            width: 2.25rem;
+            height: 2.25rem;
+            font-size: 1.1rem;
+        }
+
+        .app-brand__title {
+            font-size: 1.05rem;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #sectionTabs {
+            flex: 0 1 auto;
+            min-width: 0;
+            justify-content: center;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        #sectionTabs::-webkit-scrollbar,
+        #utilityControls::-webkit-scrollbar {
+            display: none;
+        }
+
+        #sectionTabs button {
+            flex-shrink: 0;
+            padding: 0.4rem 0.65rem;
+            font-size: 0.7rem;
+            line-height: 1.25;
+        }
+
+        #utilityControls {
+            display: flex;
+            flex: 1 1 auto;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        #modeTabs button {
+            padding: 0.4rem 0.7rem;
+            font-size: 0.72rem;
+            line-height: 1.25;
+            white-space: nowrap;
+        }
+
+        .quiz-section {
+            padding: 0.75rem clamp(0.75rem, 2vw, 1.25rem);
+        }
+
+        .quiz-section.has-answer {
+            padding-bottom: 7rem;
+        }
+
+        .quiz-shell {
+            width: 100%;
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+
+        .quiz-card {
+            width: 100%;
+            padding: clamp(1rem, 2.5vw, 1.5rem);
+        }
+
+        .quiz-topline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.65rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .quiz-stats {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .quiz-stat {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            padding: 0.3rem 0.55rem;
+            border-radius: 0.55rem;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 0.68rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .quiz-stat span {
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+
+        .quiz-board {
+            display: grid;
+            grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.4fr);
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .quiz-character-panel {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-right: 1.5rem;
+            border-right: 1px solid #f1f5f9;
+        }
+
+        .quiz-character {
+            margin: 0.45rem 0 0.15rem;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .quiz-pinyin {
+            min-height: 1.5rem;
+            margin: 0.25rem 0 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        #quizTradNote {
+            margin: 0.25rem 0 0;
+            max-width: 22rem;
+        }
+
+        #optionsContainer {
+            gap: 0.6rem;
+        }
+
+        .option-btn {
+            min-height: 2.85rem;
+            padding: 0.65rem 0.8rem;
+            line-height: 1.25;
+        }
+
+        .quiz-feedback {
+            position: fixed;
+            left: 50%;
+            bottom: max(0.75rem, env(safe-area-inset-bottom));
+            z-index: 50;
+            display: flex;
+            width: min(calc(100% - 1.5rem), 48rem);
+            align-items: center;
+            gap: 0.65rem 1rem;
+            padding: 0.65rem;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 14px 35px -12px rgba(15, 23, 42, 0.3), 0 2px 6px rgba(15, 23, 42, 0.06);
+            transform: translateX(-50%);
+            backdrop-filter: blur(10px);
+            animation: feedbackIn 0.2s ease-out;
+        }
+
+        .quiz-feedback.hidden {
+            display: none;
+        }
+
+        .quiz-feedback__text {
+            flex: 1 1 15rem;
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.35;
+            text-align: left;
+        }
+
+        .quiz-next-btn {
+            min-height: 2.75rem;
+            flex: 0 0 auto;
+            margin-left: auto;
+            padding: 0.65rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        @keyframes feedbackIn {
+            from { opacity: 0; transform: translate(-50%, 0.5rem); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        @media (max-width: 960px) {
+            .app-header__inner {
+                flex-wrap: wrap;
+                gap: 0.45rem;
+            }
+
+            #sectionTabs {
+                order: 2;
+                flex-basis: 100%;
+                justify-content: flex-start;
+            }
+
+            #utilityControls {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .quiz-board {
+                grid-template-columns: 1fr;
+                gap: 0.55rem;
+            }
+
+            .quiz-character-panel {
+                padding: 0 0 0.25rem;
+                border-right: 0;
+            }
+
+            .quiz-character {
+                font-size: 4.5rem !important;
+                margin-top: 0.2rem;
+            }
+
+            .quiz-feedback {
+                align-items: stretch;
+                flex-wrap: wrap;
+                padding: 0.6rem;
+            }
+
+            .quiz-section.has-answer {
+                padding-bottom: 8.5rem;
+            }
+
+            .quiz-feedback__text {
+                flex-basis: 100%;
+            }
+
+            .quiz-next-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .app-brand {
+                flex: 0 0 auto;
+            }
+
+            .app-brand__title {
+                display: none;
+            }
+
+            .app-brand__logo {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .lang-btn span {
+                display: none;
+            }
+
+            .lang-btn {
+                padding: 0.35rem;
+            }
+
+            .quiz-topline {
+                align-items: flex-start;
+            }
+
+            #questionPrompt {
+                font-size: 0.68rem;
+                line-height: 1.3;
+            }
+
+            .quiz-stat {
+                padding: 0.25rem 0.4rem;
+                font-size: 0.62rem;
+            }
+
+            .option-btn {
+                min-height: 2.55rem;
+                padding: 0.55rem 0.7rem;
+                font-size: 0.92rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .app-header__inner {
+                padding-inline: 0.6rem;
+            }
+
+            #modeTabs button {
+                padding-inline: 0.5rem;
+            }
+        }
     </style>
 </head>
-<body class="text-slate-800 h-screen flex flex-col overflow-hidden">
+<body class="app-viewport text-slate-800 flex flex-col overflow-hidden">
 
     <!-- Header -->
     <header class="bg-white shadow-sm z-10 flex-shrink-0">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 text-white w-10 h-10 rounded-lg flex items-center justify-center text-xl font-bold zh-char">
+        <div class="app-header__inner max-w-7xl mx-auto">
+            <div class="app-brand flex items-center gap-2">
+                <div class="app-brand__logo bg-indigo-600 text-white rounded-lg flex items-center justify-center font-bold zh-char">
                     漢
                 </div>
-                <h1 id="headerTitle" class="text-xl font-bold text-slate-800">Kangxi Radicals</h1>
+                <h1 id="headerTitle" class="app-brand__title font-bold text-slate-800">Kangxi Radicals</h1>
             </div>
-            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                <div class="flex bg-indigo-50 p-1 rounded-lg" role="tablist" aria-label="Section">
+            <div id="sectionTabs" class="flex bg-indigo-50 p-1 rounded-lg" role="tablist" aria-label="Section">
                     <button id="secKangxiBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchSection('kangxi')">
                         Kangxi Radicals
                     </button>
@@ -147,8 +475,9 @@
                     <button id="secPrimitiveBtn" class="px-3 py-2 rounded-md font-semibold text-xs sm:text-sm transition-colors text-indigo-500 hover:text-indigo-700" onclick="switchSection('primitives')">
                         Modern Primitives
                     </button>
-                </div>
-                <div class="flex bg-slate-100 p-1 rounded-lg" role="tablist">
+            </div>
+            <div id="utilityControls">
+                <div id="modeTabs" class="flex bg-slate-100 p-1 rounded-lg" role="tablist">
                     <button id="navQuizBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white shadow-sm text-indigo-700" onclick="switchTab('quiz')">
                         Quiz Mode
                     </button>
@@ -201,49 +530,56 @@
     <main class="flex-grow overflow-hidden relative">
         
         <!-- QUIZ MODE SECTION -->
-        <section id="quizSection" class="absolute inset-0 overflow-y-auto w-full h-full flex flex-col items-center py-8 px-4 fade-in">
+        <section id="quizSection" class="quiz-section absolute inset-0 overflow-y-auto w-full h-full flex flex-col items-center fade-in">
             
-            <div class="w-full max-w-2xl">
-                <!-- Stats Bar -->
-                <div class="flex justify-between items-center bg-white px-6 py-4 rounded-2xl shadow-sm border border-slate-100 mb-6">
-                    <div class="text-slate-500 font-medium">
-                        <span id="scoreLabel">Score</span>: <span id="scoreDisplay" class="text-indigo-600 font-bold text-lg">0</span>
-                    </div>
-                    <div class="text-slate-500 font-medium">
-                        <span id="streakLabel">Streak</span>: <span id="streakDisplay" class="text-amber-500 font-bold text-lg">0</span>
-                    </div>
-                </div>
-
+            <div class="quiz-shell">
                 <!-- Quiz Card -->
-                <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 sm:p-10 flex flex-col items-center w-full">
-                    
-                    <div id="questionPrompt" class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2 text-center">What does this radical mean?</div>
-                    
-                    <!-- Character Display -->
-                    <div id="characterDisplay" class="zh-char text-8xl sm:text-9xl font-medium text-slate-800 my-6 drop-shadow-sm select-none">
-                        <!-- Character gets injected here -->
-                    </div>
-                    
-                    <!-- Pinyin Reveal (Hidden initially) -->
-                    <div id="pinyinDisplay" class="text-xl text-indigo-500 font-medium mb-8 h-8 opacity-0 transition-opacity duration-300">
-                        <!-- Pinyin gets injected here -->
-                    </div>
-
-                    <div id="quizTradNote" class="text-xs leading-snug text-slate-500 text-center mb-4 px-2 hidden"></div>
-
-                    <!-- Options Grid -->
-                    <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                        <!-- Buttons get injected here -->
+                <div class="quiz-card bg-white rounded-2xl shadow-lg border border-slate-100">
+                    <div class="quiz-topline">
+                        <div id="questionPrompt" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">What does this radical mean?</div>
+                        <div class="quiz-stats">
+                            <div class="quiz-stat">
+                                <span id="scoreLabel">Score</span>
+                                <span id="scoreDisplay" class="text-indigo-600 font-bold">0</span>
+                            </div>
+                            <div class="quiz-stat">
+                                <span id="streakLabel">Streak</span>
+                                <span id="streakDisplay" class="text-amber-500 font-bold">0</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Feedback Area & Next Button -->
-                    <div id="feedbackArea" class="mt-8 flex flex-col items-center justify-center min-h-[80px] w-full hidden">
-                        <p id="feedbackText" class="text-lg font-bold mb-4 text-center"></p>
-                        <button id="nextBtn" onclick="nextQuestion()" class="w-full sm:w-auto px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-colors shadow-md shadow-indigo-200">
-                            Next Character &rarr;
-                        </button>
+                    <div class="quiz-board">
+                        <div class="quiz-character-panel">
+                            <!-- Character Display -->
+                            <div id="characterDisplay" class="zh-char quiz-character text-7xl sm:text-8xl font-medium text-slate-800 drop-shadow-sm select-none">
+                                <!-- Character gets injected here -->
+                            </div>
+
+                            <!-- Pinyin Reveal (Hidden initially) -->
+                            <div id="pinyinDisplay" class="quiz-pinyin text-indigo-500 font-medium opacity-0 transition-opacity duration-300">
+                                <!-- Pinyin gets injected here -->
+                            </div>
+
+                            <div id="quizTradNote" class="text-xs leading-snug text-slate-500 text-center px-2 hidden"></div>
+                        </div>
+
+                        <div class="quiz-answer-panel">
+                            <!-- Options Grid -->
+                            <div id="optionsContainer" class="grid grid-cols-1 gap-3 w-full">
+                                <!-- Buttons get injected here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Pinned feedback and Next action -->
+            <div id="feedbackArea" class="quiz-feedback hidden" role="status" aria-live="polite">
+                <p id="feedbackText" class="quiz-feedback__text font-bold"></p>
+                <button id="nextBtn" onclick="nextQuestion()" class="quiz-next-btn bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors shadow-md shadow-indigo-200">
+                    Next Character &rarr;
+                </button>
             </div>
         </section>
 
@@ -1758,8 +2094,8 @@
             // Set Character or Word
             const display = itemDisplay(currentQuestion);
             const length = [...display].length;
-            const sizeClass = length > 3 ? 'text-4xl sm:text-5xl' : length > 1 ? 'text-6xl sm:text-7xl' : 'text-8xl sm:text-9xl';
-            characterDisplay.className = `zh-char ${sizeClass} font-medium text-slate-800 my-6 drop-shadow-sm select-none text-center`;
+            const sizeClass = length > 3 ? 'text-3xl sm:text-4xl' : length > 1 ? 'text-5xl sm:text-6xl' : 'text-7xl sm:text-8xl';
+            characterDisplay.className = `zh-char quiz-character ${sizeClass} font-medium text-slate-800 drop-shadow-sm select-none`;
             characterDisplay.textContent = display;
 
             if (!isHsk() && currentQuestion.trad && currentQuestion.trad.char) {
@@ -1770,7 +2106,7 @@
             }
 
             // Clear and render buttons
-            optionsContainer.className = isHsk() ? "grid grid-cols-1 gap-3 w-full" : "grid grid-cols-1 sm:grid-cols-2 gap-4 w-full";
+            optionsContainer.className = "grid grid-cols-1 sm:grid-cols-2 gap-3 w-full";
             optionsContainer.innerHTML = '';
             currentOptions.forEach((option, index) => {
                 const btn = document.createElement('button');
@@ -1812,10 +2148,10 @@
 
                 if (feedbackKind === 'correct') {
                     feedbackText.textContent = t().correct;
-                    feedbackText.className = "text-xl font-bold text-emerald-600 mb-4 text-center";
+                    feedbackText.className = "quiz-feedback__text font-bold text-emerald-600";
                 } else {
                     feedbackText.textContent = t().incorrect(meaningText(currentQuestion));
-                    feedbackText.className = "text-xl font-bold text-rose-600 mb-4 text-center";
+                    feedbackText.className = "quiz-feedback__text font-bold text-rose-600";
                 }
 
                 feedbackArea.classList.remove('hidden');
@@ -1826,6 +2162,8 @@
                 quizTradNote.classList.add('hidden');
                 feedbackArea.classList.add('hidden');
             }
+
+            quizSection.classList.toggle('has-answer', hasAnswered);
         }
 
         function handleAnswer(index) {
@@ -1856,9 +2194,11 @@
             streakDisplay.textContent = streak;
 
             renderQuizUI();
+            requestAnimationFrame(() => nextBtn.focus({ preventScroll: true }));
         }
 
         function nextQuestion() {
+            quizSection.scrollTop = 0;
             generateQuestion();
         }
 
