@@ -343,6 +343,361 @@
             white-space: nowrap;
         }
 
+        #navReviewBtn {
+            padding: 0.4rem 0.7rem;
+            font-size: 0.72rem;
+            line-height: 1.25;
+            white-space: nowrap;
+        }
+
+        .review-section {
+            padding: 0.9rem clamp(0.75rem, 2vw, 1.25rem);
+        }
+
+        .review-shell {
+            width: 100%;
+            max-width: 52rem;
+            margin: 0 auto;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .review-eyebrow {
+            color: #6366f1;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .review-title {
+            margin-top: 0.15rem;
+            color: #0f172a;
+            font-size: 1.55rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .review-subtitle {
+            max-width: 38rem;
+            margin-top: 0.25rem;
+            color: #64748b;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        .review-reset {
+            flex-shrink: 0;
+            padding: 0.45rem 0.65rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.6rem;
+            color: #64748b;
+            font-size: 0.72rem;
+            font-weight: 600;
+            transition: all 0.15s ease;
+        }
+
+        .review-reset:hover {
+            border-color: #cbd5e1;
+            background: #ffffff;
+            color: #334155;
+        }
+
+        .review-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.55rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .review-stat {
+            padding: 0.65rem 0.7rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.8rem;
+            background: #ffffff;
+        }
+
+        .review-stat__label {
+            display: block;
+            overflow: hidden;
+            color: #94a3b8;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .review-stat__value {
+            display: block;
+            margin-top: 0.1rem;
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .review-card {
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.15rem;
+            background: #ffffff;
+            box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.4);
+        }
+
+        .review-card__topline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.65rem 0.9rem;
+            border-bottom: 1px solid #f1f5f9;
+            background: #f8fafc;
+        }
+
+        .review-type {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.24rem 0.5rem;
+            border-radius: 9999px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .review-progress-text {
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .review-progress-track {
+            height: 0.25rem;
+            background: #e2e8f0;
+        }
+
+        .review-progress-bar {
+            height: 100%;
+            width: 0;
+            background: #6366f1;
+            transition: width 0.25s ease;
+        }
+
+        .review-card__body {
+            display: flex;
+            min-height: 18rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.1rem;
+            text-align: center;
+        }
+
+        .review-front {
+            color: #1e293b;
+            font-size: clamp(3.5rem, 12vw, 5.5rem);
+            font-weight: 600;
+            line-height: 1.05;
+        }
+
+        .review-front--word {
+            font-size: clamp(2.8rem, 10vw, 4.5rem);
+        }
+
+        .review-answer {
+            width: 100%;
+            max-width: 34rem;
+        }
+
+        .review-answer__pinyin {
+            color: #4f46e5;
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+        .review-answer__meaning {
+            margin-top: 0.35rem;
+            color: #334155;
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .review-answer__meta {
+            margin-top: 0.4rem;
+            color: #64748b;
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+
+        .review-story {
+            margin-top: 0.8rem;
+            padding: 0.7rem 0.8rem;
+            border: 1px solid #e0e7ff;
+            border-radius: 0.75rem;
+            background: #eef2ff;
+            color: #475569;
+            font-size: 0.76rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .review-story__label {
+            display: block;
+            margin-bottom: 0.2rem;
+            color: #4338ca;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .review-actions {
+            padding: 0 0.9rem 0.9rem;
+        }
+
+        .review-reveal {
+            width: 100%;
+            min-height: 3rem;
+            border-radius: 0.8rem;
+            background: #4f46e5;
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            transition: background-color 0.15s ease;
+        }
+
+        .review-reveal:hover {
+            background: #4338ca;
+        }
+
+        .review-ratings {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.55rem;
+        }
+
+        .review-rating {
+            min-height: 3.15rem;
+            border: 1px solid transparent;
+            border-radius: 0.8rem;
+            padding: 0.55rem 0.4rem;
+            font-size: 0.82rem;
+            font-weight: 800;
+            transition: transform 0.15s ease, filter 0.15s ease;
+        }
+
+        .review-rating:hover {
+            filter: brightness(0.96);
+            transform: translateY(-1px);
+        }
+
+        .review-rating--again {
+            border-color: #fecdd3;
+            background: #fff1f2;
+            color: #be123c;
+        }
+
+        .review-rating--good {
+            border-color: #c7d2fe;
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .review-rating--easy {
+            border-color: #a7f3d0;
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .review-hint {
+            margin-top: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.68rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .review-message {
+            padding: 2.2rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.15rem;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .review-message__icon {
+            display: flex;
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 0.65rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 1.35rem;
+        }
+
+        .review-message__title {
+            color: #1e293b;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .review-message__text {
+            max-width: 28rem;
+            margin: 0.3rem auto 0.85rem;
+            color: #64748b;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .review-message__button {
+            padding: 0.55rem 0.9rem;
+            border-radius: 0.7rem;
+            background: #4f46e5;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 640px) {
+            .review-header {
+                align-items: stretch;
+            }
+
+            .review-title {
+                font-size: 1.3rem;
+            }
+
+            .review-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .review-card__body {
+                min-height: 15rem;
+                padding: 0.9rem;
+            }
+
+            .review-ratings {
+                gap: 0.4rem;
+            }
+
+            .review-rating {
+                font-size: 0.72rem;
+            }
+        }
+
         #hskViewToggle {
             max-width: 100%;
             overflow-x: auto;
@@ -694,6 +1049,9 @@
                     <button id="navStudyBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchTab('study')">
                         Study Reference
                     </button>
+                    <button id="navReviewBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchTab('review')">
+                        Daily Review
+                    </button>
                 </div>
                 <div id="langSwitch" class="flex bg-slate-100 p-1 rounded-lg" role="group" aria-label="Language">
                     <button class="lang-btn active" data-lang="en" aria-label="English" aria-pressed="true" title="English">
@@ -790,6 +1148,81 @@
                 <button id="nextBtn" onclick="nextQuestion()" class="quiz-next-btn bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors shadow-md shadow-indigo-200">
                     Next Character &rarr;
                 </button>
+            </div>
+        </section>
+
+        <!-- DAILY REVIEW SECTION -->
+        <section id="reviewSection" class="review-section absolute inset-0 overflow-y-auto w-full h-full bg-slate-50 hidden fade-in">
+            <div class="review-shell">
+                <header class="review-header">
+                    <div>
+                        <p id="reviewEyebrow" class="review-eyebrow">HSK Level 1</p>
+                        <h2 id="reviewHeading" class="review-title">Daily Review</h2>
+                        <p id="reviewSubtitleText" class="review-subtitle">Review due words and characters, then meet a few new ones.</p>
+                    </div>
+                    <button id="resetReviewBtn" class="review-reset" onclick="resetReviewProgress()">Reset</button>
+                </header>
+
+                <div class="review-stats">
+                    <div class="review-stat">
+                        <span id="reviewDueLabel" class="review-stat__label">Due</span>
+                        <strong id="reviewDueCount" class="review-stat__value">0</strong>
+                    </div>
+                    <div class="review-stat">
+                        <span id="reviewLearnedLabel" class="review-stat__label">Learned</span>
+                        <strong id="reviewLearnedCount" class="review-stat__value">0</strong>
+                    </div>
+                    <div class="review-stat">
+                        <span id="reviewDayStreakLabel" class="review-stat__label">Day streak</span>
+                        <strong id="reviewDayStreakCount" class="review-stat__value">0</strong>
+                    </div>
+                    <div class="review-stat">
+                        <span id="reviewAccuracyLabel" class="review-stat__label">Accuracy</span>
+                        <strong id="reviewAccuracyCount" class="review-stat__value">0%</strong>
+                    </div>
+                </div>
+
+                <div id="reviewSessionPanel" class="hidden">
+                    <div class="review-card">
+                        <div class="review-card__topline">
+                            <span id="reviewTypeBadge" class="review-type">Word</span>
+                            <span id="reviewProgressText" class="review-progress-text">1 / 1</span>
+                        </div>
+                        <div class="review-progress-track" aria-hidden="true">
+                            <div id="reviewProgressBar" class="review-progress-bar"></div>
+                        </div>
+                        <div class="review-card__body">
+                            <div id="reviewFront" class="review-front zh-char"></div>
+                            <div id="reviewAnswer" class="review-answer hidden" aria-live="polite">
+                                <div id="reviewPinyin" class="review-answer__pinyin"></div>
+                                <div id="reviewMeaning" class="review-answer__meaning"></div>
+                                <div id="reviewMeta" class="review-answer__meta"></div>
+                                <div id="reviewStory" class="review-story hidden">
+                                    <span id="reviewStoryLabel" class="review-story__label">Memory story</span>
+                                    <span id="reviewStoryText"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-actions">
+                            <button id="reviewRevealBtn" class="review-reveal" onclick="revealReviewAnswer()">Show answer</button>
+                            <div id="reviewRatingActions" class="hidden">
+                                <div class="review-ratings">
+                                    <button id="reviewAgainBtn" class="review-rating review-rating--again" onclick="rateReview('again')">Again</button>
+                                    <button id="reviewGoodBtn" class="review-rating review-rating--good" onclick="rateReview('good')">Good</button>
+                                    <button id="reviewEasyBtn" class="review-rating review-rating--easy" onclick="rateReview('easy')">Easy</button>
+                                </div>
+                                <p id="reviewKeyboardHint" class="review-hint">1 Again · 2 Good · 3 Easy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reviewMessagePanel" class="review-message hidden" role="status">
+                    <div class="review-message__icon">✓</div>
+                    <h3 id="reviewMessageTitle" class="review-message__title">Review complete</h3>
+                    <p id="reviewMessageText" class="review-message__text"></p>
+                    <button id="reviewMessageBtn" class="review-message__button" onclick="handleReviewMessageAction()">Study words</button>
+                </div>
             </div>
         </section>
 
@@ -1732,6 +2165,22 @@
 
             return list;
         })();
+
+        const hskWordReviewEntries = hskWords.map(word => ({
+            id: `word:${word.w}`,
+            kind: "word",
+            data: word
+        }));
+        const hskCharacterReviewEntries = hskCharacters.map(character => ({
+            id: `char:${character.c}`,
+            kind: "character",
+            data: character
+        }));
+        const hskReviewEntriesById = new Map([
+            ...hskWordReviewEntries,
+            ...hskCharacterReviewEntries
+        ].map(entry => [entry.id, entry]));
+
         const hskCharMeanings = {
             "爱": ["love", "любовь; любить", "սեր; սիրել"],
             "八": ["eight", "восемь", "ութ"],
@@ -3374,6 +3823,29 @@
                 header: "Kangxi Radicals",
                 quizTab: "Quiz Mode",
                 studyTab: "Study Reference",
+                reviewTab: "Daily Review",
+                reviewEyebrow: "HSK Level 1",
+                reviewHeading: "Daily Review",
+                reviewSubtitle: "Review due words and characters, then meet a few new ones.",
+                reviewDue: "Due",
+                reviewLearned: "Learned",
+                reviewDayStreak: "Day streak",
+                reviewAccuracy: "Accuracy",
+                reviewWord: "Word",
+                reviewCharacter: "Character",
+                reviewShowAnswer: "Show answer",
+                reviewAgain: "Again",
+                reviewGood: "Good",
+                reviewEasy: "Easy",
+                reviewKeyboardHint: "1 Again · 2 Good · 3 Easy",
+                reviewComplete: "Review complete",
+                reviewEmptyTitle: "Nothing due",
+                reviewEmptyText: "Your next review is scheduled for later. Browse the HSK study pages in the meantime.",
+                reviewSessionCompleteText: "You finished this review session. More cards are waiting whenever you are ready.",
+                reviewStartAnother: "Review more",
+                reviewStudyWords: "Study words",
+                reviewReset: "Reset",
+                reviewResetConfirm: "Reset all HSK review progress?",
                 score: "Score",
                 streak: "Streak",
                 question: "What does this radical mean?",
@@ -3417,6 +3889,29 @@
                 header: "Կանսիի արմատներ",
                 quizTab: "Վիկտորինա",
                 studyTab: "Ուսումնական տեղեկատու",
+                reviewTab: "Օրական կրկնություն",
+                reviewEyebrow: "HSK 1-ին մակարդակ",
+                reviewHeading: "Օրական կրկնություն",
+                reviewSubtitle: "Կրկնեք ժամկետանց բառերն ու նշանները, ապա ծանոթացեք մի քանի նորերի հետ։",
+                reviewDue: "Ժամկետանց",
+                reviewLearned: "Սովորած",
+                reviewDayStreak: "Օրերի շարք",
+                reviewAccuracy: "Ճշգրտություն",
+                reviewWord: "Բառ",
+                reviewCharacter: "Նշան",
+                reviewShowAnswer: "Ցույց տալ պատասխանը",
+                reviewAgain: "Կրկին",
+                reviewGood: "Լավ",
+                reviewEasy: "Հեշտ",
+                reviewKeyboardHint: "1 Կրկին · 2 Լավ · 3 Հեշտ",
+                reviewComplete: "Կրկնությունն ավարտված է",
+                reviewEmptyTitle: "Ժամկետանց նյութ չկա",
+                reviewEmptyText: "Հաջորդ կրկնությունը նշանակված է ավելի ուշ։ Այդ ընթացքում դիտեք HSK-ի ուսումնական էջերը։",
+                reviewSessionCompleteText: "Այս կրկնության նստաշրջանն ավարտված է։ Երբ պատրաստ լինեք, կլինեն նոր քարտեր։",
+                reviewStartAnother: "Կրկնել ևս",
+                reviewStudyWords: "Սովորել բառերը",
+                reviewReset: "Վերականգնել",
+                reviewResetConfirm: "Վերականգնե՞լ HSK-ի կրկնության ողջ առաջընթացը։",
                 score: "Միավորներ",
                 streak: "Անընդմեջ",
                 question: "Ի՞նչ է նշանակում այս արմատը։",
@@ -3460,6 +3955,29 @@
                 header: "Радикалы Канси",
                 quizTab: "Режим викторины",
                 studyTab: "Справочник",
+                reviewTab: "Ежедневное повторение",
+                reviewEyebrow: "HSK, уровень 1",
+                reviewHeading: "Ежедневное повторение",
+                reviewSubtitle: "Повторите слова и иероглифы, срок которых наступил, затем изучите несколько новых.",
+                reviewDue: "К повторению",
+                reviewLearned: "Изучено",
+                reviewDayStreak: "Дней подряд",
+                reviewAccuracy: "Точность",
+                reviewWord: "Слово",
+                reviewCharacter: "Иероглиф",
+                reviewShowAnswer: "Показать ответ",
+                reviewAgain: "Снова",
+                reviewGood: "Хорошо",
+                reviewEasy: "Легко",
+                reviewKeyboardHint: "1 Снова · 2 Хорошо · 3 Легко",
+                reviewComplete: "Повторение завершено",
+                reviewEmptyTitle: "Сейчас нечего повторять",
+                reviewEmptyText: "Следующее повторение запланировано позже. Пока просмотрите учебные страницы HSK.",
+                reviewSessionCompleteText: "Этот сеанс повторения завершён. Когда будете готовы, появятся новые карточки.",
+                reviewStartAnother: "Повторить ещё",
+                reviewStudyWords: "Изучать слова",
+                reviewReset: "Сбросить",
+                reviewResetConfirm: "Сбросить весь прогресс повторения HSK?",
                 score: "Счёт",
                 streak: "Серия",
                 question: "Что означает этот радикал?",
@@ -3515,6 +4033,15 @@
         let hasAnswered = false;
         let feedbackKind = null;
         const savedQuizStates = { kangxi: null, hsk: null, primitives: null };
+        const REVIEW_STORAGE_KEY = 'hsk-level1-review-v1';
+        const REVIEW_SCHEMA_VERSION = 1;
+        const REVIEW_SESSION_LIMIT = 20;
+        const REVIEW_NEW_DAILY_LIMIT = 10;
+        const REVIEW_NEW_WORD_DAILY_LIMIT = 6;
+        const REVIEW_NEW_CHAR_DAILY_LIMIT = 4;
+        let reviewState = loadReviewState();
+        let reviewSession = null;
+        let reviewMessageAction = 'study';
 
         // DOM Elements
         const scoreDisplay = document.getElementById('scoreDisplay');
@@ -3532,12 +4059,48 @@
         const nextBtn = document.getElementById('nextBtn');
         const studyTitle = document.getElementById('studyTitle');
         const studySubtitle = document.getElementById('studySubtitle');
+        const reviewSection = document.getElementById('reviewSection');
+        const reviewEyebrow = document.getElementById('reviewEyebrow');
+        const reviewHeading = document.getElementById('reviewHeading');
+        const reviewSubtitleText = document.getElementById('reviewSubtitleText');
+        const reviewDueLabel = document.getElementById('reviewDueLabel');
+        const reviewLearnedLabel = document.getElementById('reviewLearnedLabel');
+        const reviewDayStreakLabel = document.getElementById('reviewDayStreakLabel');
+        const reviewAccuracyLabel = document.getElementById('reviewAccuracyLabel');
+        const reviewDueCount = document.getElementById('reviewDueCount');
+        const reviewLearnedCount = document.getElementById('reviewLearnedCount');
+        const reviewDayStreakCount = document.getElementById('reviewDayStreakCount');
+        const reviewAccuracyCount = document.getElementById('reviewAccuracyCount');
+        const reviewSessionPanel = document.getElementById('reviewSessionPanel');
+        const reviewTypeBadge = document.getElementById('reviewTypeBadge');
+        const reviewProgressText = document.getElementById('reviewProgressText');
+        const reviewProgressBar = document.getElementById('reviewProgressBar');
+        const reviewFront = document.getElementById('reviewFront');
+        const reviewAnswer = document.getElementById('reviewAnswer');
+        const reviewPinyin = document.getElementById('reviewPinyin');
+        const reviewMeaning = document.getElementById('reviewMeaning');
+        const reviewMeta = document.getElementById('reviewMeta');
+        const reviewStory = document.getElementById('reviewStory');
+        const reviewStoryLabel = document.getElementById('reviewStoryLabel');
+        const reviewStoryText = document.getElementById('reviewStoryText');
+        const reviewRevealBtn = document.getElementById('reviewRevealBtn');
+        const reviewRatingActions = document.getElementById('reviewRatingActions');
+        const reviewAgainBtn = document.getElementById('reviewAgainBtn');
+        const reviewGoodBtn = document.getElementById('reviewGoodBtn');
+        const reviewEasyBtn = document.getElementById('reviewEasyBtn');
+        const reviewKeyboardHint = document.getElementById('reviewKeyboardHint');
+        const reviewMessagePanel = document.getElementById('reviewMessagePanel');
+        const reviewMessageTitle = document.getElementById('reviewMessageTitle');
+        const reviewMessageText = document.getElementById('reviewMessageText');
+        const reviewMessageBtn = document.getElementById('reviewMessageBtn');
+        const resetReviewBtn = document.getElementById('resetReviewBtn');
         
         // Navigation Elements
         const quizSection = document.getElementById('quizSection');
         const studySection = document.getElementById('studySection');
         const navQuizBtn = document.getElementById('navQuizBtn');
         const navStudyBtn = document.getElementById('navStudyBtn');
+        const navReviewBtn = document.getElementById('navReviewBtn');
         const secKangxiBtn = document.getElementById('secKangxiBtn');
         const secHskBtn = document.getElementById('secHskBtn');
         const secPrimitiveBtn = document.getElementById('secPrimitiveBtn');
@@ -3620,6 +4183,414 @@
                 : escapeHtml(ch)).join('');
         }
 
+        function getLocalDateKey(date = new Date()) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function getLocalDayStart(dayOffset = 0) {
+            const date = new Date();
+            date.setHours(0, 0, 0, 0);
+            date.setDate(date.getDate() + dayOffset);
+            return date.getTime();
+        }
+
+        function createEmptyReviewState() {
+            return {
+                schemaVersion: REVIEW_SCHEMA_VERSION,
+                items: {},
+                activity: {},
+                newCursor: { word: 0, character: 0 }
+            };
+        }
+
+        function loadReviewState() {
+            try {
+                const stored = localStorage.getItem(REVIEW_STORAGE_KEY);
+                if (!stored) return createEmptyReviewState();
+
+                const parsed = JSON.parse(stored);
+                if (!parsed || parsed.schemaVersion !== REVIEW_SCHEMA_VERSION) {
+                    return createEmptyReviewState();
+                }
+
+                const state = createEmptyReviewState();
+                Object.entries(parsed.items || {}).forEach(([id, item]) => {
+                    if (!hskReviewEntriesById.has(id) || !item || !Number.isFinite(item.dueAt)) return;
+                    state.items[id] = {
+                        dueAt: item.dueAt,
+                        intervalDays: Math.max(0, Number(item.intervalDays) || 0),
+                        repetitions: Math.max(0, Number(item.repetitions) || 0),
+                        lapses: Math.max(0, Number(item.lapses) || 0),
+                        lastRating: typeof item.lastRating === 'string' ? item.lastRating : null,
+                        lastReviewedAt: Number.isFinite(item.lastReviewedAt) ? item.lastReviewedAt : null,
+                        firstReviewedAt: Number.isFinite(item.firstReviewedAt) ? item.firstReviewedAt : null
+                    };
+                });
+
+                Object.entries(parsed.activity || {}).forEach(([dateKey, activity]) => {
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey) || !activity) return;
+                    state.activity[dateKey] = {
+                        reviewed: Math.max(0, Number(activity.reviewed) || 0),
+                        correct: Math.max(0, Number(activity.correct) || 0),
+                        newWords: Math.max(0, Number(activity.newWords) || 0),
+                        newChars: Math.max(0, Number(activity.newChars) || 0)
+                    };
+                });
+
+                state.newCursor.word = Math.max(0, Number(parsed.newCursor?.word) || 0);
+                state.newCursor.character = Math.max(0, Number(parsed.newCursor?.character) || 0);
+                return state;
+            } catch {
+                return createEmptyReviewState();
+            }
+        }
+
+        function saveReviewState() {
+            try {
+                localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(reviewState));
+            } catch {}
+        }
+
+        function getTodayActivity() {
+            const dateKey = getLocalDateKey();
+            return reviewState.activity[dateKey] || {
+                reviewed: 0,
+                correct: 0,
+                newWords: 0,
+                newChars: 0
+            };
+        }
+
+        function ensureTodayActivity() {
+            const dateKey = getLocalDateKey();
+            if (!reviewState.activity[dateKey]) {
+                reviewState.activity[dateKey] = {
+                    reviewed: 0,
+                    correct: 0,
+                    newWords: 0,
+                    newChars: 0
+                };
+            }
+            return reviewState.activity[dateKey];
+        }
+
+        function getDueReviewIds() {
+            const now = Date.now();
+            return Object.entries(reviewState.items)
+                .filter(([, item]) => item.dueAt <= now)
+                .sort((a, b) => a[1].dueAt - b[1].dueAt)
+                .map(([id]) => id)
+                .filter(id => hskReviewEntriesById.has(id));
+        }
+
+        function getNewReviewCandidates(kind) {
+            const source = kind === 'word' ? hskWordReviewEntries : hskCharacterReviewEntries;
+            const start = reviewState.newCursor[kind] || 0;
+            const ordered = [...source.slice(start), ...source.slice(0, start)];
+            return ordered.filter(entry => !reviewState.items[entry.id]);
+        }
+
+        function buildNewReviewIds(limit) {
+            if (limit <= 0) return [];
+            const activity = getTodayActivity();
+            const remainingWords = Math.max(0, REVIEW_NEW_WORD_DAILY_LIMIT - activity.newWords);
+            const remainingCharacters = Math.max(0, REVIEW_NEW_CHAR_DAILY_LIMIT - activity.newChars);
+            const roundQuota = index => {
+                if (index % 5 < 3) return 'word';
+                return 'character';
+            };
+            const wordCandidates = getNewReviewCandidates('word');
+            const characterCandidates = getNewReviewCandidates('character');
+            let wordCount = 0;
+            let characterCount = 0;
+            const result = [];
+
+            for (let index = 0; index < limit; index++) {
+                let kind = roundQuota(index);
+                const canTakeWord = wordCount < remainingWords && wordCount < wordCandidates.length;
+                const canTakeCharacter = characterCount < remainingCharacters && characterCount < characterCandidates.length;
+                if (kind === 'word' && !canTakeWord) kind = 'character';
+                if (kind === 'character' && !canTakeCharacter) kind = 'word';
+                if (kind === 'word' && canTakeWord) {
+                    result.push(wordCandidates[wordCount++].id);
+                } else if (kind === 'character' && canTakeCharacter) {
+                    result.push(characterCandidates[characterCount++].id);
+                }
+            }
+            return result;
+        }
+
+        function hasReviewWorkRemaining() {
+            return getDueReviewIds().length > 0 || buildNewReviewIds(REVIEW_SESSION_LIMIT).length > 0;
+        }
+
+        function startReviewSession(forceNew = false) {
+            if (
+                !forceNew &&
+                reviewSession &&
+                reviewSession.dateKey === getLocalDateKey() &&
+                reviewSession.index < reviewSession.items.length
+            ) {
+                renderReviewUI();
+                return;
+            }
+
+            const dueIds = getDueReviewIds().slice(0, REVIEW_SESSION_LIMIT);
+            const remainingSlots = Math.max(0, REVIEW_SESSION_LIMIT - dueIds.length);
+            const newIds = buildNewReviewIds(remainingSlots);
+            reviewSession = {
+                dateKey: getLocalDateKey(),
+                items: [...dueIds, ...newIds],
+                index: 0,
+                revealed: false,
+                reviewed: 0,
+                againIds: new Set()
+            };
+            renderReviewUI();
+            if (reviewSession.index < reviewSession.items.length) {
+                requestAnimationFrame(() => reviewRevealBtn.focus({ preventScroll: true }));
+            }
+        }
+
+        function getCurrentReviewEntry() {
+            if (!reviewSession || reviewSession.index >= reviewSession.items.length) return null;
+            return hskReviewEntriesById.get(reviewSession.items[reviewSession.index]) || null;
+        }
+
+        function getReviewStreak() {
+            const cursor = new Date();
+            cursor.setHours(0, 0, 0, 0);
+            if (!reviewState.activity[getLocalDateKey(cursor)]?.reviewed) {
+                cursor.setDate(cursor.getDate() - 1);
+            }
+            let streak = 0;
+            while (reviewState.activity[getLocalDateKey(cursor)]?.reviewed > 0) {
+                streak++;
+                cursor.setDate(cursor.getDate() - 1);
+            }
+            return streak;
+        }
+
+        function getReviewAccuracy() {
+            const totals = Object.values(reviewState.activity).reduce((sum, activity) => ({
+                reviewed: sum.reviewed + activity.reviewed,
+                correct: sum.correct + activity.correct
+            }), { reviewed: 0, correct: 0 });
+            return totals.reviewed ? Math.round((totals.correct / totals.reviewed) * 100) : 0;
+        }
+
+        function renderReviewStats() {
+            const learned = Object.values(reviewState.items).filter(item => item.firstReviewedAt).length;
+            reviewDueCount.textContent = getDueReviewIds().length;
+            reviewLearnedCount.textContent = learned;
+            reviewDayStreakCount.textContent = getReviewStreak();
+            reviewAccuracyCount.textContent = `${getReviewAccuracy()}%`;
+        }
+
+        function showReviewMessage(title, text, buttonText, action) {
+            reviewSessionPanel.classList.add('hidden');
+            reviewMessagePanel.classList.remove('hidden');
+            reviewMessageTitle.textContent = title;
+            reviewMessageText.textContent = text;
+            reviewMessageBtn.textContent = buttonText;
+            reviewMessageAction = action;
+        }
+
+        function renderReviewCard(entry) {
+            const isWord = entry.kind === 'word';
+            const data = entry.data;
+            const display = isWord ? data.w : data.c;
+            const meaning = isWord
+                ? (data[currentLang] || data.en)
+                : (hskCharMeanings[data.c]?.[{ en: 0, ru: 1, hy: 2 }[currentLang]] || '');
+            const meta = isWord
+                ? `${t().partOfSpeech}: ${localizedPos(data.pos)}`
+                : data.examples.map(escapeHtml).join(' · ');
+            const story = !isWord ? hskCharacterStories[data.c] : null;
+
+            reviewSessionPanel.classList.remove('hidden');
+            reviewMessagePanel.classList.add('hidden');
+            reviewTypeBadge.textContent = isWord ? t().reviewWord : t().reviewCharacter;
+            reviewFront.textContent = display;
+            reviewFront.classList.toggle('review-front--word', isWord);
+            reviewPinyin.textContent = data.p;
+            reviewMeaning.textContent = meaning;
+            reviewMeta.innerHTML = meta;
+            reviewStory.classList.toggle('hidden', !story);
+            reviewStoryLabel.textContent = t().memoryStory;
+            reviewStoryText.textContent = story ? story.story[{ en: 0, ru: 1, hy: 2 }[currentLang]] : '';
+            reviewAnswer.classList.toggle('hidden', !reviewSession.revealed);
+            reviewRevealBtn.classList.toggle('hidden', reviewSession.revealed);
+            reviewRatingActions.classList.toggle('hidden', !reviewSession.revealed);
+            reviewProgressText.textContent = `${reviewSession.index + 1} / ${reviewSession.items.length}`;
+            reviewProgressBar.style.width = `${((reviewSession.index + 1) / reviewSession.items.length) * 100}%`;
+            reviewRevealBtn.textContent = t().reviewShowAnswer;
+            reviewAgainBtn.textContent = t().reviewAgain;
+            reviewGoodBtn.textContent = t().reviewGood;
+            reviewEasyBtn.textContent = t().reviewEasy;
+            reviewKeyboardHint.textContent = t().reviewKeyboardHint;
+        }
+
+        function renderReviewUI() {
+            renderReviewStats();
+            if (!reviewSession) {
+                startReviewSession();
+                return;
+            }
+
+            if (reviewSession.index >= reviewSession.items.length) {
+                const hasMore = hasReviewWorkRemaining();
+                if (hasMore) {
+                    showReviewMessage(
+                        t().reviewComplete,
+                        t().reviewSessionCompleteText,
+                        t().reviewStartAnother,
+                        'more'
+                    );
+                } else {
+                    showReviewMessage(
+                        t().reviewEmptyTitle,
+                        t().reviewEmptyText,
+                        t().reviewStudyWords,
+                        'study'
+                    );
+                }
+                requestAnimationFrame(() => reviewMessageBtn.focus({ preventScroll: true }));
+                return;
+            }
+
+            const entry = getCurrentReviewEntry();
+            if (!entry) {
+                reviewSession.index++;
+                renderReviewUI();
+                return;
+            }
+            renderReviewCard(entry);
+        }
+
+        function revealReviewAnswer() {
+            if (!reviewSession || reviewSession.index >= reviewSession.items.length) return;
+            reviewSession.revealed = true;
+            renderReviewUI();
+            requestAnimationFrame(() => reviewAgainBtn.focus({ preventScroll: true }));
+        }
+
+        function advanceNewCursor(entry) {
+            const list = entry.kind === 'word' ? hskWordReviewEntries : hskCharacterReviewEntries;
+            const index = list.findIndex(item => item.id === entry.id);
+            if (index >= 0) {
+                reviewState.newCursor[entry.kind] = Math.max(reviewState.newCursor[entry.kind] || 0, index + 1);
+            }
+        }
+
+        function rateReview(rating) {
+            if (!reviewSession || !reviewSession.revealed) return;
+            const entry = getCurrentReviewEntry();
+            if (!entry) return;
+
+            const now = Date.now();
+            const existing = reviewState.items[entry.id];
+            const isFirstReview = !existing?.firstReviewedAt;
+            const item = existing ? { ...existing } : {
+                dueAt: now,
+                intervalDays: 0,
+                repetitions: 0,
+                lapses: 0,
+                lastRating: null,
+                lastReviewedAt: null,
+                firstReviewedAt: null
+            };
+
+            if (rating === 'again') {
+                item.repetitions = 0;
+                item.intervalDays = 1;
+                item.lapses += 1;
+            } else if (rating === 'good') {
+                item.intervalDays = item.repetitions === 0
+                    ? 1
+                    : Math.max(1, Math.round(item.intervalDays * 2.5));
+                item.repetitions += 1;
+            } else {
+                item.intervalDays = item.repetitions === 0
+                    ? 3
+                    : Math.max(3, Math.round(item.intervalDays * 4));
+                item.repetitions += 1;
+            }
+
+            item.intervalDays = Math.min(365, item.intervalDays);
+            item.dueAt = getLocalDayStart(item.intervalDays);
+            item.lastRating = rating;
+            item.lastReviewedAt = now;
+            item.firstReviewedAt = item.firstReviewedAt || now;
+            reviewState.items[entry.id] = item;
+
+            const activity = ensureTodayActivity();
+            activity.reviewed += 1;
+            if (rating !== 'again') activity.correct += 1;
+            if (isFirstReview) {
+                if (entry.kind === 'word') activity.newWords += 1;
+                else activity.newChars += 1;
+                advanceNewCursor(entry);
+            }
+
+            if (rating === 'again' && !reviewSession.againIds.has(entry.id)) {
+                reviewSession.againIds.add(entry.id);
+                const insertAt = Math.min(reviewSession.index + 4, reviewSession.items.length);
+                reviewSession.items.splice(insertAt, 0, entry.id);
+            }
+
+            reviewSession.index += 1;
+            reviewSession.reviewed += 1;
+            reviewSession.revealed = false;
+            saveReviewState();
+            renderReviewUI();
+            if (reviewSession.index < reviewSession.items.length) {
+                requestAnimationFrame(() => reviewRevealBtn.focus({ preventScroll: true }));
+            }
+        }
+
+        function resetReviewProgress() {
+            if (!window.confirm(t().reviewResetConfirm)) return;
+            reviewState = createEmptyReviewState();
+            reviewSession = null;
+            saveReviewState();
+            startReviewSession(true);
+        }
+
+        function handleReviewMessageAction() {
+            if (reviewMessageAction === 'more') {
+                startReviewSession(true);
+            } else {
+                switchTab('study');
+            }
+        }
+
+        function recordHskQuizMiss(word) {
+            const id = `word:${word.w}`;
+            if (!hskReviewEntriesById.has(id)) return;
+            const now = Date.now();
+            const item = reviewState.items[id] || {
+                dueAt: now,
+                intervalDays: 0,
+                repetitions: 0,
+                lapses: 0,
+                lastRating: null,
+                lastReviewedAt: null,
+                firstReviewedAt: null
+            };
+            item.dueAt = now;
+            item.intervalDays = 0;
+            item.lapses += 1;
+            item.lastRating = 'quiz-miss';
+            item.lastReviewedAt = now;
+            reviewState.items[id] = item;
+            saveReviewState();
+            renderReviewStats();
+        }
+
         function sharesMeaning(a, b) {
             if (isPrimitive()) return a[currentLang] === b[currentLang];
             if (isHsk()) return meaningText(a) === meaningText(b);
@@ -3636,6 +4607,7 @@
             const inactive = "px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900";
             navQuizBtn.className = currentTab === 'quiz' ? active : inactive;
             navStudyBtn.className = currentTab === 'study' ? active : inactive;
+            navReviewBtn.className = currentTab === 'review' ? active : inactive;
         }
 
         function updateSectionStyles() {
@@ -3667,6 +4639,21 @@
             secPrimitiveBtn.textContent = t().sectionPrimitive;
             navQuizBtn.textContent = t().quizTab;
             navStudyBtn.textContent = t().studyTab;
+            navReviewBtn.textContent = t().reviewTab;
+            reviewEyebrow.textContent = t().reviewEyebrow;
+            reviewHeading.textContent = t().reviewHeading;
+            reviewSubtitleText.textContent = t().reviewSubtitle;
+            reviewDueLabel.textContent = t().reviewDue;
+            reviewLearnedLabel.textContent = t().reviewLearned;
+            reviewDayStreakLabel.textContent = t().reviewDayStreak;
+            reviewAccuracyLabel.textContent = t().reviewAccuracy;
+            resetReviewBtn.textContent = t().reviewReset;
+            reviewRevealBtn.textContent = t().reviewShowAnswer;
+            reviewAgainBtn.textContent = t().reviewAgain;
+            reviewGoodBtn.textContent = t().reviewGood;
+            reviewEasyBtn.textContent = t().reviewEasy;
+            reviewKeyboardHint.textContent = t().reviewKeyboardHint;
+            reviewStoryLabel.textContent = t().memoryStory;
             scoreLabel.textContent = t().score;
             streakLabel.textContent = t().streak;
             questionPrompt.textContent = isPrimitive() ? t().primitiveQuestion : isHsk() ? t().hskQuestion : t().question;
@@ -3720,6 +4707,8 @@
                 renderQuizUI();
             }
             renderStudyGrid();
+            if (currentTab === 'review') renderReviewUI();
+            else renderReviewStats();
         }
 
         langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
@@ -3758,6 +4747,9 @@
             if (section !== 'kangxi' && section !== 'hsk' && section !== 'primitives') return;
             if (section === currentSection) return;
 
+            if (currentTab === 'review' && section !== 'hsk') {
+                currentTab = 'quiz';
+            }
             saveQuizState();
             currentSection = section;
             loadQuizState(section);
@@ -3769,6 +4761,8 @@
                 renderQuizUI();
             }
             renderStudyGrid();
+            updateMainSectionVisibility();
+            updateTabStyles();
         }
 
         function switchHskView(view) {
@@ -3780,18 +4774,29 @@
 
         // Tab Switching Logic
         function switchTab(tabName) {
-            currentTab = tabName === 'study' ? 'study' : 'quiz';
+            currentTab = tabName === 'study' || tabName === 'review' ? tabName : 'quiz';
 
-            if (currentTab === 'quiz') {
-                quizSection.classList.remove('hidden');
-                studySection.classList.add('hidden');
-            } else {
-                quizSection.classList.add('hidden');
-                studySection.classList.remove('hidden');
+            if (currentTab === 'review') {
+                if (currentSection !== 'hsk') {
+                    saveQuizState();
+                    currentSection = 'hsk';
+                    loadQuizState('hsk');
+                    if (!currentQuestion) generateQuestion();
+                }
+                updateTexts();
+                startReviewSession();
+            } else if (currentTab === 'study') {
                 renderStudyGrid();
             }
 
+            updateMainSectionVisibility();
             updateTabStyles();
+        }
+
+        function updateMainSectionVisibility() {
+            quizSection.classList.toggle('hidden', currentTab !== 'quiz');
+            studySection.classList.toggle('hidden', currentTab !== 'study');
+            reviewSection.classList.toggle('hidden', currentTab !== 'review');
         }
 
         // --- QUIZ LOGIC ---
@@ -3958,6 +4963,7 @@
                 // Wrong State
                 streak = 0;
                 feedbackKind = 'incorrect';
+                if (isHsk()) recordHskQuizMiss(currentQuestion);
             }
 
             // Update Stats UI
@@ -4140,6 +5146,30 @@
                 studyGrid.appendChild(card);
             });
         }
+
+        document.addEventListener('keydown', event => {
+            if (currentTab !== 'review' || !reviewSession || reviewSession.index >= reviewSession.items.length) return;
+            const activeTag = event.target?.tagName;
+            const isInteractive = ['BUTTON', 'A', 'INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag);
+
+            if (!reviewSession.revealed) {
+                if ((event.key === ' ' || event.key === 'Enter') && !isInteractive) {
+                    event.preventDefault();
+                    revealReviewAnswer();
+                }
+                return;
+            }
+
+            const ratingByKey = {
+                '1': 'again',
+                '2': 'good',
+                '3': 'easy'
+            };
+            if (ratingByKey[event.key]) {
+                event.preventDefault();
+                rateReview(ratingByKey[event.key]);
+            }
+        });
 
         // Initialize Game
         window.onload = function() {
