@@ -671,6 +671,74 @@
             font-weight: 700;
         }
 
+        .pronunciation-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .pronunciation-btn {
+            display: inline-flex;
+            min-height: 1.85rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
+            padding: 0.2rem 0.42rem;
+            border: 1px solid #c7d2fe;
+            border-radius: 0.55rem;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 0.62rem;
+            font-weight: 800;
+            line-height: 1;
+            transition: all 0.15s ease;
+        }
+
+        .pronunciation-btn:hover:not(:disabled) {
+            border-color: #818cf8;
+            background: #e0e7ff;
+        }
+
+        .pronunciation-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+        }
+
+        .pronunciation-btn svg {
+            width: 0.85rem;
+            height: 0.85rem;
+        }
+
+        .pronunciation-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.45rem;
+        }
+
+        .audio-status {
+            position: fixed;
+            left: 50%;
+            bottom: max(1rem, env(safe-area-inset-bottom));
+            z-index: 80;
+            max-width: min(calc(100% - 2rem), 28rem);
+            padding: 0.65rem 0.85rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.98);
+            color: #334155;
+            font-size: 0.76rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+            box-shadow: 0 10px 30px -15px rgba(15, 23, 42, 0.35);
+            transform: translateX(-50%);
+        }
+
+        .audio-status--error {
+            border-color: #fecdd3;
+            color: #9f1239;
+        }
+
         @media (max-width: 640px) {
             .review-header {
                 align-items: stretch;
@@ -695,6 +763,11 @@
 
             .review-rating {
                 font-size: 0.72rem;
+            }
+
+            .pronunciation-btn {
+                min-height: 2rem;
+                padding-inline: 0.38rem;
             }
         }
 
@@ -1185,7 +1258,10 @@
                 <div id="reviewSessionPanel" class="hidden">
                     <div class="review-card">
                         <div class="review-card__topline">
-                            <span id="reviewTypeBadge" class="review-type">Word</span>
+                            <div class="flex items-center gap-2">
+                                <span id="reviewTypeBadge" class="review-type">Word</span>
+                                <span id="reviewAudioControls" class="pronunciation-controls"></span>
+                            </div>
                             <span id="reviewProgressText" class="review-progress-text">1 / 1</span>
                         </div>
                         <div class="review-progress-track" aria-hidden="true">
@@ -1252,6 +1328,8 @@
         </section>
 
     </main>
+
+    <div id="audioStatus" class="audio-status hidden" role="status" aria-live="polite"></div>
 
     <script>
         // Complete Dataset of all 214 Kangxi Radicals (Simplified Versions)
@@ -3846,6 +3924,11 @@
                 reviewStudyWords: "Study words",
                 reviewReset: "Reset",
                 reviewResetConfirm: "Reset all HSK review progress?",
+                audioPlayNormal: "Play Chinese at normal speed",
+                audioPlaySlow: "Play Chinese slowly",
+                audioUnavailable: "Chinese pronunciation is unavailable on this device.",
+                audioLoading: "Loading Chinese voice...",
+                audioPlaybackError: "Could not play the Chinese pronunciation.",
                 score: "Score",
                 streak: "Streak",
                 question: "What does this radical mean?",
@@ -3912,6 +3995,11 @@
                 reviewStudyWords: "Սովորել բառերը",
                 reviewReset: "Վերականգնել",
                 reviewResetConfirm: "Վերականգնե՞լ HSK-ի կրկնության ողջ առաջընթացը։",
+                audioPlayNormal: "Լսել չինարենը նորմալ արագությամբ",
+                audioPlaySlow: "Լսել չինարենը դանդաղ",
+                audioUnavailable: "Այս սարքում չինարենի արտասանությունը հասանելի չէ։",
+                audioLoading: "Չինարենի ձայնը բեռնվում է...",
+                audioPlaybackError: "Չհաջողվեց նվագարկել չինարենի արտասանությունը։",
                 score: "Միավորներ",
                 streak: "Անընդմեջ",
                 question: "Ի՞նչ է նշանակում այս արմատը։",
@@ -3978,6 +4066,11 @@
                 reviewStudyWords: "Изучать слова",
                 reviewReset: "Сбросить",
                 reviewResetConfirm: "Сбросить весь прогресс повторения HSK?",
+                audioPlayNormal: "Прослушать китайское произношение в обычном темпе",
+                audioPlaySlow: "Прослушать китайское произношение медленно",
+                audioUnavailable: "Китайское произношение недоступно на этом устройстве.",
+                audioLoading: "Китайский голос загружается...",
+                audioPlaybackError: "Не удалось воспроизвести китайское произношение.",
                 score: "Счёт",
                 streak: "Серия",
                 question: "Что означает этот радикал?",
@@ -4042,6 +4135,12 @@
         let reviewState = loadReviewState();
         let reviewSession = null;
         let reviewMessageAction = 'study';
+        const speechSupported = typeof window !== 'undefined' &&
+            'speechSynthesis' in window &&
+            'SpeechSynthesisUtterance' in window;
+        let chineseVoice = null;
+        let audioVoiceCheckComplete = false;
+        let audioStatusTimer = null;
 
         // DOM Elements
         const scoreDisplay = document.getElementById('scoreDisplay');
@@ -4083,6 +4182,7 @@
         const reviewStory = document.getElementById('reviewStory');
         const reviewStoryLabel = document.getElementById('reviewStoryLabel');
         const reviewStoryText = document.getElementById('reviewStoryText');
+        const reviewAudioControls = document.getElementById('reviewAudioControls');
         const reviewRevealBtn = document.getElementById('reviewRevealBtn');
         const reviewRatingActions = document.getElementById('reviewRatingActions');
         const reviewAgainBtn = document.getElementById('reviewAgainBtn');
@@ -4094,6 +4194,7 @@
         const reviewMessageText = document.getElementById('reviewMessageText');
         const reviewMessageBtn = document.getElementById('reviewMessageBtn');
         const resetReviewBtn = document.getElementById('resetReviewBtn');
+        const audioStatus = document.getElementById('audioStatus');
         
         // Navigation Elements
         const quizSection = document.getElementById('quizSection');
@@ -4181,6 +4282,146 @@
             return [...text].map(ch => hskExtraChars.has(ch)
                 ? `<span class="text-amber-600 font-semibold" title="${escapeHtml(t().extra)}">${escapeHtml(ch)}</span>`
                 : escapeHtml(ch)).join('');
+        }
+
+        function normalizeVoiceLanguage(language) {
+            return String(language || '').toLowerCase().replace('_', '-');
+        }
+
+        function getVoicePriority(voice) {
+            const language = normalizeVoiceLanguage(voice.lang);
+            if (language === 'zh-cn') return 0;
+            if (language.startsWith('cmn')) return 1;
+            if (language.startsWith('zh')) return 2;
+            return -1;
+        }
+
+        function refreshChineseVoice() {
+            if (!speechSupported) {
+                audioVoiceCheckComplete = true;
+                updatePronunciationAvailability();
+                return;
+            }
+            const voices = window.speechSynthesis.getVoices?.() || [];
+            chineseVoice = voices
+                .filter(voice => getVoicePriority(voice) >= 0)
+                .sort((a, b) => {
+                    const priority = getVoicePriority(a) - getVoicePriority(b);
+                    if (priority !== 0) return priority;
+                    return Number(b.localService) - Number(a.localService);
+                })[0] || null;
+            if (voices.length > 0) audioVoiceCheckComplete = true;
+            updatePronunciationAvailability();
+        }
+
+        function updatePronunciationAvailability() {
+            const unavailable = audioVoiceCheckComplete
+                ? t().audioUnavailable
+                : t().audioLoading;
+            document.querySelectorAll('[data-pronunciation-text]').forEach(button => {
+                button.disabled = !chineseVoice;
+                const label = button.dataset.pronunciationSlow === 'true'
+                    ? t().audioPlaySlow
+                    : t().audioPlayNormal;
+                button.title = chineseVoice ? label : unavailable;
+                button.setAttribute('aria-label', chineseVoice ? label : unavailable);
+            });
+        }
+
+        function pronunciationButtonsHtml(text, fallbackText = '') {
+            const disabled = chineseVoice ? '' : ' disabled';
+            const normalLabel = escapeHtml(t().audioPlayNormal);
+            const slowLabel = escapeHtml(t().audioPlaySlow);
+            const disabledLabel = escapeHtml(
+                audioVoiceCheckComplete ? t().audioUnavailable : t().audioLoading
+            );
+            const escapedText = escapeHtml(text);
+            const escapedFallback = escapeHtml(fallbackText);
+            const speaker = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18 6a8 8 0 0 1 0 12"></path></svg>';
+            return `<span class="pronunciation-controls">
+                <button type="button" class="pronunciation-btn" data-pronunciation-text="${escapedText}" data-pronunciation-fallback="${escapedFallback}" data-pronunciation-slow="false" aria-label="${chineseVoice ? normalLabel : disabledLabel}" title="${chineseVoice ? normalLabel : disabledLabel}"${disabled}>${speaker}<span>1×</span></button>
+                <button type="button" class="pronunciation-btn" data-pronunciation-text="${escapedText}" data-pronunciation-fallback="${escapedFallback}" data-pronunciation-slow="true" aria-label="${chineseVoice ? slowLabel : disabledLabel}" title="${chineseVoice ? slowLabel : disabledLabel}"${disabled}>${speaker}<span>0.6×</span></button>
+            </span>`;
+        }
+
+        function showAudioStatus(message, isError = false, persistent = false) {
+            clearTimeout(audioStatusTimer);
+            audioStatus.textContent = message;
+            audioStatus.classList.remove('hidden');
+            audioStatus.classList.toggle('audio-status--error', isError);
+            if (!persistent) {
+                audioStatusTimer = setTimeout(() => {
+                    audioStatus.classList.add('hidden');
+                }, 4000);
+            }
+        }
+
+        function stopChineseSpeech() {
+            if (speechSupported) window.speechSynthesis.cancel();
+        }
+
+        function speakChinese(text, slow = false, fallbackText = '') {
+            if (!/[\u3400-\u9fff]/.test(text)) return;
+            if (!chineseVoice) {
+                showAudioStatus(
+                    speechSupported ? t().audioUnavailable : t().audioPlaybackError,
+                    true
+                );
+                return;
+            }
+
+            stopChineseSpeech();
+            const speakAttempt = (candidate, isFallback) => {
+                const utterance = new SpeechSynthesisUtterance(candidate);
+                utterance.lang = 'zh-CN';
+                utterance.voice = chineseVoice;
+                utterance.rate = slow ? 0.6 : 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                utterance.onstart = () => {
+                    audioStatus.classList.add('hidden');
+                };
+                utterance.onerror = event => {
+                    if (['canceled', 'interrupted'].includes(event.error)) return;
+                    if (
+                        !isFallback &&
+                        fallbackText &&
+                        fallbackText !== candidate &&
+                        /[\u3400-\u9fff]/.test(fallbackText)
+                    ) {
+                        speakAttempt(fallbackText, true);
+                    } else {
+                        showAudioStatus(t().audioPlaybackError, true);
+                    }
+                };
+                window.speechSynthesis.speak(utterance);
+            };
+            speakAttempt(text, false);
+        }
+
+        function notifyMissingChineseVoice() {
+            if (!isHsk() || !audioVoiceCheckComplete || chineseVoice) return;
+            showAudioStatus(
+                speechSupported ? t().audioUnavailable : t().audioPlaybackError,
+                true
+            );
+        }
+
+        function initializeAudio() {
+            if (!speechSupported) {
+                audioVoiceCheckComplete = true;
+                updatePronunciationAvailability();
+                return;
+            }
+
+            refreshChineseVoice();
+            window.speechSynthesis.addEventListener?.('voiceschanged', refreshChineseVoice);
+            setTimeout(() => {
+                refreshChineseVoice();
+                audioVoiceCheckComplete = true;
+                updatePronunciationAvailability();
+                notifyMissingChineseVoice();
+            }, 1200);
         }
 
         function getLocalDateKey(date = new Date()) {
@@ -4414,6 +4655,10 @@
             reviewSessionPanel.classList.remove('hidden');
             reviewMessagePanel.classList.add('hidden');
             reviewTypeBadge.textContent = isWord ? t().reviewWord : t().reviewCharacter;
+            reviewAudioControls.innerHTML = pronunciationButtonsHtml(
+                display,
+                isWord ? '' : (data.examples?.[0] || '')
+            );
             reviewFront.textContent = display;
             reviewFront.classList.toggle('review-front--word', isWord);
             reviewPinyin.textContent = data.p;
@@ -4690,6 +4935,7 @@
             updateSectionStyles();
             updateTabStyles();
             updateHskViewStyles();
+            updatePronunciationAvailability();
         }
 
         function setLanguage(lang) {
@@ -4763,6 +5009,7 @@
             renderStudyGrid();
             updateMainSectionVisibility();
             updateTabStyles();
+            notifyMissingChineseVoice();
         }
 
         function switchHskView(view) {
@@ -4791,6 +5038,7 @@
 
             updateMainSectionVisibility();
             updateTabStyles();
+            notifyMissingChineseVoice();
         }
 
         function updateMainSectionVisibility() {
@@ -5052,6 +5300,7 @@
                     </div>
                     <div class="zh-char text-3xl font-medium text-slate-800 text-center">${highlightHskChars(word.w)}</div>
                     <div class="text-sm font-semibold text-indigo-500 text-center mt-1">${escapeHtml(word.p)}</div>
+                    <div class="pronunciation-row">${pronunciationButtonsHtml(word.w)}</div>
                     <div class="text-xs leading-snug text-slate-500 mt-2">${escapeHtml(meaningText(word))}</div>
                 `;
                 studyGrid.appendChild(card);
@@ -5078,6 +5327,7 @@
                     </div>
                     <div class="zh-char text-4xl font-medium text-slate-800">${escapeHtml(entry.c)}</div>
                     <div class="text-[11px] font-semibold text-indigo-500 text-center mt-1">${escapeHtml(entry.p)}</div>
+                    <div class="pronunciation-row">${pronunciationButtonsHtml(entry.c, entry.examples[0] || '')}</div>
                     <div class="text-[11px] leading-snug text-slate-600 text-center mt-1">${escapeHtml(meaning)}</div>
                     <div class="text-[10px] leading-snug text-slate-400 text-center mt-1">${examples}</div>
                 `;
@@ -5117,6 +5367,7 @@
                         <div class="story-card__meta">
                             <div class="story-card__pinyin">${escapeHtml(characterInfo?.p || '')}</div>
                             <div class="story-card__meaning">${escapeHtml(meaning)}</div>
+                            <div class="pronunciation-row justify-start">${pronunciationButtonsHtml(character, characterInfo?.examples?.[0] || '')}</div>
                         </div>
                     </div>
                     <div class="story-equation" aria-label="${escapeHtml(entry.parts.join(' + '))}">
@@ -5171,6 +5422,17 @@
             }
         });
 
+        document.addEventListener('click', event => {
+            const button = event.target?.closest?.('[data-pronunciation-text]');
+            if (!button || button.disabled) return;
+            event.preventDefault();
+            speakChinese(
+                button.dataset.pronunciationText,
+                button.dataset.pronunciationSlow === 'true',
+                button.dataset.pronunciationFallback || ''
+            );
+        });
+
         // Initialize Game
         window.onload = function() {
             let savedLang = 'en';
@@ -5180,6 +5442,7 @@
             } catch {}
 
             setLanguage(savedLang);
+            initializeAudio();
             generateQuestion();
         };
 
