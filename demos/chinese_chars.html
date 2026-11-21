@@ -785,6 +785,111 @@
             flex-shrink: 0;
         }
 
+        .study-search {
+            width: 100%;
+            max-width: 34rem;
+            margin: 0.85rem auto 0;
+        }
+
+        .study-search__field {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .study-search__icon {
+            position: absolute;
+            left: 0.8rem;
+            width: 1rem;
+            height: 1rem;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .study-search__input {
+            width: 100%;
+            height: 2.65rem;
+            padding: 0 4.8rem 0 2.35rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.8rem;
+            background: #ffffff;
+            color: #1e293b;
+            font-size: 0.84rem;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .study-search__input::placeholder {
+            color: #94a3b8;
+        }
+
+        .study-search__input::-webkit-search-cancel-button {
+            display: none;
+        }
+
+        .study-search__input:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
+        }
+
+        .study-search__shortcut {
+            position: absolute;
+            right: 0.55rem;
+            padding: 0.12rem 0.35rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.35rem;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 0.68rem;
+            font-weight: 700;
+            line-height: 1.2;
+            pointer-events: none;
+        }
+
+        .study-search__clear {
+            position: absolute;
+            right: 2rem;
+            display: flex;
+            width: 1.4rem;
+            height: 1.4rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+
+        .study-search__clear:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .study-search__count {
+            display: block;
+            min-height: 1.1rem;
+            margin-top: 0.3rem;
+            color: #64748b;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .study-empty-state {
+            display: flex;
+            min-height: 12rem;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 1px dashed #cbd5e1;
+            border-radius: 1rem;
+            background: #ffffff;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
         .story-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -1318,6 +1423,18 @@
                         <button id="hskStoriesBtn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-slate-600 hover:text-slate-900" onclick="switchHskView('stories')">
                             Stories
                         </button>
+                    </div>
+                    <div class="study-search">
+                        <div class="study-search__field">
+                            <svg class="study-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <path d="m20 20-3.5-3.5"></path>
+                            </svg>
+                            <input id="studySearchInput" class="study-search__input" type="search" autocomplete="off" spellcheck="false" placeholder="Search characters, words, or pinyin">
+                            <button id="studySearchClear" class="study-search__clear hidden" type="button" aria-label="Clear search">×</button>
+                            <kbd class="study-search__shortcut" aria-hidden="true">/</kbd>
+                        </div>
+                        <span id="studySearchCount" class="study-search__count" aria-live="polite"></span>
                     </div>
                 </div>
                 
@@ -3929,6 +4046,10 @@
                 audioUnavailable: "Chinese pronunciation is unavailable on this device.",
                 audioLoading: "Loading Chinese voice...",
                 audioPlaybackError: "Could not play the Chinese pronunciation.",
+                searchPlaceholder: "Search characters, words, translations, or pinyin",
+                searchClear: "Clear search",
+                searchResults: (shown, total) => `${shown} of ${total} results`,
+                searchNoResults: query => `No matches for “${query}”.`,
                 score: "Score",
                 streak: "Streak",
                 question: "What does this radical mean?",
@@ -4000,6 +4121,10 @@
                 audioUnavailable: "Այս սարքում չինարենի արտասանությունը հասանելի չէ։",
                 audioLoading: "Չինարենի ձայնը բեռնվում է...",
                 audioPlaybackError: "Չհաջողվեց նվագարկել չինարենի արտասանությունը։",
+                searchPlaceholder: "Փնտրել նշաններ, բառեր, թարգմանություններ կամ փինյին",
+                searchClear: "Մաքրել որոնումը",
+                searchResults: (shown, total) => `${shown} / ${total} արդյունք`,
+                searchNoResults: query => `«${query}» հարցման համար արդյունք չկա։`,
                 score: "Միավորներ",
                 streak: "Անընդմեջ",
                 question: "Ի՞նչ է նշանակում այս արմատը։",
@@ -4071,6 +4196,10 @@
                 audioUnavailable: "Китайское произношение недоступно на этом устройстве.",
                 audioLoading: "Китайский голос загружается...",
                 audioPlaybackError: "Не удалось воспроизвести китайское произношение.",
+                searchPlaceholder: "Искать иероглифы, слова, перевод или пиньинь",
+                searchClear: "Очистить поиск",
+                searchResults: (shown, total) => `${shown} из ${total} результатов`,
+                searchNoResults: query => `По запросу «${query}» ничего не найдено.`,
                 score: "Счёт",
                 streak: "Серия",
                 question: "Что означает этот радикал?",
@@ -4118,6 +4247,7 @@
         let currentSection = 'kangxi';
         let currentTab = 'quiz';
         let hskStudyView = 'words';
+        let studySearchQuery = '';
         let score = 0;
         let streak = 0;
         let currentQuestion = null;
@@ -4158,6 +4288,9 @@
         const nextBtn = document.getElementById('nextBtn');
         const studyTitle = document.getElementById('studyTitle');
         const studySubtitle = document.getElementById('studySubtitle');
+        const studySearchInput = document.getElementById('studySearchInput');
+        const studySearchClear = document.getElementById('studySearchClear');
+        const studySearchCount = document.getElementById('studySearchCount');
         const reviewSection = document.getElementById('reviewSection');
         const reviewEyebrow = document.getElementById('reviewEyebrow');
         const reviewHeading = document.getElementById('reviewHeading');
@@ -4276,6 +4409,52 @@
                 '"': '&quot;',
                 "'": '&#39;'
             }[ch]));
+        }
+
+        function normalizeStudySearch(value) {
+            return String(value || '')
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function filterStudyEntries(items, getSearchValues) {
+            const tokens = normalizeStudySearch(studySearchQuery).split(' ').filter(Boolean);
+            return items
+                .map((item, index) => ({ item, index }))
+                .filter(({ item }) => {
+                    if (!tokens.length) return true;
+                    const haystack = normalizeStudySearch(
+                        [].concat(getSearchValues(item)).filter(Boolean).join(' ')
+                    );
+                    return tokens.every(token => haystack.includes(token));
+                });
+        }
+
+        function updateStudySearchCount(shown = null, total = null) {
+            const hasQuery = Boolean(studySearchQuery.trim());
+            studySearchClear.classList.toggle('hidden', !hasQuery);
+            if (!hasQuery || shown === null || total === null) {
+                studySearchCount.textContent = '';
+                return;
+            }
+            studySearchCount.textContent = t().searchResults(shown, total);
+        }
+
+        function renderStudyEmptyState(total) {
+            studyGrid.className = 'study-empty-state';
+            studyGrid.textContent = t().searchNoResults(studySearchQuery.trim());
+            updateStudySearchCount(0, total);
+        }
+
+        function clearStudySearch(refocus = false) {
+            studySearchQuery = '';
+            studySearchInput.value = '';
+            updateStudySearchCount();
+            renderStudyGrid();
+            if (refocus) studySearchInput.focus({ preventScroll: true });
         }
 
         function highlightHskChars(text) {
@@ -4899,6 +5078,10 @@
             reviewEasyBtn.textContent = t().reviewEasy;
             reviewKeyboardHint.textContent = t().reviewKeyboardHint;
             reviewStoryLabel.textContent = t().memoryStory;
+            studySearchInput.placeholder = t().searchPlaceholder;
+            studySearchInput.setAttribute('aria-label', t().searchPlaceholder);
+            studySearchClear.setAttribute('aria-label', t().searchClear);
+            studySearchClear.title = t().searchClear;
             scoreLabel.textContent = t().score;
             streakLabel.textContent = t().streak;
             questionPrompt.textContent = isPrimitive() ? t().primitiveQuestion : isHsk() ? t().hskQuestion : t().question;
@@ -4961,6 +5144,13 @@
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
 
+        studySearchInput.addEventListener('input', event => {
+            studySearchQuery = event.target.value;
+            renderStudyGrid();
+        });
+
+        studySearchClear.addEventListener('click', () => clearStudySearch(true));
+
         function saveQuizState() {
             savedQuizStates[currentSection] = {
                 score,
@@ -4996,6 +5186,8 @@
             if (currentTab === 'review' && section !== 'hsk') {
                 currentTab = 'quiz';
             }
+            studySearchQuery = '';
+            studySearchInput.value = '';
             saveQuizState();
             currentSection = section;
             loadQuizState(section);
@@ -5015,6 +5207,8 @@
         function switchHskView(view) {
             if (view !== 'words' && view !== 'chars' && view !== 'stories') return;
             hskStudyView = view;
+            studySearchQuery = '';
+            studySearchInput.value = '';
             updateTexts();
             renderStudyGrid();
         }
@@ -5249,7 +5443,18 @@
             }
 
             studyGrid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12";
-            radicals.forEach((radical, index) => {
+            const matches = filterStudyEntries(radicals, radical => [
+                radical.c,
+                radical.p,
+                radical.p.replace(/\s+/g, ''),
+                ...radical[currentLang],
+                ...(radical.trad?.[currentLang] || [])
+            ]);
+            if (!matches.length) {
+                renderStudyEmptyState(radicals.length);
+                return;
+            }
+            matches.forEach(({ item: radical, index }) => {
                 const card = document.createElement('div');
                 card.className = "study-card bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow cursor-default group";
                 
@@ -5272,6 +5477,7 @@
                 studyGrid.appendChild(card);
             });
 
+            updateStudySearchCount(matches.length, radicals.length);
             attachTradToggles();
         }
 
@@ -5290,7 +5496,19 @@
         function renderHskWords() {
             studyGrid.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-12";
 
-            hskWords.forEach((word, index) => {
+            const matches = filterStudyEntries(hskWords, word => [
+                word.w,
+                word.p,
+                word.p.replace(/\s+/g, ''),
+                meaningText(word),
+                localizedPos(word.pos)
+            ]);
+            if (!matches.length) {
+                renderStudyEmptyState(hskWords.length);
+                return;
+            }
+
+            matches.forEach(({ item: word, index }) => {
                 const card = document.createElement('div');
                 card.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col shadow-sm hover:shadow-md transition-shadow";
                 card.innerHTML = `
@@ -5305,13 +5523,26 @@
                 `;
                 studyGrid.appendChild(card);
             });
+            updateStudySearchCount(matches.length, hskWords.length);
         }
 
         function renderHskCharacters() {
             studyGrid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 pb-12";
             const langIndex = { en: 0, ru: 1, hy: 2 }[currentLang];
 
-            hskCharacters.forEach((entry, index) => {
+            const matches = filterStudyEntries(hskCharacters, entry => [
+                entry.c,
+                entry.p,
+                entry.p.replace(/\s+/g, ''),
+                hskCharMeanings[entry.c]?.[langIndex] || '',
+                ...entry.examples
+            ]);
+            if (!matches.length) {
+                renderStudyEmptyState(hskCharacters.length);
+                return;
+            }
+
+            matches.forEach(({ item: entry, index }) => {
                 const card = document.createElement('div');
                 card.className = `study-card border rounded-xl p-3 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow ${entry.extra ? 'bg-amber-50 border-amber-300' : 'bg-white border-slate-200'}`;
                 const badge = entry.extra
@@ -5333,13 +5564,31 @@
                 `;
                 studyGrid.appendChild(card);
             });
+            updateStudySearchCount(matches.length, hskCharacters.length);
         }
 
         function renderHskStories() {
             studyGrid.className = "story-grid";
             const langIndex = { en: 0, ru: 1, hy: 2 }[currentLang];
+            const storyEntries = Object.entries(hskCharacterStories);
+            const matches = filterStudyEntries(storyEntries, ([character, entry]) => {
+                const characterInfo = hskCharacters.find(item => item.c === character);
+                return [
+                    character,
+                    characterInfo?.p || '',
+                    (characterInfo?.p || '').replace(/\s+/g, ''),
+                    hskCharMeanings[character]?.[langIndex] || '',
+                    entry.story[langIndex],
+                    ...entry.parts,
+                    ...entry.parts.map(componentLabel)
+                ];
+            });
+            if (!matches.length) {
+                renderStudyEmptyState(storyEntries.length);
+                return;
+            }
 
-            Object.entries(hskCharacterStories).forEach(([character, entry]) => {
+            matches.forEach(({ item: [character, entry] }) => {
                 const card = document.createElement('article');
                 const characterInfo = hskCharacters.find(item => item.c === character);
                 const meaning = hskCharMeanings[character]?.[langIndex] || '';
@@ -5380,12 +5629,24 @@
                 `;
                 studyGrid.appendChild(card);
             });
+            updateStudySearchCount(matches.length, storyEntries.length);
         }
 
         function renderPrimitiveGrid() {
             studyGrid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-12";
 
-            primitives.forEach(item => {
+            const matches = filterStudyEntries(primitives, item => [
+                item.c,
+                item.p,
+                item.p.replace(/\s+/g, ''),
+                item[currentLang]
+            ]);
+            if (!matches.length) {
+                renderStudyEmptyState(primitives.length);
+                return;
+            }
+
+            matches.forEach(({ item }) => {
                 const card = document.createElement('div');
                 card.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow";
                 card.innerHTML = `
@@ -5396,7 +5657,33 @@
                 `;
                 studyGrid.appendChild(card);
             });
+            updateStudySearchCount(matches.length, primitives.length);
         }
+
+        document.addEventListener('keydown', event => {
+            const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target?.tagName) ||
+                event.target?.isContentEditable;
+
+            if (
+                event.key === '/' &&
+                currentTab === 'study' &&
+                !isTyping &&
+                !event.ctrlKey &&
+                !event.metaKey &&
+                !event.altKey
+            ) {
+                event.preventDefault();
+                studySearchInput.focus({ preventScroll: true });
+                studySearchInput.select();
+                return;
+            }
+
+            if (event.key === 'Escape' && document.activeElement === studySearchInput) {
+                if (studySearchQuery) clearStudySearch(true);
+                else studySearchInput.blur();
+                return;
+            }
+        });
 
         document.addEventListener('keydown', event => {
             if (currentTab !== 'review' || !reviewSession || reviewSession.index >= reviewSession.items.length) return;
